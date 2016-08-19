@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\\name{brthwt.gestage.overall.counts}\n\\alias{brthwt.gestage.overall.counts}\n\\docType{data}\n\\title{\nBirthweight and Gestational Time of Newborns\n}\n\\description{\nThe dataset contains information from the US CDC National Vital Statistics System about 3,999,386 live births in the United States in 2010.  The dataset categorizes counts of birth weights by gestational length.  The columns represent weight groupings measured in grams, and the rows represent gestational length groupings measured in weeks.\n}\n\n\\details{\n%%  ~~ If necessary, more details than the __description__ above ~~\n}\n\\source{\n%%  ~~ reference to a publication or URL from which the data were obtained ~~\n}\n\\references{\n%%  ~~ possibly secondary sources and usages ~~\n}\n\\examples{\n% data(brthwt.gestage.overall.counts)\n% ## maybe str(brthwt.gestage.overall.counts) ; plot(brthwt.gestage.overall.counts) ...\n}\n\\keyword{datasets}\n",
+    "created" : 1455720886029.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3364821690",
+    "id" : "21CBD7DD",
+    "lastKnownWriteTime" : 1456163425,
+    "last_content_update" : 1456163425855,
+    "path" : "~/OIBioStat/man/brthwt.gestage.overall.counts.Rd",
+    "project_path" : "man/brthwt.gestage.overall.counts.Rd",
+    "properties" : {
+    },
+    "relative_order" : 6,
+    "source_on_save" : true,
+    "source_window" : "",
+    "type" : "r_doc"
+}

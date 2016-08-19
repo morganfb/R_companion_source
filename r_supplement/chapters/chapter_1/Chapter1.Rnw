@@ -1,0 +1,435 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in,bottom=.5in,includehead,includefoot]{geometry}
+\usepackage{hyperref}
+\usepackage{alltt}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+\title{Open Intro Biostat R Companion: \\ Chapter 1}
+\author{Morgan F. Breitmeyer}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\vspace{1cm}
+This document is intended to be a companion source to the textbook \textit{Introductory Statistics for the Life and Biomedical Sciences} that goes through all of the $R$ code and operations seen in the text.
+
+We have created a package that stores all of the datasets seen in the text.  You can download the package using the following command:
+%% These commands aren't going to work until we have uploaded the package to CRAN. Just skip it for now and require below.
+<<eval = FALSE>>=
+install.packages("OIBioStat")  ## make sure to include the quotations
+@
+
+The above command only needs to be run once, as after that, the package will be in your computer.  However, each time you want to use the package, you must alert $R$ using the following command:
+<<warning = FALSE, message = FALSE>>=
+require(OIBioStat) ## note the lack of quotations here
+@
+
+\section{Case study: preventing peanut allergies}
+%% Perhaps make a preface. Also consider a chapter 0 with basics of R and maybe how to download it?
+
+The first dataset encountered in the text is from the ``Learning Early About Peanut Allergy" (LEAP) study.  The dataset contains the results of a study conducted in 2015, which was reported in the \textit{New England Journal of Medicine.}  There are several basic things we can do to learn about our dataset.  Firstly, we can see the help files that come with it, using the following command:
+
+<<eval=FALSE>>=
+help(LEAP)
+@
+Running this, you should see a file appear, which contains several useful pieces of information:
+\begin{itemize}
+\item \textbf{Description:} This is a very short description of the dataset.  It typically contains a short overview of what is contained, but few details.
+\item \textbf{Format:} This is typically the most useful section of the help file.  It contains the names and descriptions of every variable in the dataset.  It should contain information such as the units and the type of variable seen.  A variable can take two main types: a \textit{factor} meaning it can be one of several set categories which do not have quantitative meaning (such as male and female or racial identification) or a \textit{number} meaning the variable can take on a range of quantitative values, which typically have some sort of meaning (such as height, weight, or frequency).
+\item \textbf{Details:} This section is an extension of the Description section seen at the beginning of the help file.  It will typically offer more details about where the data came from and its previous or intended uses.
+\end{itemize}
+The next important thing to know about datasets is how to take a look at the dataset itself.  The simplest way to do this is as follows:
+<<eval=FALSE>>=
+View(LEAP)
+@
+This command should cause a new window to pop up that shows you the whole dataset.  Here you can see the variable names you saw in your help file across the top as the names of the columns.  Also, you can see the entries in the dataset, as the various values within the rows and columns.  Note that the farthest left column should show what are called indeces, these are computer generated values that allow you to access specific rows in the dataset, but are not meaningful values in the dataset.  It is important to note that these indeces typically have no meaning that corresponds with the data, but are very useful for working with the data.
+
+Another simple way to view a small portion of the data is as follows:
+<<>>=
+LEAP[1:5,1:6]
+@
+This command will print out in the console the first 5 rows of the data.  The bracket notation above after the dataset name implies location, so you are telling $R$ at what location you would like to look.  The notation here is \textit{dataset[rows,columns]}, so the 1:5 dictates the first 5 rows and the 1:6 dictates the first 6 columns.  You can use this notation to access any combination of rows and columns in the dataset that you wish.  If you wanted to tell $R$ to take all the columns, but only the first five rows you could do that with the following:
+
+<<>>=
+## note the space (or lack of text after the comma)
+LEAP[1:5, ]
+@
+This output actually gives the same as the above command, but with a different command.  This is a common theme in $R$ - there are multiple ways to do everything.
+
+The final and most complex way to look at part of the data can be seen below and in Table 1.1 in the text. In this case, rather than doing a list of numbers sequentially, we create a list using the command $c()$ which binds the values inside the parentheses together into a list.  We can see the command below has first a list of row indexes (numbers as described above) and then a list of column names.
+
+<<Table.1.1>>=
+## Table 1.1
+LEAP[c(1,2,3,529, 530),c("participant.ID", "treatment.group",
+                         "overall.V60.outcome")]
+@
+
+Another good way to visualize data is using a table, which summarizes the data using two variables, one on each axis, and then provides the number of counts matching the varaible categories.  We can see this with the below command, which corresponds to Table 1.2 in the text.  Using the \textit{table} command, the first variable put in goes to the x-axis (meaning the row names) and the second variable goes to the y-axis (meaning the column names).  The addition of the \textit{addmargins()} command prints the sums of the rows and columns on the sides of the table as seen below,
+<<Table.1.2>>=
+## Table 1.2
+table(LEAP$treatment.group, LEAP$overall.V60.outcome)
+addmargins(table(LEAP$treatment.group, LEAP$overall.V60.outcome))
+
+@
+
+
+\section{Data Basics}
+We can partition part of the entire data to make what is called a dataframe.  We do this as follows below, where the brackets again indicate the location and the values inside these brackets indicate rows 1-3 and 150 and all columns for those rows.  This output corresponds to Table 1.3 in the text.  By separating this part of the dataframe as its own variable, here called \textit{data.matrix}, we can then call this specific part of the data for later operations.
+<<>>=
+## Table 1.3
+data.matrix = frog.altitude.data[c(1:3, 150),]
+data.matrix
+@
+We can perform a similar operation on the \textit{famuss} data to get Table 1.5 in the text:
+<<>>=
+## Table 1.5
+famuss[c(1,2,3,595),c( "sex", "age", "race", "height", "weight", "actn3.r577x",
+                       "ndrm.ch")]
+@
+
+\stepcounter{section}
+\section{Numerical Data}
+
+Now that we know how to look at the data itself, we may want to consider some methods to numerically summarize the data.  Doing this, we can get a good idea of the patterns seen in the data with just a few key values.  Each of these values can be calculated by hand using a mathematical formula or in $R$ using a function which calculates the value for you.
+
+\subsection{Measures of Center -- Mean and Median}
+The first numerical summary value we will consider is the \textbf{mean}, which provides the average value of the data.  The mathematical formula to do this by hand is
+$$ \bar{X} = \frac{X_1 + X_2 + \cdots + X_n}{n}$$
+where $n$ is the number of $X$ observations in the data.  We can perform this calculation in $R$ with the following.
+<<>>=
+## Solving by hand
+# First solve for n - the number of observations in the data
+n = length(frog.altitude.data$clutch.volume)
+n
+x.bar.h = sum(frog.altitude.data$clutch.volume)/n
+x.bar.h
+@
+
+Alternatively, we can use an $R$ provided function that will automatically calculate this value with no work on our part, as follows:
+<<>>=
+## Compare to Using R function
+x.bar.r = mean(frog.altitude.data$clutch.volume)
+x.bar.r
+
+## We can also round to get the exact values seen in text
+x.bar.rounded = round(x.bar.r, 1)
+x.bar.rounded
+@
+
+Finally, we could also consider getting the \textbf{median} value of the dataset, which is the center value in the data.  You could think of it as the observation $X_{n/2}$, but the best way to obtain this value is using the following $R$ function:
+<<>>=
+median(frog.altitude.data$clutch.volume)
+@
+
+\subsection{Measures of Spread -- Standard Deviation and Variance}
+Now that we have an idea of the center of the data, it is of interest to know how the data spreads away from that center.  This is where the \textbf{standard deviation} comes in.  The \textbf{variance} is another measure of spread and is simply equal to the square of the standard deviation.
+To calculate the variance, you can follow a few steps:
+\begin{enumerate}
+\item Obtain the deviation of each data point from the mean, i.e. $x_i - \bar{x}$
+\item Square each of these deviations, i.e. $(x_i - \bar{x})^2$
+\item Sum all of the squares, i.e. $\sum_{i=1}^n (x_i - \bar{x})^2$
+\item To obtain the final value for variance, divide this sum by the number of observations minus 1, $n-1$, i.e. $(\frac{1}{n-1})\sum_{i=1}^n (x_i - \bar{x})^2$
+\item To obtain the standard deviation, take the square root of the variance, i.e $\sqrt{(\frac{1}{n-1})\sum_{i=1}^n (x_i - \bar{x})^2}$
+\end{enumerate}
+We go through these steps by hand here and compare to the $R$ function's output.
+<<>>=
+## Looking at a few sample values from text
+frog.altitude.data$clutch.volume[c(1,2,3,431)]-x.bar.r
+
+## Calculating variance by hand
+# Step 1: calculating all deviations
+diffs = frog.altitude.data$clutch.volume-x.bar.r
+
+# Steps 2-4:
+variance = sum(diffs^2)/(n-1)
+variance
+
+## Comparing to the R function's value
+var(frog.altitude.data$clutch.volume)
+
+## Step 5: obtaining standard deviation
+stand.dev = sqrt(variance)
+stand.dev
+sd(frog.altitude.data$clutch.volume)        ## compare to R function value
+@
+
+A third measure of spread is the \textbf{interquartile range (IQR)}, which measures variability.  The IQR is equal to the third quartile (the 75th percentile), labeled $Q_3$, minus the first quartile (the 25th percentile), labeled $Q_1$, i.e. $IQR = Q_3 - Q_1$. The IQR can be obtained in $R$ using the following function,
+<<>>=
+IQR(frog.altitude.data$clutch.volume)
+@
+
+\subsection{Summary}
+A final way to get a lot of the above information about the numerical data can be obtained using the \textit{summary} command in $R$ as follows,
+<<>>=
+summary(frog.altitude.data$clutch.volume)
+@
+
+\subsection{With and Without Extreme Outliers}
+%% COME BACK HERE
+<<>>=
+# Table 1.13
+loc = (frog.altitude.data$clutch.volume<= 2000)
+
+## Robust estimates
+median(frog.altitude.data$clutch.volume[loc])
+IQR(frog.altitude.data$clutch.volume[loc])
+
+## Non-robust estimates
+mean(frog.altitude.data$clutch.volume[loc])
+sd(frog.altitude.data$clutch.volume[loc])
+@
+
+\subsection{Visualizing Data}
+One of the most important functions of $R$ is in data visualization.  As we saw above, most numerical summaries of data can be caclulated by hand or in $R$, but creating plots and other visualizations are much more difficult by hand.
+
+\subsubsection{Histograms}
+The first type of plot we will consider is a \textbf{histogram}, which plots the frequency of the various values of a variable.  The command for doing this is \textit{hist()}, and this function takes several arguments:
+\begin{itemize}
+\item $x$: the variable you want to visualize
+\item $breaks$: the number of vertical boxes (called bins) you want the plot to have; higher numbers will equal more boxes
+\item $col$: the color you want your plot to be; if unspecified, it will be white; must be in quotation marks
+\item $xlab$: the label you would like the x-axis to have; must be in quotation marks
+\item $ylab$: the label you would like the y-axis to have; must be in quotation marks
+\item $xlim$: the range of values you would like the x-axis to have; of the form $c(lower bound, upper bound)$
+\item $ylim$: the range of values you would like the y-axis to have; of the form $c(lower bound, upper bound)$
+\item $main$: the title you would like the whole plot to have; must be in quotation marks
+\end{itemize}
+In order to use each argument, you write the argument name followed by an equals sign, followed by what information you want to give it.  Note that not all arguments must be used - only the $x$ argument is necessary, the rest are just optional preferences.  An example of this can be seen below, plotting Figure 1.15 from the text:
+<<fig.height=3.5, fig.width=5.5>>=
+## Figure 1.15
+hist(x = frog.altitude.data$clutch.volume, breaks = 20, col = "lightblue",
+     xlab = "Clutch Volume", ylab = "Frequency", xlim = c(0, 2600),
+     main = "Histogram of Clutch Volume Frequencies")
+@
+
+\subsubsection{Boxplots}
+Another way to visualize data is with a boxplot.  The command for doing this in $R$ is \textit{boxplot()}, and it takes the following arguments:
+\begin{itemize}
+\item $x$: the variable you want to visualize
+\item $axes$: a TRUE/FALSE indicator that determines whether or not numbers are shown on the axes
+\item $col$: the color you want the fill inside your boxplot to be; if unspecified, it will be white; must be in quotation marks
+\item $xlab$: the label you would like the x-axis to have; must be in quotation marks
+\item $ylab$: the label you would like the y-axis to have; must be in quotation marks
+\item $xlim$: the range of values you would like the x-axis to have; of the form $c(lower bound, upper bound)$; fairly meaningless for a boxplot
+\item $ylim$: the range of values you would like the y-axis to have; of the form $c(lower bound, upper bound)$; be careful not to specify too much here because you can eliminate data of importance to the boxplot
+\item $main$: the title you would like the whole plot to have; must be in quotation marks
+\end{itemize}
+\begin{centering}
+<<fig.height=4, fig.width=3.5>>=
+## Simplified Figure 1.17
+boxplot(x = frog.altitude.data$clutch.volume, ylab = 'Clutch Volume', axes = TRUE,
+        ylim = range(frog.altitude.data$clutch.volume))
+@
+\end{centering}
+
+\subsubsection{Scatterplots}
+Scatterplots can be used to visualize the relationship between two variables or to visualize just one variable individually.
+
+The command for doing this is \textit{plot()}, and this function takes several arguments:
+\begin{itemize}
+\item $x$: the first variable you want to visualize; \textit{necessary to include}
+\item $y$: the second variable you may want to visualize; included if you want to consider two variables \textit{not necessary to include}
+\item $col$: the color you want your dots on the plot to be; if unspecified, they will be black; must be in quotation marks
+\item $type$: specifies how you want R to plot the data; if unspecified, you will end up with dots (in a scatterplot); other options include $"l"$ for lines between data points
+\item $xlab$: the label you would like the x-axis to have; must be in quotation marks
+\item $ylab$: the label you would like the y-axis to have; must be in quotation marks
+\item $xlim$: the range of values you would like the x-axis to have; of the form $c(lower bound, upper bound)$
+\item $ylim$: the range of values you would like the y-axis to have; of the form $c(lower bound, upper bound)$
+\item $main$: the title you would like the whole plot to have; must be in quotation marks
+\end{itemize}
+
+The \textit{plot} command has an interesting feature that you can either specify your $x$ and $y$ variables by running $plot(x,y)$ or by running $plot(y~x)$.  Either command will give the same result.  Below provides an example of using the \textit{plot} command for one and two variables (corresponds to Figure 1.18 in the text):
+\begin{centering}
+<<fig.height=4, fig.width=4>>=
+# For one variable
+plot(frog.altitude.data$clutch.volume)
+
+## Figure 1.18
+# For two variables,
+plot(frog.altitude.data$clutch.volume~frog.altitude.data$body.size,
+     xlab = "Female Body Size (cm)", ylab = expression("Clutch Volume" ~ (mm^3)))
+@
+\end{centering}
+
+\subsection{Correlation}
+Correlation can be calculated by hand but it's a tedious calculation, so doing it using $R$ is often the best bet.  It can be done with the command \textit{cor()} which takes as its arguments your two variables of interest.  Using the example from the text, we can create Figure 1.22 and calculate the correlation as follows:
+<<fig.height = 3.5, fig.width=3.5>>=
+## Figure 1.22
+x = c(1, 2, 3)
+y = c(5, 4, 0)
+
+plot(x,y)
+cor(x,y)
+@
+
+Figure 1.21 can also be seen with the following with the correlation calculated as stated in the book to be 0.63.  Note that this correlation command contains the argument \textit{use = "complete.obs"}, which simply allows for the correlation calculation by ignoring any NA values in the dataset.
+<<fig.height=5, fig.width=6, tidy=TRUE, tidy.opts=list(width.cutoff=60)>>=
+cor(life.expectancy.income$income, life.expectancy.income$life.expectancy, use = "complete.obs")
+@
+
+\subsection{Transforming Data}
+Transformations of data are often of interest, and performing them in $R$ is quite easy.  The plot below shows the before and after of a log transformation on the \textit{life expectancy-income} data.  The \textit{log} command in $R$ perform a natural log, or ln, on the data, despite being written as log.
+<<fig.height=4, tidy=TRUE, tidy.opts=list(width.cutoff=60)>>=
+## Figure 1.24
+par(mfrow=c(1,2))       ## this line just allows two plots to print at the same time
+hist(life.expectancy.income$income, breaks = 12, xlab = 'Income (USD)',
+         ylab = "Frequency", ylim = c(0, 120), main = "Untransformed")
+
+hist(log(life.expectancy.income$income), breaks = 12, xlab = 'Income (log USD)',
+         ylab = "Frequency", ylim = c(0, 30), main = "Log Transformed")
+@
+
+Figures 1.21 and 1.25 in the text can be seen below next to each other to see how the log transformation changes a scatterplot.  The function \textit{par()} creates partitions in the graphing output.  In this case, we get 1 row and 2 columns, as indicated by \textit{mfrow = c(1,2)}
+<<fig.height=4, tidy=TRUE, tidy.opts=list(width.cutoff=35)>>=
+## Figure 1.21 and Figure 1.25
+par(mfrow=c(1,2))
+plot(life.expectancy.income$income, life.expectancy.income$life.expectancy,
+     ylab = "Life Expectancy (years)", xlab = "Per Capita Income (USD)",
+     main = "Untransformed")
+plot(log(life.expectancy.income$income), log(life.expectancy.income$life.expectancy),
+     ylab = "Life Expectancy (log years)", xlab = "Per Capita Income (log USD)",
+     main = "Transformed")
+@
+
+\section{Categorical Data}
+\subsection{Contingency Tables}
+Shown below, Table 1.26 shows a \textbf{frequency table} for genotypes of the actn3.r577x gene.  As a frequency table, it gives the counts of each genotype within the dataset.
+<<>>=
+## Table 1.26
+addmargins(table(famuss$actn3.r577x))
+@
+Table 1.27 shows a frequency table on two variables, genotype of the actn3.r577x gene and race from the \textit{famuss} dataset.  Using the command \textit{addmargins} here gives us \textbf{marginal totals}. Because this data summarizes two categorical variables, it is called a \textbf{contingency table}.
+<<>>=
+## Table 1.27
+addmargins(table(famuss$race, famuss$actn3.r577x))
+@
+
+If we instead wanted a contingency table with proportions rather than counts, we could do that in one of two ways - either row proportions or column proportions.  Table 1.28 shows the row proportions and the column proportions are calculated just below.
+<<>>=
+## Table 1.28
+row.prop.table = table(famuss$race, famuss$actn3.r577x)[1:5,]
+row.prop.table / rep(rowSums(row.prop.table), 3)
+@
+Alternatively, we could build a similar table but performing column proportions rather than row proportions as seen in Table 1.29:
+<<warning=FALSE>>=
+## Table 1.29
+col.prop.table = table(famuss$race, famuss$actn3.r577x)[1:5,]
+col.prop.table / rep(colSums(col.prop.table), 3)
+@
+
+\subsection{Bar Plots}
+Another way to visualize categorical data is using a \textbf{bar plot}, which can present the data by its categories, and either the count or proportion of occurences within each category.  Note how the \textit{barplot} command takes as its input a table, rather than just a variable.  This is because the data needs to be sorted by its categories before plotting.  We can see Figure 1.30 below which shows two barplots of the same data, sorted on the left by counts and on the right by frequencies.
+<<fig.height=4, tidy=TRUE>>=
+## Figure 1.30
+par(mfrow=c(1,2))
+barplot(table(famuss$actn3.r577x)) ## count barplot
+barplot(table(famuss$actn3.r577x)/sum(table(famuss$actn3.r577x))) 
+    ## frequency barplot
+@
+
+\subsubsection{Segmented Bar Plot}
+A segmented bar plot is a more sophisticated version of the barplots seen above.  The data is now sorted on two categorical variables, so This code is the most sophisticated thus far, so try to as best as possible work through it line by line.
+<<tidy = TRUE, fig.height=5, tidy.opts=list(width.cutoff=60)>>=
+## Figure 1.31a
+# first, create a table of the data that is sorted
+genotype.race = matrix(table(famuss$actn3.r577x, famuss$race), ncol=3, byrow=T)
+
+# second, change the column and row names on the table
+colnames(genotype.race)=c("CC", "CT", "TT")
+rownames(genotype.race)=c("African Am", "Asian", "Caucasian", "Hispanic", "Other")
+
+# third, plot the barplot where colors are specified
+barplot(genotype.race, col=c("grey", "red", "blue", "green", "yellow"), ylim=
+          c(0,300), width=2)
+# lastly, include a legend for intepretation of your plots
+legend("topright", inset=c(.05, 0), fill=c("grey", "red", "blue", "green", "yellow"),
+       legend=rownames(genotype.race))
+@
+
+If we instead wanted to make a \textbf{standardized segmented bar plot}, we could do that by creating a table of proportions (instead of counts) using the command \textit{prop.table}.  This command is similar to the \textit{table} command but it calculates the proportions for you.  The only difference in the following code from the section above is the use of a proportion table in the first step.
+<<tidy = TRUE, fig.height=5, tidy.opts=list(width.cutoff=60)>>=
+## Figure 1.31b
+# first, create table of proportions
+prop.genotype.race <- prop.table(genotype.race, 2)
+
+# second, change the column and row names on the table
+colnames(prop.genotype.race)=c("CC", "CT", "TT")
+rownames(prop.genotype.race)=c("African Am", "Asian", "Caucasian", "Hispanic", "Other")
+
+#second, plot the output
+barplot(prop.genotype.race, col=c("grey", "red", "blue", "green", "yellow"),
+        ylim=c(0, 1.5), width=2)
+
+# lastly, include a legend for intepretation of your plots
+legend("topright", inset=c(0.05, -0.005), fill=c("grey", "red", "blue", "green", "yellow"),
+       legend=rownames(prop.genotype.race), bty = "n")
+@
+\textit{Note:} In the \textit{legend} line, the command  \textit{inset=} controls where on the plot the legend prints out.  Sometimes this specification can be a little bit bizarre so it may require some alteration to find the right spot for the legend.  
+
+If we wanted to reproduce Figure 1.32, where the bars indicate race instead of genotype, we can do the same process as above, with one exception.  In the first step, of creating the table, we must instead put the race variable first as the rows and the gene variable as the columns, as follows:
+<<tidy = TRUE, fig.height=4, tidy.opts=list(width.cutoff=60)>>=
+## Figure 1.32
+# Plotting two graphs next to each other
+par(mfrow=(c(1,2)))
+
+# Setting up the table and changing column/row names
+race.genotype = matrix(table(famuss$race, famuss$actn3.r577x), ncol=5, byrow=T)
+colnames(race.genotype)=c("African Am", "Asian", "Caucasian", "Hispanic", "Other")
+rownames(race.genotype)=c("CC", "CT", "TT")
+
+# Creating segmented bar plot with a legend
+barplot(race.genotype, col=c("blue", "green", "yellow"), ylim=c(0,500), width=2)
+legend("topright", inset=c(0, 0), fill=c("blue", "green", "yellow"), 
+      legend=rownames(race.genotype))
+
+# Creating standardized segmented bar plot with a legend
+prop.race.genotype <- prop.table(race.genotype, 2)
+barplot(prop.race.genotype, col=c("blue", "green", "yellow"), ylim=c(0, 1.5), width=2)
+legend("topright", inset=c(0, 0), fill=c("blue", "green", "yellow"), 
+       legend=rownames(race.genotype))
+@
+
+\subsubsection{Side-by-Side Boxplots}
+With categorical data, you can also create a \textbf{side-by-side boxplot}, as seen in Figure 1.33, which plots the boxplots for corresponding categories on the same plot.  It can be plotted as follows,
+<<tidy=TRUE, fig.height=4, tidy.opts=list(width.cutoff=30)>>=
+## Figure 1.33(a)
+boxplot(famuss$ndrm.ch ~ famuss$actn3.r577x, ylab = "% Change in Non-Dominant Arm Strength", xlab = "Genotype")
+@
+
+Another example of a larger side-by-side boxplot can be seen in Figure 1.34, created as follows,
+<<tidy = TRUE, fig.height=4, tidy.opts=list(width.cutoff=60)>>=
+## Figure 1.34
+boxplot(frog.altitude.data$clutch.volume ~ frog.altitude.data$altitude, xlab = "Clutch Volume", ylab = "Altitude")
+@
+
+\subsubsection{Hollow Histogram}
+Using categorical data, we can also plot histograms for each category on top of each other on one single plot, using a \textbf{hollow histogram}.  This can be done as follows,
+
+<<tidy = TRUE, fig.height = 4>>=
+## Figure 1.33(b)
+hist(famuss$ndrm.ch[famuss$actn3.r577x == "CC"], breaks = 20, border = "blue", xlab = "% Change in Non-Dominant Arm Strength", ylim = c(0,50), xlim = c(0,250))
+hist(famuss$ndrm.ch[famuss$actn3.r577x == "CT"], breaks = 20, border = "green", add = T)
+hist(famuss$ndrm.ch[famuss$actn3.r577x == "TT"], breaks = 20, border = "red", add = T)
+@
+
+\section{Genomic Data}
+<<tidy = TRUE, fig.height = 4, tidy.opts=list(width.cutoff=30)>>=
+## Table 1.36
+subset.golub =  Golub[c(1,2,3,4, 5, 6), c("Samples", "Gender", "cancer", "AFFX.BioB.5.at", "AFFX.BioB.M.at", "AFFX.BioB.3.at")]
+subset.golub
+@
+
+<<tidy = TRUE, fig.height = 4, fig.width = 4>>=
+## Figure 1.37
+boxplot(Golub[,7:9])
+@
+
+
+\end{document}

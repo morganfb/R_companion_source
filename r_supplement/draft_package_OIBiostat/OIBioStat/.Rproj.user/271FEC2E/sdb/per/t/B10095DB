@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\\name{diabetes.cdc.2012}\n\\alias{diabetes.cdc.2012}\n\\docType{data}\n\\title{\nDiabetes CDC Data\n}\n\\description{\n%%  ~~ A concise (1-5 lines) description of the dataset. ~~\nData from 2012\n}\n\\usage{data(diabetes.cdc.2012)}\n\\format{\n  A data frame with 3143 observations on the following 14 variables.\n  \\describe{\n    \\item{\\code{State}}{State}\n%    \\item{\\code{FIPS.Codes}}{a numeric vector}\n    \\item{\\code{County}}{County}\n    \\item{\\code{num.men.diabetes}}{Number of men with diabetes}\n    \\item{\\code{percent.men.diabetes}}{Percent of men who have diabetes}\n    \\item{\\code{num.women.diabetes}}{Number of women with diabetes}\n    \\item{\\code{percent.women.diabetes}}{Percent of women who have diabetes}\n    \\item{\\code{num.men.obese}}{Number of men who are obese}\n    \\item{\\code{percent.men.obese}}{Percent of men who are obese}\n    \\item{\\code{num.women.obese}}{Number of women who are obese}\n    \\item{\\code{percent.women.obese}}{Percent of women who are obese}\n%    \\item{\\code{num.men.inactive.leisure}}{a numeric vector}\n%    \\item{\\code{num.women.inactive.leisure}}{a numeric vector}\n%    \\item{\\code{percent.women.inactive.liesure}}{a numeric vector}\n  }\n}\n\\details{\nNot exactly perfect numbers because the CDC did not document the population size in 2012 and the prevalence data are rounded to the nearest 100,000.\n}\n\\source{\n%%  ~~ reference to a publication or URL from which the data were obtained ~~\n}\n\\references{\n%%  ~~ possibly secondary sources and usages ~~\n}\n\\examples{\n% data(diabetes.cdc.2012)\n% ## maybe str(diabetes.cdc.2012) ; plot(diabetes.cdc.2012) ...\n}\n\\keyword{datasets}\n",
+    "created" : 1455720809655.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1683426897",
+    "id" : "B10095DB",
+    "lastKnownWriteTime" : 1456760401,
+    "last_content_update" : 1456760401796,
+    "path" : "~/OIBioStat/man/diabetes.cdc.2012.Rd",
+    "project_path" : "man/diabetes.cdc.2012.Rd",
+    "properties" : {
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_doc"
+}

@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "install.packages(\"devtools\")\nlibrary(\"devtools\")\ndevtools::install_github(\"klutometis/roxygen\")\nlibrary(roxygen2)\ninstall.packages(\"plyr\")\nlibrary(plyr)\n\n## Starting with Chapter 1\n## loading frog altitude data\nload(\"/Users/morganfbreitmeyer/Dropbox/open_intro/oi_biostat/data_working_dir/data/ch1_intro_oi_biostat/frogs/frog_altitude_in_progress.Rdata\")\nView(frog.altitude)\nkeeps3 = c(\"altitude\", \"latitude\", \"clutch.size\", \"body.size\", \"clutch.volume\", \"egg.size\")\nfrog_altitude_data = frog.altitude[keeps3]\ndevtools::use_data(frog_altitude_data, overwrite = TRUE)\n\n## loading famuss data\nload(\"/Users/morganfbreitmeyer/Dropbox/open_intro/oi_biostat/data_working_dir/data/ch1_intro_oi_biostat/famuss/famuss_09aug2015.Rdata\")\ndevtools::use_data(famuss)\n\n## loading life expectancy data\nload(\"/Users/morganfbreitmeyer/Dropbox/open_intro/oi_biostat/data_working_dir/data/ch1_intro_oi_biostat/life_expectancy/life.expectancy.income.Rdata\")\nkeeps <- c(\"country\",\"income\", \"life.expectancy\")\nlife.expectancy.income = life.expectancy.income[keeps]\ndevtools::use_data(life.expectancy.income, overwrite = TRUE)\n\n## loading leap data\nload(\"/Users/morganfbreitmeyer/Dropbox/open_intro/oi_biostat/data_working_dir/data/ch1_intro_oi_biostat/leap/LEAP_7aug2015.Rdata\")\nLEAP$OFC.outcome.V60[is.na(LEAP$OFC.outcome.V60)] = LEAP$indeterminant.recode[is.na(LEAP$OFC.outcome.V60)]\nkeeps2 = c(\"participant.ID\", \"treatment.group\", \"age.months\", \"sex\", \"primary.ethnicity\", \"overall.V60.outcome\")\nLEAP = LEAP[keeps2]\ndevtools::use_data(LEAP, overwrite = TRUE)\n\n## Chapter 2\n## loading birthweight, gestational age data\nload(\"/Users/morganfbreitmeyer/Dropbox/open_intro/oi_biostat/data_working_dir/data/ch2_prob_oi_biostat/birthwt_gestage/brthwt.gestage.overall.counts.Rdata\")\ndevtools::use_data(brthwt.gestage.overall.counts)\n\n## loading CDC diabetes data\nload(\"/Users/morganfbreitmeyer/Dropbox/open_intro/oi_biostat/data_working_dir/data/ch2_prob_oi_biostat/cdc_diabetes/cdc_diabetes_2012.Rdata\")\ndiabetes.cdc.2012 = rename(diabetes.cdc.2012, c(\"numbe.men.inactive.leisure\" = \"num.men.inactive.leisure\"))\ndevtools::use_data(diabetes.cdc.2012, overwrite = TRUE)\n\n## Chapter 4\n## loading nhanes data\nload(\"/Users/morganfbreitmeyer/Dropbox/open_intro/oi_biostat/data_working_dir/data/ch4_foundinf_oi_biostat/nhanes/NHANES.Rdata\")\ndevtools::use_data(NHANES)\n\n## loading yrbss data\nload(\"/Users/morganfbreitmeyer/Dropbox/open_intro/oi_biostat/data_working_dir/data/ch4_foundinf_oi_biostat/yrbss/yrbss.Rdata\")\ndevtools::use_data(yrbss)\n\ninstall.packages(OIBioStat)\nattach(OIBioStat)\n\ndocument()\ndevtools::document()\n\ndevtools::check()\n\nsetwd(\"..\")\ninstall(\"OIBioStat\")\n",
+    "created" : 1455682687225.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1825685306",
+    "id" : "85581A5F",
+    "lastKnownWriteTime" : 1456764764,
+    "last_content_update" : 1456764764558,
+    "path" : "~/Desktop/School/2016 Spring/Statistics 91r/Adding Data to Package.R",
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

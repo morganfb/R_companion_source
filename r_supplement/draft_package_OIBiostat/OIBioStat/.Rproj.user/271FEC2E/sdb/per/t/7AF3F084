@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\\name{yrbss}\n\\alias{yrbss}\n\\docType{data}\n\\title{\nYouth Risk Behavior Surveillance System (YRBSS)\n}\n\\description{\nThe YRBSS contains surveys conducted from 1991-2013 nationwide for the United States as a whole and in multiple states and districts individually.\n}\n\\usage{data(yrbss)}\n\\format{\n  A data frame with 13583 observations on the following 13 variables.\n  \\describe{\n    \\item{\\code{age}}{Age of participant, ranging from 12 to 18}\n    \\item{\\code{gender}}{Gender of participant, can be \\code{male} or \\code{female}}\n    \\item{\\code{grade}}{Represents grade in high school}\n    \\item{\\code{hispanic}}{Indicates a participant's status as \\code{hispanic} or \\code{not}}\n    \\item{\\code{race}}{Indicates a participant's race}\n    \\item{\\code{height}}{Self reported height in meters}\n    \\item{\\code{weight}}{Self reported weight in kgs}\n    \\item{\\code{helmet_12m}}{During the 12 months preceding the survey, how frequently the participant wore a helmet while riding a bicycle.}\n    \\item{\\code{text_while_driving_30d}}{During the 30 days preceding the survey, how frequently the participant texted or emailed while driving.}\n    \\item{\\code{physically_active_7d}}{Days per week that the participant is physically active}\n    \\item{\\code{hours_tv_per_school_day}}{The average number of hours of TV watched by the participant on a schoolday.}\n    \\item{\\code{strength_training_7d}}{Out of the 7 days preceding the survey, how many days the participant did exercises to strengthen or tone their muscles (such as push-ups, sit-ups, or weight lifting).}\n    \\item{\\code{school_night_hours_sleep}}{On an average school night, the number of hours of sleep the participant gets.}\n  }\n}\n\\details{\n%%  ~~ If necessary, more details than the __description__ above ~~\n}\n\\source{\n%%  ~~ reference to a publication or URL from which the data were obtained ~~\nThe data is provided by the CDC at http://www.cdc.gov/healthyyouth/data/yrbs/index.htm.\n}\n\\references{\n%%  ~~ possibly secondary sources and usages ~~\n}\n\\examples{\n% data(yrbss)\n% ## maybe str(yrbss) ; plot(yrbss) ...\n}\n\\keyword{datasets}\n",
+    "created" : 1455720909491.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "188614007",
+    "id" : "7AF3F084",
+    "lastKnownWriteTime" : 1456170726,
+    "last_content_update" : 1456170726828,
+    "path" : "~/OIBioStat/man/yrbss.Rd",
+    "project_path" : "man/yrbss.Rd",
+    "properties" : {
+    },
+    "relative_order" : 11,
+    "source_on_save" : true,
+    "source_window" : "",
+    "type" : "r_doc"
+}

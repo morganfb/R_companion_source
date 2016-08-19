@@ -1,0 +1,28 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1456168186887.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "FB9DF7D3",
+    "lastKnownWriteTime" : 4380029696,
+    "last_content_update" : 1456168186887,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "980rbi454i",
+        "caption" : "diabetes.cdc.2012",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=diabetes.cdc.2012&cache_key=980rbi454i",
+        "displayedObservations" : "3143",
+        "environment" : "",
+        "object" : "diabetes.cdc.2012",
+        "totalObservations" : "3143",
+        "variables" : "14"
+    },
+    "relative_order" : 12,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

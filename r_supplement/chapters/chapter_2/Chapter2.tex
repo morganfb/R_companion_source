@@ -1,0 +1,302 @@
+\documentclass[11pt]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+
+\usepackage[margin=1in,bottom=.5in,includehead,includefoot]{geometry}
+\usepackage{hyperref}
+\usepackage{alltt}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+\title{Open Intro Biostat R Companion: \\ Chapter 2}
+\author{Morgan F. Breitmeyer}
+\date{}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\begin{document}
+ 
+\maketitle
+ 
+\tableofcontents
+\vspace{1cm}
+
+Chapter 2 explains probability, how its used, and what questions it can be used to answer.  In this chapter, we will go through some examples of how \texttt{R} can be used to solve propability problems.  Once again, we will see that there are several different methods that can be used to answer the same question.  
+
+We will focus on \textbf{conditional probability} here as these are the questions you would most commonly use \texttt{R} to solve.  To review, a conditional probability is the probability of an outcome given prior knowledge about another factor or condition.  For example, we could ask what is the conditional probability of an individual being male \textit{given} they have brown hair.  \textbf{Joint probability} is the probability of two events occuring simultaneously.  Referring back to our example, the joint probability would be the probability of an individual being male \textit{and} having brown hair.  We could also consider the \textbf{marginal probability}, or the probability of a single event occuring, such as an individual being male.  Another marginal probability would be the probability of an individual having brown hair.  
+
+The mathematical definition for conditional probability is, for events \textit{A} and \textit{B}, the probability of \textit{A} given \textit{B} is computed as 
+$$ P(A|B) = \frac{P(A \textnormal{ and } B)}{P(B)} $$
+
+\section{Case Study on Conditional Probability}
+In order to demonstrate the various techniques which can be used to solve a conditional probability question in R, we are going to consider a case study of cystic fibrosis.  The prevalence of cystic fibrosis is considered to be 1 in 6000 people.  A test used to screen for cystic fibrosis has a \textbf{sensitivity} of 0.950, meaning that it correctly gives a positive test result in a patient with the disease 95\% of the time.  This can also be referred to as the \textbf{true positive rate}.  Additionally, the test has a \textbf{specificity} of 0.99897, meaning that it correctly gives a negative test result in a patient without the disease 99.897\% of the time.  This can be referred to as the \textbf{true negative rate}.  Using this information, we want to determine the \textbf{positive predictive value} of the test, or the probability of a patient having the disease given their test result is positive.  
+
+
+
+\section{Method 1 -- Bayes Theorem}
+To solve this problem using Bayes, we would want to define two sets of events: 
+\begin{itemize}
+\item $T+$: the test returning a positive result 
+\item $T-$: the test returning a negative result 
+\item $D+$: the patient having cystic fibrosis 
+\item $D-$: the patient not having cystic fibrosis 
+\end{itemize}
+
+We want to find the positive predictive value, or $P(D+|T+)$, and this can be done using Bayes theorem as follows, 
+$$ P(D+|T+) = \frac{P(T+|D+)P(D+)}{P(T+)} = \frac{(\textnormal{sensitivity})^*(\textnormal{prevalence})}{(\textnormal{sensitivity})^*(\textnormal{prevalence})+(1-\textnormal{specificity})^*(1-\textnormal{prevalence})}$$ 
+
+One of the handy features of $R$ is that it can be used as a calculator, and we can use it to solve the above equation.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{prevalence} \hlkwb{=} \hlnum{1}\hlopt{/}\hlnum{6000}
+\hlstd{sensitivity} \hlkwb{=} \hlnum{0.950}
+\hlstd{specificity} \hlkwb{=} \hlnum{0.99897}
+
+\hlstd{ppv.bayes} \hlkwb{=} \hlstd{(sensitivity}\hlopt{*}\hlstd{prevalence)}\hlopt{/}
+  \hlstd{((sensitivity}\hlopt{*}\hlstd{prevalence)}\hlopt{+}\hlstd{((}\hlnum{1}\hlopt{-}\hlstd{specificity)}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{prevalence)))}
+\hlstd{ppv.bayes}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1332591
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\section{Method 2 -- Using a Table}
+The second technique which can be used to solve this question is by filling a table with a figurative population of 100,000 people and calculating the PPV using this.  The table would look like this
+
+\begin{center}
+\begin{tabular}{|l|c|c|r|}
+\hline 
+& D+ & D- & Total\\ 
+\hline
+T+ & & & \\ 
+\hline
+T- & & & \\ 
+\hline 
+Total & & & 10,000 \\ 
+\hline 
+\end{tabular} 
+\end{center} 
+
+The first step would be to calculate the expected number of disease cases and non-diseases cases in the population, which would correspond to the following calculation
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{population.size} \hlkwb{=} \hlnum{100000}
+\hlstd{expected.cases} \hlkwb{=} \hlstd{prevalence} \hlopt{*} \hlstd{population.size}
+\hlstd{expected.cases}
+\end{alltt}
+\begin{verbatim}
+## [1] 16.66667
+\end{verbatim}
+\begin{alltt}
+\hlstd{expected.noncases} \hlkwb{=} \hlstd{(}\hlnum{1} \hlopt{-} \hlstd{prevalence)} \hlopt{*} \hlstd{population.size}
+\hlstd{expected.noncases}
+\end{alltt}
+\begin{verbatim}
+## [1] 99983.33
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+And with this calculation, we can update our table to this
+\begin{center}
+\begin{tabular}{|l|c|c|r|}
+\hline 
+& D+ & D- & Total\\ 
+\hline
+T+ & & & \\ 
+\hline
+T- & & & \\ 
+\hline 
+Total & 16.7 & 99983.3 & 10,000 \\ 
+\hline 
+\end{tabular} 
+\end{center}
+
+The next step is to calculate the expected number of cases of true positives and the expected number of cases of false positives as follows.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{expected.true.positives} \hlkwb{=} \hlstd{expected.cases} \hlopt{*} \hlstd{sensitivity}
+\hlstd{expected.true.positives}
+\end{alltt}
+\begin{verbatim}
+## [1] 15.83333
+\end{verbatim}
+\begin{alltt}
+\hlstd{expected.false.positives} \hlkwb{=} \hlstd{expected.noncases} \hlopt{*} \hlstd{(}\hlnum{1} \hlopt{-} \hlstd{specificity)}
+\hlstd{expected.false.positives}
+\end{alltt}
+\begin{verbatim}
+## [1] 102.9828
+\end{verbatim}
+\begin{alltt}
+\hlstd{total.expected.positives} \hlkwb{=} \hlstd{expected.true.positives} \hlopt{+} \hlstd{expected.false.positives}
+\hlstd{total.expected.positives}
+\end{alltt}
+\begin{verbatim}
+## [1] 118.8162
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+The table can again be updated to the following, 
+\begin{center}
+\begin{tabular}{|l|c|c|r|}
+\hline 
+& D+ & D- & Total\\ 
+\hline
+T+ & 15.83 & 102.98 & 118.8\\ 
+\hline
+T- & & & \\ 
+\hline 
+Total & 16.7 & 99983.3 & 10,000 \\ 
+\hline 
+\end{tabular} 
+\end{center}
+
+The final step is to calculate the positive predictive value, as follows 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{ppv.table} \hlkwb{=} \hlstd{expected.true.positives}\hlopt{/}\hlstd{total.expected.positives}
+\hlstd{ppv.table}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1332591
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+We see that this result is the same as in the first method - success!  This process of using a table is a great way to visualize this process, but it is not necessary to create the table as you go.  Instead, this process can be done just using the $R$ calculations that are seen above.  
+
+\section{Method 3 -- Simulation}
+The final method for solving this conditional probability problem is called \textbf{simulation} and involves the process of simulating 100,000 individuals who each have the same probability of having the disease.  We then simulate a test performed on each of them, keeping the known specificity and sensitivity in mind.  This will give us an imaginary dataset of 100,000 individuals from which we can solve for the conditional probability.  
+
+The first step in this process is to set some defined parameters as follows.  Note that the last line "sets a seed" for our simulation.  To perform the simulation, we will be using random number generation, and this line guarantees that we are getting the same set of "random" numbers everytime we perform the simulation.  It does not affect the results at all, but rather is just to compare work between colleagues or compare against a previous simulation. Any integer can be put into the seed command.   
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{#parameters}
+\hlstd{prevalence} \hlkwb{=} \hlnum{1}\hlopt{/}\hlnum{6000}
+\hlstd{sensitivity} \hlkwb{=} \hlnum{0.950}
+\hlstd{specificity} \hlkwb{=} \hlnum{0.99897}
+\hlstd{population.size} \hlkwb{=} \hlnum{100000}
+\hlkwd{set.seed}\hlstd{(}\hlnum{8}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Next, we must create a space where we can store the information about our simulated individuals.  Imagine as if you wrote on a sheet of paper the numbers 1 through 100,000 and left a blank line next to each number.  You could then go back and fill in each line with the information you wanted to.  We can create two empty lists as follows, one for the patient disease status and one for their test outcomes.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{disease.presence} \hlkwb{=} \hlkwd{vector}\hlstd{(}\hlstr{"numeric"}\hlstd{, population.size)}
+\hlstd{test.outcome} \hlkwb{=} \hlkwd{vector}\hlstd{(}\hlstr{"numeric"}\hlstd{, population.size)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Next, we must determine whether each individual in our simulated population has the disease or not.  We know the prevalence of the disease, so for each individual we can say that $P(D+) = prevalence$.  For the data storage, we will keep track of diseased individuals as 1 and non-diseased individuals as 0.  The following line determines the disease status by either giving outcomes of 0 or 1, as indicated by the command $x = c(0,1)$. The next element of size dictates how many individuals the $sample$ should consider, in this case 100,000 individuals.  Next, we dictate the probability of each outcome in our list of possible outcomes $x$.  This prob element must have the same number of possibilities as $x$ and each element corresponds to the same element in $x$.  We see that for each individual, the probability of no disease, or 0, will be $1-prevalence$ and the probability of disease, or 1, will be $prevalence$.  The last element of this command is "replace = TRUE", and this commands tells the computer whether or not to return a possible outcome to the selection options after it has been picked once.  For example, if the first person has no disease, i.e. they have outcome 0, this command says to put the 0 back in the options list, $x$, for the next person to possibly have.  Essentially, this just means that values in $x$ can be repeated.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{disease.status} \hlkwb{=} \hlkwd{sample}\hlstd{(}\hlkwc{x} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{),} \hlkwc{size} \hlstd{= population.size,} \hlkwc{prob}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{prevalence,}
+              \hlstd{prevalence),} \hlkwc{replace} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Next, we perform our simulation using a process called \textbf{looping}.  Looping is the idea that we want to perform the same set of steps for each individual.  This set of steps includes looking at the disease status for each individual and if they are diseased, considering the sensitivity to determine their test result, or if they are not diseased, considering the specificity to determine their test result.  This point illustrates a key idea of why we use simulation studies.  In a real life study, when a test is performed, the true disease status is not actually known, which is why you are performing the test.  However, in this case, we can simulate true disease status as if we were omnipotent, and then, see how the test would react based on that.
+
+There are a lot of commands in here, so let's try to break them down a bit.  The first one we see is our loop, the command $for$.  This command simply takes the numbers 1 through 100,000 as dictated by the code "1:population.size" and scrolls through them one at a time.  It starts by setting a variable $ii$ equal to 1, then all of the code inside the brackets is executed, then it sets $ii$ equal to the next number and so forth.  Within this loop are two $if$ statements, which operate by checking if the code inside the parentheses is true and if so, performing the code inside the brackets.  If not, the code inside the brackets is skipped over.  In this case, we see the code inside the $if$ parentheses says $disease.status[ii] ==1$, and this is testing whether or not the disease status of the $ii$th person is equal equal to 1.  The two equals signs here imply the question of whether or not the left hand side is equal to the right hand side.  The next $if$ statement does the opposite by testing whether or not an individual is not diseased, i.e. having disease status of 0.  Inside the $if$ statements, we see a similar $sample$ command as above which uses probabilities to determine an outcome. 
+
+Note that to run the below code, you must run the entire section from $for$ to the last bracket.  This can be done by selecting all of the lines and selecting run, or by hitting command enter on each line individually all the way through.  $R$ does not understand how to run a loop unless it has the entire loop.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwa{for} \hlstd{(ii} \hlkwa{in} \hlnum{1}\hlopt{:}\hlstd{population.size) \{}
+  \hlkwa{if}\hlstd{(disease.status[ii]} \hlopt{==} \hlnum{1}\hlstd{) \{}
+    \hlstd{test.outcome[ii]} \hlkwb{=} \hlkwd{sample}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{),} \hlkwc{size}\hlstd{=}\hlnum{1}\hlstd{,}
+                                   \hlkwc{prob} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1} \hlopt{-} \hlstd{sensitivity, sensitivity))\}}
+  \hlkwa{if}\hlstd{(disease.status[ii]} \hlopt{==} \hlnum{0}\hlstd{) \{}
+   \hlstd{test.outcome[ii]} \hlkwb{=} \hlkwd{sample}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{),} \hlkwc{size}\hlstd{=}\hlnum{1}\hlstd{,}
+                                   \hlkwc{prob} \hlstd{=} \hlkwd{c}\hlstd{(specificity,} \hlnum{1} \hlopt{-} \hlstd{specificity))\}}
+\hlstd{\}}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+The final step is to calculate the ppv as we have been doing so far.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## count the total number of people with disease }
+\hlstd{num.disease} \hlkwb{=} \hlkwd{sum}\hlstd{(disease.status)}
+\hlcom{## count the total number of positive tests }
+\hlstd{num.pos.test} \hlkwb{=} \hlkwd{sum}\hlstd{(test.outcome)}
+\hlcom{## identify which individuals have the disease}
+\hlstd{d} \hlkwb{=} \hlstd{(disease.status} \hlopt{==} \hlnum{1}\hlstd{)}
+\hlcom{## identify how many positive tests match with diseased individuals }
+\hlstd{num.true.pos} \hlkwb{=} \hlkwd{sum}\hlstd{(test.outcome[d])}
+\hlcom{## calculate ppv }
+\hlstd{ppv.sim} \hlkwb{=} \hlstd{num.true.pos}\hlopt{/}\hlstd{num.pos.test}
+\hlstd{ppv.sim}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1367521
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\end{document}

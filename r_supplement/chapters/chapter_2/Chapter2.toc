@@ -1,0 +1,4 @@
+\contentsline {section}{\numberline {1}Case Study on Conditional Probability}{1}{section.1}
+\contentsline {section}{\numberline {2}Method 1 -- Bayes Theorem}{2}{section.2}
+\contentsline {section}{\numberline {3}Method 2 -- Using a Table}{2}{section.3}
+\contentsline {section}{\numberline {4}Method 3 -- Simulation}{4}{section.4}

@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\\name{life.expectancy.income}\n\\alias{life.expectancy.income}\n\\docType{data}\n\\title{\nLife Expectancy and Income\n}\n\\description{\n%%  ~~ A concise (1-5 lines) description of the dataset. ~~\nA dataset that contains life expectancy and annual per capita income for 248 countries in 2012.\n}\n\\usage{data(life.expectancy.income)}\n\\format{\n  A data frame with 248 observations on the following 4 variables.\n  \\describe{\n    \\item{\\code{country}}{Country}\n    \\item{\\code{income}}{Annual per capita income}\n    \\item{\\code{life.expectancy}}{Average Life Expectancy}\n  }\n}\n\\details{\n%%  ~~ If necessary, more details than the __description__ above ~~\n}\n\\source{\n%%  ~~ reference to a publication or URL from which the data were obtained ~~\n}\n\\references{\n%%  ~~ possibly secondary sources and usages ~~\n}\n\\examples{\n%% data(life.expectancy.income)\n%% ## maybe str(life.expectancy.income) ; plot(life.expectancy.income) ...\n}\n\\keyword{datasets}\n",
+    "created" : 1455720844815.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2055200353",
+    "id" : "EF1C3D45",
+    "lastKnownWriteTime" : 1456760410,
+    "last_content_update" : 1456760410332,
+    "path" : "~/OIBioStat/man/life.expectancy.income.Rd",
+    "project_path" : "man/life.expectancy.income.Rd",
+    "properties" : {
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_doc"
+}
