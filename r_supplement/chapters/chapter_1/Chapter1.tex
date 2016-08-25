@@ -56,20 +56,33 @@
 \pagestyle{fancy}
 \fancyhf{}
 
+%comment these lines out to revert to default font
+\usepackage{kpfonts}
+\usepackage[T1]{fontenc}
+\usepackage{inconsolata}
+
+\def\labelitemi{--}
+
 \title{Open Intro Biostat R Companion: \\ Chapter 1}
 \author{Morgan F. Breitmeyer}
 \date{}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 
-\maketitle
+%%JV: apparently this is only needed when using sweave instead of knitr
+%\SweaveOpts{concordance=TRUE}
+
+%\maketitle
 
 \tableofcontents
 
-\vspace{1cm}
-This document is intended to be a companion source to the textbook \textit{Introductory Statistics for the Life and Biomedical Sciences} that goes through all of the $R$ code and operations seen in the text.
+%JV: Will eventually need a longer introduction with some details about downloading R, R Studio, etc. Also clarify the relationship between what OI Biostat shows vs. this book (e.g., difference between figures)
 
-We have created a package that stores all of the datasets seen in the text.  You can download the package using the following command:
+\vspace{1cm}
+This text is a companion to \textit{Introductory Statistics for the Life and Biomedical Sciences}; while the main text focuses on statistical concepts and ideas, this supplement provides details about how to use the statistical computing language \textsf{R}.
+
+All the datasets used in the text can be accessed by downloading the OIBiostat package from \textsf{R}. Run the following command to download the package:
+
 %% These commands aren't going to work until we have uploaded the package to CRAN. Just skip it for now and require below.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -79,7 +92,8 @@ We have created a package that stores all of the datasets seen in the text.  You
 \end{kframe}
 \end{knitrout}
 
-The above command only needs to be run once, as after that, the package will be in your computer.  However, each time you want to use the package, you must alert $R$ using the following command:
+The above command only needs to be run once. Each time a dataset in the package is needed, run the following command: 
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -88,10 +102,13 @@ The above command only needs to be run once, as after that, the package will be 
 \end{kframe}
 \end{knitrout}
 
-\section{Case study: preventing peanut allergies}
-%% Perhaps make a preface. Also consider a chapter 0 with basics of R and maybe how to download it?
+%%% start of Chapter 1
 
-The first dataset encountered in the text is from the ``Learning Early About Peanut Allergy" (LEAP) study.  The dataset contains the results of a study conducted in 2015, which was reported in the \textit{New England Journal of Medicine.}  There are several basic things we can do to learn about our dataset.  Firstly, we can see the help files that come with it, using the following command:
+This chapter introduces basic commands for manipulating datasets, including how to calculate numerical summaries, create tables from data, and make graphical plots. 
+
+\section{Case study: preventing peanut allergies}
+
+The \textt{LEAP} dataset contains the results of the "Learning Early About Peanut Allergy" (LEAP) study, an experiment conducted to assess whether early exposure to peanut products reduces the probability of peanut allergies developing. To access the documentation associated with the dataset, run the following command: 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -100,13 +117,19 @@ The first dataset encountered in the text is from the ``Learning Early About Pea
 \end{alltt}
 \end{kframe}
 \end{knitrout}
-Running this, you should see a file appear, which contains several useful pieces of information:
+
+A file will appear in the Help pane that provides some basic information about the dataset:
+
 \begin{itemize}
-\item \textbf{Description:} This is a very short description of the dataset.  It typically contains a short overview of what is contained, but few details.
-\item \textbf{Format:} This is typically the most useful section of the help file.  It contains the names and descriptions of every variable in the dataset.  It should contain information such as the units and the type of variable seen.  A variable can take two main types: a \textit{factor} meaning it can be one of several set categories which do not have quantitative meaning (such as male and female or racial identification) or a \textit{number} meaning the variable can take on a range of quantitative values, which typically have some sort of meaning (such as height, weight, or frequency).
-\item \textbf{Details:} This section is an extension of the Description section seen at the beginning of the help file.  It will typically offer more details about where the data came from and its previous or intended uses.
+\item \textbf{Description:} A general overview of the dataset. 
+\item \textbf{Usage:} Instructions for how to load the dataset. 
+\item \textbf{Format:} The names and descriptions of each variable in the dataset, including information about variable type and measurement units.
+\item \textbf{Details:} Additional details about the conditions under which the data were collected.
+\item \textbf{Source}: Information about where the data originates from.
 \end{itemize}
-The next important thing to know about datasets is how to take a look at the dataset itself.  The simplest way to do this is as follows:
+
+To view the dataset itself, run:
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -114,31 +137,28 @@ The next important thing to know about datasets is how to take a look at the dat
 \end{alltt}
 \end{kframe}
 \end{knitrout}
-This command should cause a new window to pop up that shows you the whole dataset.  Here you can see the variable names you saw in your help file across the top as the names of the columns.  Also, you can see the entries in the dataset, as the various values within the rows and columns.  Note that the farthest left column should show what are called indeces, these are computer generated values that allow you to access specific rows in the dataset, but are not meaningful values in the dataset.  It is important to note that these indeces typically have no meaning that corresponds with the data, but are very useful for working with the data.
 
-Another simple way to view a small portion of the data is as follows:
+In the main console pane, a window will appear that shows the entire dataset. The variable names are displayed across the top, as the names of the columns. Data for each case in the study are contained within the rows. Note that the farthest left column shows the \textbf{indices}, which are computer-generated values that allow specific rows in the dataset to be accessed. These can be used to view a specific portion of the data.
+
+For example, to print out data contained in the first 5 rows and first 3 columns of the data, use the following syntax:
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{LEAP[}\hlnum{1}\hlopt{:}\hlnum{5}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{6}\hlstd{]}
+\hlstd{LEAP[}\hlnum{1}\hlopt{:}\hlnum{5}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{3}\hlstd{]}
 \end{alltt}
 \begin{verbatim}
-##   participant.ID    treatment.group age.months    sex primary.ethnicity
-## 1    LEAP_100522 Peanut Consumption     6.0780 Female             Black
-## 2    LEAP_103358 Peanut Consumption     7.5893 Female             White
-## 3    LEAP_105069   Peanut Avoidance     5.9795   Male             White
-## 4    LEAP_105328 Peanut Consumption     7.0308 Female             White
-## 5    LEAP_106377   Peanut Avoidance     6.4066   Male             White
-##   overall.V60.outcome
-## 1            PASS OFC
-## 2            PASS OFC
-## 3            PASS OFC
-## 4            PASS OFC
-## 5            PASS OFC
+##   participant.ID    treatment.group age.months
+## 1    LEAP_100522 Peanut Consumption     6.0780
+## 2    LEAP_103358 Peanut Consumption     7.5893
+## 3    LEAP_105069   Peanut Avoidance     5.9795
+## 4    LEAP_105328 Peanut Consumption     7.0308
+## 5    LEAP_106377   Peanut Avoidance     6.4066
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-This command will print out in the console the first 5 rows of the data.  The bracket notation above after the dataset name implies location, so you are telling $R$ at what location you would like to look.  The notation here is \textit{dataset[rows,columns]}, so the 1:5 dictates the first 5 rows and the 1:6 dictates the first 6 columns.  You can use this notation to access any combination of rows and columns in the dataset that you wish.  If you wanted to tell $R$ to take all the columns, but only the first five rows you could do that with the following:
+
+The bracket notation after the dataset name implies location; the syntax \texttt{dataset[rows,columns]} specifies rows 1 through 5 and columns 1 through 6. To access only the first 5 rows, but all the columns, leave an empty space where the columns would usually be specified:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -162,15 +182,16 @@ This command will print out in the console the first 5 rows of the data.  The br
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-This output actually gives the same as the above command, but with a different command.  This is a common theme in $R$ - there are multiple ways to do everything.
 
-The final and most complex way to look at part of the data can be seen below and in Table 1.1 in the text. In this case, rather than doing a list of numbers sequentially, we create a list using the command $c()$ which binds the values inside the parentheses together into a list.  We can see the command below has first a list of row indexes (numbers as described above) and then a list of column names.
+Alternatively, since there are 6 columns in the dataset, the command \texttt{LEAP[1:5,1:6]} would also achieve the same result. This is a common theme in \textsf{R} -- there can be several ways to accomplish a desired result. 
+
+\textit{OI Biostat} Table 1.1 shows the participant ID, treatment group, and overall outcome for five patients. It is not specified in the main text, but the data are specifically from rows 1, 2, 3, 529, and 530. The command \texttt{c()} can be used to bind the row numbers into a list, as well as to create a list of the desired columns. Columns can be referred to by name, instead of by number:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Table 1.1}
-\hlstd{LEAP[}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{529}\hlstd{,} \hlnum{530}\hlstd{),}\hlkwd{c}\hlstd{(}\hlstr{"participant.ID"}\hlstd{,} \hlstr{"treatment.group"}\hlstd{,}
+\hlcom{## OI Biostat Table 1.1}
+\hlstd{LEAP[}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{,} \hlnum{529}\hlstd{,} \hlnum{530}\hlstd{),}\hlkwd{c}\hlstd{(}\hlstr{"participant.ID"}\hlstd{,} \hlstr{"treatment.group"}\hlstd{,}
                          \hlstr{"overall.V60.outcome"}\hlstd{)]}
 \end{alltt}
 \begin{verbatim}
@@ -178,13 +199,14 @@ The final and most complex way to look at part of the data can be seen below and
 ## 1      LEAP_100522 Peanut Consumption            PASS OFC
 ## 2      LEAP_103358 Peanut Consumption            PASS OFC
 ## 3      LEAP_105069   Peanut Avoidance            PASS OFC
-## 639    LEAP_994047   Peanut Avoidance            PASS OFC
-## 640    LEAP_997608 Peanut Consumption            PASS OFC
+## 529    LEAP_994047   Peanut Avoidance            PASS OFC
+## 530    LEAP_997608 Peanut Consumption            PASS OFC
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
 
-Another good way to visualize data is using a table, which summarizes the data using two variables, one on each axis, and then provides the number of counts matching the varaible categories.  We can see this with the below command, which corresponds to Table 1.2 in the text.  Using the \textit{table} command, the first variable put in goes to the x-axis (meaning the row names) and the second variable goes to the y-axis (meaning the column names).  The addition of the \textit{addmargins()} command prints the sums of the rows and columns on the sides of the table as seen below,
+Two-way summary tables organize the data according to two variables and display the number of counts matching each combination of variable categories. The following code corresponds to \textit{OI~Biostat} Table~1.2, which groups participants into categories based on treatment group and overall outcome. In the \texttt{table()} command, the first variable specifies the rows and the second variable specifies the columns. The addition of the \texttt{addmargins()} command prints the sums of the rows and columns on the sides of the table.
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -212,13 +234,17 @@ Another good way to visualize data is using a table, which summarizes the data u
 
 
 \section{Data Basics}
-We can partition part of the entire data to make what is called a dataframe.  We do this as follows below, where the brackets again indicate the location and the values inside these brackets indicate rows 1-3 and 150 and all columns for those rows.  This output corresponds to Table 1.3 in the text.  By separating this part of the dataframe as its own variable, here called \textit{data.matrix}, we can then call this specific part of the data for later operations.
+
+Entire datasets can be partitioned into data frames using bracket notation. For example, \textit{OI Biostat} Table 1.3 shows a data frame consisting of rows 1-3 and 150 (and all columns) from the \texttt{frog.altitude} dataset. The data frame can then be given a specific name, such as \texttt{frog.df}, and directly called on for later operations.
+
+%%JV: order of variables should be the same between companion and oi biostat
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{## Table 1.3}
-\hlstd{data.matrix} \hlkwb{=} \hlstd{frog.altitude.data[}\hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{3}\hlstd{,} \hlnum{150}\hlstd{),]}
-\hlstd{data.matrix}
+\hlstd{frog.df} \hlkwb{=} \hlstd{frog.altitude.data[}\hlkwd{c}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{3}\hlstd{,} \hlnum{150}\hlstd{),]}
+\hlstd{frog.df}
 \end{alltt}
 \begin{verbatim}
 ##     altitude latitude clutch.size body.size clutch.volume egg.size
@@ -229,7 +255,9 @@ We can partition part of the entire data to make what is called a dataframe.  We
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-We can perform a similar operation on the \textit{famuss} data to get Table 1.5 in the text:
+
+Similarly, matrix notation can be used to create \textit{OI Biostat} Table 1.5.
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -238,11 +266,11 @@ We can perform a similar operation on the \textit{famuss} data to get Table 1.5 
                        \hlstr{"ndrm.ch"}\hlstd{)]}
 \end{alltt}
 \begin{verbatim}
-##         sex age      race height weight actn3.r577x ndrm.ch
-## 1    Female  27 Caucasian   65.0    199          CC    40.0
-## 2      Male  36 Caucasian   71.7    189          CT    25.0
-## 3    Female  24 Caucasian   65.0    134          CT    40.0
-## 1348 Female  30 Caucasian   64.0    134          CC    43.8
+##        sex age      race height weight actn3.r577x ndrm.ch
+## 1   Female  27 Caucasian   65.0    199          CC    40.0
+## 2     Male  36 Caucasian   71.7    189          CT    25.0
+## 3   Female  24 Caucasian   65.0    134          CT    40.0
+## 595 Female  30 Caucasian   64.0    134          CC    43.8
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -250,137 +278,7 @@ We can perform a similar operation on the \textit{famuss} data to get Table 1.5 
 \stepcounter{section}
 \section{Numerical Data}
 
-Now that we know how to look at the data itself, we may want to consider some methods to numerically summarize the data.  Doing this, we can get a good idea of the patterns seen in the data with just a few key values.  Each of these values can be calculated by hand using a mathematical formula or in $R$ using a function which calculates the value for you.
-
-\subsection{Measures of Center -- Mean and Median}
-The first numerical summary value we will consider is the \textbf{mean}, which provides the average value of the data.  The mathematical formula to do this by hand is
-$$ \bar{X} = \frac{X_1 + X_2 + \cdots + X_n}{n}$$
-where $n$ is the number of $X$ observations in the data.  We can perform this calculation in $R$ with the following.
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{## Solving by hand}
-\hlcom{# First solve for n - the number of observations in the data}
-\hlstd{n} \hlkwb{=} \hlkwd{length}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
-\hlstd{n}
-\end{alltt}
-\begin{verbatim}
-## [1] 431
-\end{verbatim}
-\begin{alltt}
-\hlstd{x.bar.h} \hlkwb{=} \hlkwd{sum}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}\hlopt{/}\hlstd{n}
-\hlstd{x.bar.h}
-\end{alltt}
-\begin{verbatim}
-## [1] 882.474
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-
-Alternatively, we can use an $R$ provided function that will automatically calculate this value with no work on our part, as follows:
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{## Compare to Using R function}
-\hlstd{x.bar.r} \hlkwb{=} \hlkwd{mean}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
-\hlstd{x.bar.r}
-\end{alltt}
-\begin{verbatim}
-## [1] 882.474
-\end{verbatim}
-\begin{alltt}
-\hlcom{## We can also round to get the exact values seen in text}
-\hlstd{x.bar.rounded} \hlkwb{=} \hlkwd{round}\hlstd{(x.bar.r,} \hlnum{1}\hlstd{)}
-\hlstd{x.bar.rounded}
-\end{alltt}
-\begin{verbatim}
-## [1] 882.5
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-
-Finally, we could also consider getting the \textbf{median} value of the dataset, which is the center value in the data.  You could think of it as the observation $X_{n/2}$, but the best way to obtain this value is using the following $R$ function:
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{median}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
-\end{alltt}
-\begin{verbatim}
-## [1] 831.7638
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-
-\subsection{Measures of Spread -- Standard Deviation and Variance}
-Now that we have an idea of the center of the data, it is of interest to know how the data spreads away from that center.  This is where the \textbf{standard deviation} comes in.  The \textbf{variance} is another measure of spread and is simply equal to the square of the standard deviation.
-To calculate the variance, you can follow a few steps:
-\begin{enumerate}
-\item Obtain the deviation of each data point from the mean, i.e. $x_i - \bar{x}$
-\item Square each of these deviations, i.e. $(x_i - \bar{x})^2$
-\item Sum all of the squares, i.e. $\sum_{i=1}^n (x_i - \bar{x})^2$
-\item To obtain the final value for variance, divide this sum by the number of observations minus 1, $n-1$, i.e. $(\frac{1}{n-1})\sum_{i=1}^n (x_i - \bar{x})^2$
-\item To obtain the standard deviation, take the square root of the variance, i.e $\sqrt{(\frac{1}{n-1})\sum_{i=1}^n (x_i - \bar{x})^2}$
-\end{enumerate}
-We go through these steps by hand here and compare to the $R$ function's output.
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{## Looking at a few sample values from text}
-\hlstd{frog.altitude.data}\hlopt{$}\hlstd{clutch.volume[}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{431}\hlstd{)]}\hlopt{-}\hlstd{x.bar.r}
-\end{alltt}
-\begin{verbatim}
-## [1] -704.64604 -625.43440 -731.11786   50.78032
-\end{verbatim}
-\begin{alltt}
-\hlcom{## Calculating variance by hand}
-\hlcom{# Step 1: calculating all deviations}
-\hlstd{diffs} \hlkwb{=} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{clutch.volume}\hlopt{-}\hlstd{x.bar.r}
-
-\hlcom{# Steps 2-4:}
-\hlstd{variance} \hlkwb{=} \hlkwd{sum}\hlstd{(diffs}\hlopt{^}\hlnum{2}\hlstd{)}\hlopt{/}\hlstd{(n}\hlopt{-}\hlnum{1}\hlstd{)}
-\hlstd{variance}
-\end{alltt}
-\begin{verbatim}
-## [1] 143680.9
-\end{verbatim}
-\begin{alltt}
-\hlcom{## Comparing to the R function's value}
-\hlkwd{var}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
-\end{alltt}
-\begin{verbatim}
-## [1] 143680.9
-\end{verbatim}
-\begin{alltt}
-\hlcom{## Step 5: obtaining standard deviation}
-\hlstd{stand.dev} \hlkwb{=} \hlkwd{sqrt}\hlstd{(variance)}
-\hlstd{stand.dev}
-\end{alltt}
-\begin{verbatim}
-## [1] 379.0527
-\end{verbatim}
-\begin{alltt}
-\hlkwd{sd}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}        \hlcom{## compare to R function value}
-\end{alltt}
-\begin{verbatim}
-## [1] 379.0527
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-
-A third measure of spread is the \textbf{interquartile range (IQR)}, which measures variability.  The IQR is equal to the third quartile (the 75th percentile), labeled $Q_3$, minus the first quartile (the 25th percentile), labeled $Q_1$, i.e. $IQR = Q_3 - Q_1$. The IQR can be obtained in $R$ using the following function,
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{IQR}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
-\end{alltt}
-\begin{verbatim}
-## [1] 486.9009
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-
-\subsection{Summary}
-A final way to get a lot of the above information about the numerical data can be obtained using the \textit{summary} command in $R$ as follows,
+Numerical summaries can be quickly and easily calculated using \textsf{R}. The \texttt{summary()} command is one way to access several numerical summaries at once, including the minimum and maximum values of a variable:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -393,35 +291,226 @@ A final way to get a lot of the above information about the numerical data can b
 \end{kframe}
 \end{knitrout}
 
-\subsection{With and Without Extreme Outliers}
-%% COME BACK HERE
+\subsection{Measures of center: mean and median}
+
+The \textbf{mean} of a numerical value is the sum of all observations divided by the number of observations, where $x_1, x_2, \dots, x_n$ represent the $n$ observed values:
+
+\begin{align*}
+		\overline{x} = \frac{x_1+x_2+\cdots+x_n}{n}
+\end{align*}
+
+This calculation can be completed in \textsf{R} the same way as a hand calculation is done:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{# Table 1.13}
-\hlstd{loc} \hlkwb{=} \hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume}\hlopt{<=} \hlnum{2000}\hlstd{)}
+\hlcom{# identify n, the number of observations in the data}
+\hlstd{n} \hlkwb{=} \hlkwd{length}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
+\hlstd{n}
+\end{alltt}
+\begin{verbatim}
+## [1] 431
+\end{verbatim}
+\begin{alltt}
+\hlcom{# calculate the sum of all observations and divide by n}
+\hlkwd{sum}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}\hlopt{/}\hlstd{n}
+\end{alltt}
+\begin{verbatim}
+## [1] 882.474
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
-\hlcom{## Robust estimates}
-\hlkwd{median}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume[loc])}
+Alternatively, the \textsf{R} function \texttt{mean()} can be directly applied to the variable of interest:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{x.bar} \hlkwb{=} \hlkwd{mean}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
+\hlstd{x.bar}
+\end{alltt}
+\begin{verbatim}
+## [1] 882.474
+\end{verbatim}
+\begin{alltt}
+\hlcom{## round to the first decimal}
+\hlkwd{round}\hlstd{(x.bar,} \hlnum{1}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 882.5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+To identify the \textbf{median} value, use the following command:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{median}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
+\end{alltt}
+\begin{verbatim}
+## [1] 831.7638
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsection{Measures of spread: standard deviation and variance}
+
+The distance of a single observation from the mean is its \textbf{deviation}. The following command produces the deviations for the $1^{st}$, $2^{nd}$, $3^{rd}$, and $431^{th}$ observations in the \texttt{clutch.volume} variable.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{frog.altitude.data}\hlopt{$}\hlstd{clutch.volume[}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{431}\hlstd{)]}\hlopt{-}\hlstd{x.bar}
+\end{alltt}
+\begin{verbatim}
+## [1] -704.64604 -625.43440 -731.11786   50.78032
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+The sample \textbf{standard deviation} is computed as the square root of the \textbf{variance}, which is the sum of squared deviations divided by the number of observations minus 1. 
+
+\begin{align*}
+		s = \sqrt{\frac{({x_1 - \overline{x})}^{2}+({x_2 - \overline{x})}^{2}+\cdots+({x_n - \overline{x})}^{2}}{n-1}}
+\end{align*}
+
+The following steps illustrate how to calculate the variance and standard deviation using the formula: 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# calculate all deviations}
+\hlstd{dev} \hlkwb{=} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{-} \hlstd{x.bar}
+
+\hlcom{# sum the squares of the deviations and divide by n - 1}
+\hlstd{var} \hlkwb{=} \hlstd{(}\hlkwd{sum}\hlstd{(dev}\hlopt{^}\hlnum{2}\hlstd{))}\hlopt{/}\hlstd{(n}\hlopt{-}\hlnum{1}\hlstd{)}
+\hlstd{var}
+\end{alltt}
+\begin{verbatim}
+## [1] 143680.9
+\end{verbatim}
+\begin{alltt}
+\hlcom{# take the square root of the variance}
+\hlstd{sd} \hlkwb{=} \hlkwd{sqrt}\hlstd{(var)}
+\hlstd{sd}
+\end{alltt}
+\begin{verbatim}
+## [1] 379.0527
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Alternatively, use the \textsf{R} functions \texttt{var()} and \texttt{sd()}:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{var}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
+\end{alltt}
+\begin{verbatim}
+## [1] 143680.9
+\end{verbatim}
+\begin{alltt}
+\hlkwd{sd}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
+\end{alltt}
+\begin{verbatim}
+## [1] 379.0527
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+%To calculate the variance, you can follow a few steps:
+%\begin{enumerate}
+%\item Obtain the deviation of each data point from the mean, i.e. $x_i - \bar{x}$
+%\item Square each of these deviations, i.e. $(x_i - \bar{x})^2$
+%\item Sum all of the squares, i.e. $\sum_{i=1}^n (x_i - \bar{x})^2$
+%\item To obtain the final value for variance, divide this sum by the number of observations minus 1, $n-1$, i.e. $(\frac{1}{n-1})\sum_{i=1}^n (x_i - \bar{x})^2$
+%\item To obtain the standard deviation, take the square root of the variance, i.e $\sqrt{(\frac{1}{n-1})\sum_{i=1}^n (x_i - \bar{x})^2}$
+%\end{enumerate}
+%We go through these steps by hand here and compare to the $R$ function's output.
+
+%<<>>=
+%## Looking at a few sample values from text
+%frog.altitude.data$clutch.volume[c(1,2,3,431)]-x.bar
+
+%## Calculating variance by hand
+%# Step 1: calculating all deviations
+%diffs = frog.altitude.data$clutch.volume-x.bar
+
+%# Steps 2-4:
+%variance = sum(diffs^2)/(n-1)
+%variance
+
+%## Comparing to the R function's value
+%var(frog.altitude.data$clutch.volume)
+
+%## Step 5: obtaining standard deviation
+%stand.dev = sqrt(variance)
+%stand.dev
+%sd(frog.altitude.data$clutch.volume)        ## compare to R function value
+%@
+
+Variability can also be measured using the textbf{interquartile range (IQR)}, which equals the third quartile (the $75^{th}$ percentile) minus the first quartile (the $25^{th}$ percentile). 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{IQR}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
+\end{alltt}
+\begin{verbatim}
+## [1] 486.9009
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsection{Robust statistics}
+
+In the \texttt{frog.altitude} dataset, there are four extreme values for clutch volume that are larger than 2,000 mm$^3$. To illustrate how the summary statistics are influenced by extreme values, \textit{OI Biostat} Table 1.15 shows summary statistics for the data without the four largest observations. 
+
+The subset of the data with values less than 2,000 mm$^3$ can be pulled out by first specifying a logical condition, which assigns \texttt{TRUE} or \texttt{FALSE} to each entry. 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# logical condition}
+\hlstd{less.than.2000} \hlkwb{=} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{clutch.volume}\hlopt{<=} \hlnum{2000}
+
+\hlcom{# view the first 5 values}
+\hlstd{less.than.2000[}\hlnum{1}\hlopt{:}\hlnum{5}\hlstd{]}
+\end{alltt}
+\begin{verbatim}
+## [1] TRUE TRUE TRUE TRUE TRUE
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Bracket notation can then be used to calculate summary statistics specifically for the values in \texttt{clutch.volume} that satisfy the logical condition.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## robust estimates}
+\hlkwd{median}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume[less.than.2000])}
 \end{alltt}
 \begin{verbatim}
 ## [1] 831.7638
 \end{verbatim}
 \begin{alltt}
-\hlkwd{IQR}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume[loc])}
+\hlkwd{IQR}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume[less.than.2000])}
 \end{alltt}
 \begin{verbatim}
 ## [1] 493.9186
 \end{verbatim}
 \begin{alltt}
-\hlcom{## Non-robust estimates}
-\hlkwd{mean}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume[loc])}
+\hlcom{## non-robust estimates}
+\hlkwd{mean}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume[less.than.2000])}
 \end{alltt}
 \begin{verbatim}
 ## [1] 867.9425
 \end{verbatim}
 \begin{alltt}
-\hlkwd{sd}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume[loc])}
+\hlkwd{sd}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume[less.than.2000])}
 \end{alltt}
 \begin{verbatim}
 ## [1] 349.1596
@@ -429,114 +518,224 @@ A final way to get a lot of the above information about the numerical data can b
 \end{kframe}
 \end{knitrout}
 
-\subsection{Visualizing Data}
-One of the most important functions of $R$ is in data visualization.  As we saw above, most numerical summaries of data can be caclulated by hand or in $R$, but creating plots and other visualizations are much more difficult by hand.
+\subsection{Visualizing distributions of data: histograms and boxplots}
+While most numerical summaries can be calculated by hand, \textsf{R} is essential for creating graphical summaries.
 
 \subsubsection{Histograms}
-The first type of plot we will consider is a \textbf{histogram}, which plots the frequency of the various values of a variable.  The command for doing this is \textit{hist()}, and this function takes several arguments:
-\begin{itemize}
-\item $x$: the variable you want to visualize
-\item $breaks$: the number of vertical boxes (called bins) you want the plot to have; higher numbers will equal more boxes
-\item $col$: the color you want your plot to be; if unspecified, it will be white; must be in quotation marks
-\item $xlab$: the label you would like the x-axis to have; must be in quotation marks
-\item $ylab$: the label you would like the y-axis to have; must be in quotation marks
-\item $xlim$: the range of values you would like the x-axis to have; of the form $c(lower bound, upper bound)$
-\item $ylim$: the range of values you would like the y-axis to have; of the form $c(lower bound, upper bound)$
-\item $main$: the title you would like the whole plot to have; must be in quotation marks
-\end{itemize}
-In order to use each argument, you write the argument name followed by an equals sign, followed by what information you want to give it.  Note that not all arguments must be used - only the $x$ argument is necessary, the rest are just optional preferences.  An example of this can be seen below, plotting Figure 1.15 from the text:
+
+A \textbf{histogram} provides a view of data density. Observations are sorted into different bins based on their value, and the histogram shows the number of observations in each bin. The following command produces a histogram of the \texttt{clutch.volume} variable.
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Figure 1.15}
-\hlkwd{hist}\hlstd{(}\hlkwc{x} \hlstd{= frog.altitude.data}\hlopt{$}\hlstd{clutch.volume,} \hlkwc{breaks} \hlstd{=} \hlnum{20}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"lightblue"}\hlstd{,}
-     \hlkwc{xlab} \hlstd{=} \hlstr{"Clutch Volume"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"Frequency"}\hlstd{,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{2600}\hlstd{),}
-     \hlkwc{main} \hlstd{=} \hlstr{"Histogram of Clutch Volume Frequencies"}\hlstd{)}
+\hlkwd{hist}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-16-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-19-1} 
 
 \end{knitrout}
 
-\subsubsection{Boxplots}
-Another way to visualize data is with a boxplot.  The command for doing this in $R$ is \textit{boxplot()}, and it takes the following arguments:
+The \texttt{hist()} function takes several arguments:
 \begin{itemize}
-\item $x$: the variable you want to visualize
-\item $axes$: a TRUE/FALSE indicator that determines whether or not numbers are shown on the axes
-\item $col$: the color you want the fill inside your boxplot to be; if unspecified, it will be white; must be in quotation marks
-\item $xlab$: the label you would like the x-axis to have; must be in quotation marks
-\item $ylab$: the label you would like the y-axis to have; must be in quotation marks
-\item $xlim$: the range of values you would like the x-axis to have; of the form $c(lower bound, upper bound)$; fairly meaningless for a boxplot
-\item $ylim$: the range of values you would like the y-axis to have; of the form $c(lower bound, upper bound)$; be careful not to specify too much here because you can eliminate data of importance to the boxplot
-\item $main$: the title you would like the whole plot to have; must be in quotation marks
+\item \texttt{x}: variable of interest
+\item \texttt{breaks}: number of bins
+\item \texttt{col}: color of the bars, enclosed in \texttt{""}
+\item \texttt{xlab}: $x$-axis label, enclosed in \texttt{""}
+\item \texttt{ylab}: $y$-axis label, enclosed in \texttt{""}
+\item \texttt{xlim}: range of values for the $x$-axis, in the form \texttt{c(lower bound, upper bound)}
+\item \texttt{ylim}: range of values for the $y$-axis, in the form \texttt{c(lower bound, upper bound)}
+\item \texttt{main}: main title of the plot, enclosed in \texttt{""} 
+\item \texttt{plot}: if \texttt{TRUE} (default), a histogram is plotted; otherwise, data about the histogram is returned
 \end{itemize}
+
+As seen above, not all arguments must be specified; only the \texttt{x} argument is necessary. When options are not specified, \textsf{R} uses the default options, such as the default color of white for the histogram bars.
+
+The following command reproduces \textit{OI Biostat} Table 1.16 and Figure 1.17.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Table 1.16}
+\hlkwd{hist}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume,} \hlkwc{breaks} \hlstd{=} \hlnum{14}\hlstd{,} \hlkwc{plot} \hlstd{=} \hlnum{FALSE}\hlstd{)}\hlopt{$}\hlstd{counts}
+\end{alltt}
+\begin{verbatim}
+##  [1]  4 29 69 99 93 56 45 18  7  7  1  0  2  1
+\end{verbatim}
+\begin{alltt}
+\hlcom{## Figure 1.17}
+\hlkwd{hist}\hlstd{(}\hlkwc{x} \hlstd{= frog.altitude.data}\hlopt{$}\hlstd{clutch.volume,} \hlkwc{breaks} \hlstd{=} \hlnum{14}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"dodgerblue"}\hlstd{,}
+     \hlkwc{xlab} \hlstd{=} \hlstr{"Clutch Volume"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"Frequency"}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{100}\hlstd{),}
+     \hlkwc{main} \hlstd{=} \hlstr{"Histogram of Clutch Volume Frequencies"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-20-1} 
+
+\end{knitrout}
+
+
+\subsubsection{Boxplots}
+
+A \textbf{boxplot} uses five statistics to summarize a dataset, in addition to showing unusual observations. The following command produces a boxplot of the \texttt{clutch.volume} variable.
+
 \begin{centering}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Simplified Figure 1.17}
+\hlkwd{boxplot}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-21-1} 
+
+\end{knitrout}
+\end{centering}
+
+Like the \texttt{hist()} function, the \texttt{boxplot()} function also takes several arguments that allow for certain parameters to be specified:
+\begin{itemize}
+\item \texttt{x}: variable of interest
+\item \texttt{axes}: if \texttt{TRUE}, numbers are shown on the axes
+\item \texttt{col}: color of the boxplot, enclosed in \texttt{""}
+\item \texttt{xlab}: $x$-axis label, enclosed in \texttt{""}
+\item \texttt{ylab}: $y$-axis label, enclosed in \texttt{""}
+\item \texttt{xlim}: range of values for the $x$-axis, in the form \texttt{c(lower bound, upper bound)}
+\item \texttt{ylim}: range of values for the $y$-axis, in the form \texttt{c(lower bound, upper bound)}
+\item \texttt{main}: main title of the plot, enclosed in \texttt{""} 
+
+\end{itemize}
+
+
+%Another way to visualize data is with a boxplot.  The command for doing this in $R$ is \textit{boxplot()}, and it takes the following arguments:
+%\begin{itemize}
+%\item $x$: the variable you want to visualize
+%\item $axes$: a TRUE/FALSE indicator that determines whether or not numbers are shown on the axes
+%\item $col$: the color you want the fill inside your boxplot to be; if unspecified, it will be white; must be in quotation marks
+%\item $xlab$: the label you would like the x-axis to have; must be in quotation marks
+%\item $ylab$: the label you would like the y-axis to have; must be in quotation marks
+%\item $xlim$: the range of values you would like the x-axis to have; of the form $c(lower bound, upper bound)$; fairly meaningless for a boxplot
+%\item $ylim$: the range of values you would like the y-axis to have; of the form $c(lower bound, upper bound)$; be careful not to specify too much here because you can eliminate data of importance to the boxplot
+%\item $main$: the title you would like the whole plot to have; must be in quotation marks
+\end{itemize}
+
+The following command reproduces a simplified version of \textit{OI Biostat} Figure 1.19. 
+
+\begin{centering}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Figure 1.19}
 \hlkwd{boxplot}\hlstd{(}\hlkwc{x} \hlstd{= frog.altitude.data}\hlopt{$}\hlstd{clutch.volume,} \hlkwc{ylab} \hlstd{=} \hlstr{'Clutch Volume'}\hlstd{,} \hlkwc{axes} \hlstd{=} \hlnum{TRUE}\hlstd{,}
         \hlkwc{ylim} \hlstd{=} \hlkwd{range}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume))}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-17-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-22-1} 
 
 \end{knitrout}
 \end{centering}
 
-\subsubsection{Scatterplots}
-Scatterplots can be used to visualize the relationship between two variables or to visualize just one variable individually.
+\subsection{Scatterplots and correlation}
+\textbf{Scatterplots} can be used to visualize the relationship between two numerical variables. In the \texttt{plot()} command, either a comma or a tilde can be used between the variable names; i.e., \texttt{plot(x,y)} versus \texttt{plot(y $\sim$ x)}.
 
-The command for doing this is \textit{plot()}, and this function takes several arguments:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{plot}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{body.size, frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-23-1} 
+
+\end{knitrout}
+
+The \texttt{plot()} command takes the following arguments: 
+
 \begin{itemize}
-\item $x$: the first variable you want to visualize; \textit{necessary to include}
-\item $y$: the second variable you may want to visualize; included if you want to consider two variables \textit{not necessary to include}
-\item $col$: the color you want your dots on the plot to be; if unspecified, they will be black; must be in quotation marks
-\item $type$: specifies how you want R to plot the data; if unspecified, you will end up with dots (in a scatterplot); other options include $"l"$ for lines between data points
-\item $xlab$: the label you would like the x-axis to have; must be in quotation marks
-\item $ylab$: the label you would like the y-axis to have; must be in quotation marks
-\item $xlim$: the range of values you would like the x-axis to have; of the form $c(lower bound, upper bound)$
-\item $ylim$: the range of values you would like the y-axis to have; of the form $c(lower bound, upper bound)$
-\item $main$: the title you would like the whole plot to have; must be in quotation marks
+\item \texttt{x}: variable defining the $x$-coordinates 
+\item \texttt{y}: variable defining the $y$-coordinates 
+\item \texttt{col}: color of the dots, enclosed in \texttt{""}
+\item \texttt{type}: by default, data points are marked with dots; other options include \texttt{"l"} which draws a line chart, or \texttt{"b"} which includes both dots and lines
+\item \texttt{xlab}: $x$-axis label, enclosed in \texttt{""}
+\item \texttt{ylab}: $y$-axis label, enclosed in \texttt{""}
+\item \texttt{xlim}: range of values for the $x$-axis, in the form \texttt{c(lower bound, upper bound)}
+\item \texttt{ylim}: range of values for the $y$-axis, in the form \texttt{c(lower bound, upper bound)}
+\item \texttt{main}: main title of the plot, enclosed in \texttt{""} 
 \end{itemize}
 
-The \textit{plot} command has an interesting feature that you can either specify your $x$ and $y$ variables by running $plot(x,y)$ or by running $plot(y~x)$.  Either command will give the same result.  Below provides an example of using the \textit{plot} command for one and two variables (corresponds to Figure 1.18 in the text):
+%The command for doing this is \textit{plot()}, and this function takes several arguments:
+%\begin{itemize}
+%\item $x$: the first variable you want to visualize; \textit{necessary to include}
+%\item $y$: the second variable you may want to visualize; included if you want to consider two variables \textit{not necessary to include}
+%\item $col$: the color you want your dots on the plot to be; if unspecified, they will be black; must be in quotation marks
+%\item $type$: specifies how you want R to plot the data; if unspecified, you will end up with dots (in a scatterplot); other options include $"l"$ for lines between data points
+%\item $xlab$: the label you would like the x-axis to have; must be in quotation marks
+%\item $ylab$: the label you would like the y-axis to have; must be in quotation marks
+%\item $xlim$: the range of values you would like the x-axis to have; of the form $c%(lower bound, upper bound)$
+%\item $ylim$: the range of values you would like the y-axis to have; of the form $c(lower bound, upper bound)$
+%\item $main$: the title you would like the whole plot to have; must be in quotation marks
+%\end{itemize}
+
+%The \textit{plot} command has an interesting feature that you can either specify your $x$ and $y$ variables by running $plot(x,y)$ or by running $plot(y~x)$.  Either command will give the same result.  Below provides an example of using the \textit{plot} command for one and two variables (corresponds to Figure 1.18 in the text):
+%\begin{centering}
+%<<fig.height=4, fig.width=4>>=
+%# For one variable
+%plot(frog.altitude.data$clutch.volume)
+%@
+%\end{centering}
+
+The following command reproduces a simplified version of \textit{OI Biostat} Figure 1.20. The additional argument \texttt{pch} changes the appearance of the dots to filled dots, which is specified by \texttt{19}. 
+
 \begin{centering}
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{# For one variable}
-\hlkwd{plot}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
+\hlcom{## Figure 1.20}
+\hlkwd{plot}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume}\hlopt{~}\hlstd{frog.altitude.data}\hlopt{$}\hlstd{body.size,} \hlkwc{col} \hlstd{=} \hlstr{"dodgerblue"}\hlstd{,}
+     \hlkwc{pch} \hlstd{=} \hlnum{19}\hlstd{,} \hlkwc{xlab} \hlstd{=} \hlstr{"Female Body Size (cm)"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlkwd{expression}\hlstd{(}\hlstr{"Clutch Volume"} \hlopt{~} \hlstd{(mm}\hlopt{^}\hlnum{3}\hlstd{)))}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-18-1} 
-\begin{kframe}\begin{alltt}
-\hlcom{## Figure 1.18}
-\hlcom{# For two variables,}
-\hlkwd{plot}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume}\hlopt{~}\hlstd{frog.altitude.data}\hlopt{$}\hlstd{body.size,}
-     \hlkwc{xlab} \hlstd{=} \hlstr{"Female Body Size (cm)"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlkwd{expression}\hlstd{(}\hlstr{"Clutch Volume"} \hlopt{~} \hlstd{(mm}\hlopt{^}\hlnum{3}\hlstd{)))}
-\end{alltt}
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-18-2} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-24-1} 
 
 \end{knitrout}
 \end{centering}
 
-\subsection{Correlation}
-Correlation can be calculated by hand but it's a tedious calculation, so doing it using $R$ is often the best bet.  It can be done with the command \textit{cor()} which takes as its arguments your two variables of interest.  Using the example from the text, we can create Figure 1.22 and calculate the correlation as follows:
+Simplified versions of \textit{OI Biostat} Figures 1.21, 1.22, and 1.23 can also be reproduced using \texttt{plot()}.
+
+\subsubsection{Correlation}
+
+\textbf{Correlation} is a numerical measure of the strength of a linear relationship. The formula for correlation uses the pairing of the two variables, just as the scatterplot does in a graph, so the data used in calculating correlation is a set of $n$ ordered pairs $(x_1,y_1), (x_2,y_2), \ldots, (x_n, y_n) $.
+
+The correlation between two variables $x$ and $y$ is given by:
+		\begin{align*}
+          r &=  \frac{1}{n-1}\sum^{n}_{i=1}
+          \left(\frac{x_{i}-\overline{x}}
+          {s_{x}}\right)\left(\frac{y_{i}-\overline{y}}{s_{y}}\right)
+    \end{align*}      
+where $(x_1,y_1), (x_2,y_2), \ldots, (x_n, y_n)$ are the $n$ paired values of $x$ and $y$, and $s_x$ and $s_y$ are the sample standard deviations of the $x$ and $y$ variables, respectively.     
+
+The following illustrates the calculations for finding the correlation coefficient of (1,5), (2, 4), and (3,0), as shown in \textit{OI Biostat} Example 1.13.
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Figure 1.22}
+\hlcom{# define variables}
 \hlstd{x} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{)}
 \hlstd{y} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{5}\hlstd{,} \hlnum{4}\hlstd{,} \hlnum{0}\hlstd{)}
 
-\hlkwd{plot}\hlstd{(x,y)}
-\end{alltt}
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-19-1} 
-\begin{kframe}\begin{alltt}
-\hlkwd{cor}\hlstd{(x,y)}
+\hlcom{# calculate sample means}
+\hlstd{x.bar} \hlkwb{=} \hlkwd{mean}\hlstd{(x)}
+\hlstd{y.bar} \hlkwb{=} \hlkwd{mean}\hlstd{(y)}
+
+\hlcom{# calculate sample sd's}
+\hlstd{sd.x} \hlkwb{=} \hlkwd{sd}\hlstd{(x)}
+\hlstd{sd.y} \hlkwb{=} \hlkwd{sd}\hlstd{(y)}
+
+\hlcom{# calculate products and sum of products}
+\hlstd{x.component} \hlkwb{=} \hlstd{(x} \hlopt{-} \hlstd{x.bar)}\hlopt{/}\hlstd{(sd.x)}
+\hlstd{y.component} \hlkwb{=} \hlstd{(y} \hlopt{-} \hlstd{y.bar)}\hlopt{/}\hlstd{(sd.y)}
+\hlstd{products} \hlkwb{=} \hlstd{x.component} \hlopt{*} \hlstd{y.component}
+\hlstd{products.sum} \hlkwb{=} \hlkwd{sum}\hlstd{(products)}
+
+\hlcom{# divide by n - 1}
+\hlstd{n} \hlkwb{=} \hlkwd{length}\hlstd{(x)}   \hlcom{## n also equals length(y)}
+\hlstd{r} \hlkwb{=} \hlstd{products.sum} \hlopt{/} \hlstd{(n} \hlopt{-} \hlnum{1}\hlstd{)}
+\hlstd{r}
 \end{alltt}
 \begin{verbatim}
 ## [1] -0.9449112
@@ -544,7 +743,27 @@ Correlation can be calculated by hand but it's a tedious calculation, so doing i
 \end{kframe}
 \end{knitrout}
 
-Figure 1.21 can also be seen with the following with the correlation calculated as stated in the book to be 0.63.  Note that this correlation command contains the argument \textit{use = "complete.obs"}, which simply allows for the correlation calculation by ignoring any NA values in the dataset.
+It is much easier to use the \texttt{cor()} function to find correlation. 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Figure 1.22}
+\hlkwd{cor}\hlstd{(x,y)}
+\end{alltt}
+\begin{verbatim}
+## [1] -0.9449112
+\end{verbatim}
+\begin{alltt}
+\hlkwd{plot}\hlstd{(x,y)}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-26-1} 
+
+\end{knitrout}
+
+The correlation can also be calculated for the income versus life expectancy data plotted in \textit{OI Biostat} Figure 1.23. In this case, the command includes the argument \texttt{use = "complete.obs"} to allow for the computation to disregard any missing values in the dataset.
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -558,12 +777,15 @@ Figure 1.21 can also be seen with the following with the correlation calculated 
 \end{knitrout}
 
 \subsection{Transforming Data}
-Transformations of data are often of interest, and performing them in $R$ is quite easy.  The plot below shows the before and after of a log transformation on the \textit{life expectancy-income} data.  The \textit{log} command in $R$ perform a natural log, or ln, on the data, despite being written as log.
+A \textbf{transformation} is a rescaling of data using a function. The figure below shows the original plot of income data as well as the plot of the log-transformed data. Note that the \texttt{log} command in \textsf{R} computes natural logarithms.
+
+The function \texttt{par()} creates partitions in the graphing output. In this case, specifying \texttt{mfrow = c(1,2)} produces 1 row and 2 columns.
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Figure 1.24}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{))}  \hlcom{## this line just allows two plots to print at the same time}
+\hlcom{## Figure 1.26}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{))}  \hlcom{## this line allows two plots to print at the same time}
 \hlkwd{hist}\hlstd{(life.expectancy.income}\hlopt{$}\hlstd{income,} \hlkwc{breaks} \hlstd{=} \hlnum{12}\hlstd{,} \hlkwc{xlab} \hlstd{=} \hlstr{"Income (USD)"}\hlstd{,}
     \hlkwc{ylab} \hlstd{=} \hlstr{"Frequency"}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{120}\hlstd{),} \hlkwc{main} \hlstd{=} \hlstr{"Untransformed"}\hlstd{)}
 
@@ -571,39 +793,38 @@ Transformations of data are often of interest, and performing them in $R$ is qui
     \hlkwc{ylab} \hlstd{=} \hlstr{"Frequency"}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{30}\hlstd{),} \hlkwc{main} \hlstd{=} \hlstr{"Log Transformed"}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-21-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-28-1} 
 
 \end{knitrout}
 
-Figures 1.21 and 1.25 in the text can be seen below next to each other to see how the log transformation changes a scatterplot.  The function \textit{par()} creates partitions in the graphing output.  In this case, we get 1 row and 2 columns, as indicated by \textit{mfrow = c(1,2)}
+Transformations can also be applied to both variables when exploring a relationship. The following figure shows simplified versions of \textit{OI Biostat} Figures 1.23 and 1.27.
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Figure 1.21 and Figure 1.25}
+\hlcom{## Figure 1.23 and Figure 1.27}
 \hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{))}
-\hlkwd{plot}\hlstd{(life.expectancy.income}\hlopt{$}\hlstd{income,}
-    \hlstd{life.expectancy.income}\hlopt{$}\hlstd{life.expectancy,}
-    \hlkwc{ylab} \hlstd{=} \hlstr{"Life Expectancy (years)"}\hlstd{,}
-    \hlkwc{xlab} \hlstd{=} \hlstr{"Per Capita Income (USD)"}\hlstd{,}
+\hlkwd{plot}\hlstd{(life.expectancy.income}\hlopt{$}\hlstd{income, life.expectancy.income}\hlopt{$}\hlstd{life.expectancy,}
+    \hlkwc{ylab} \hlstd{=} \hlstr{"Life Expectancy (years)"}\hlstd{,} \hlkwc{xlab} \hlstd{=} \hlstr{"Per Capita Income (USD)"}\hlstd{,}
     \hlkwc{main} \hlstd{=} \hlstr{"Untransformed"}\hlstd{)}
-\hlkwd{plot}\hlstd{(}\hlkwd{log}\hlstd{(life.expectancy.income}\hlopt{$}\hlstd{income),}
-    \hlkwd{log}\hlstd{(life.expectancy.income}\hlopt{$}\hlstd{life.expectancy),}
-    \hlkwc{ylab} \hlstd{=} \hlstr{"Life Expectancy (log years)"}\hlstd{,}
-    \hlkwc{xlab} \hlstd{=} \hlstr{"Per Capita Income (log USD)"}\hlstd{,}
+\hlkwd{plot}\hlstd{(}\hlkwd{log}\hlstd{(life.expectancy.income}\hlopt{$}\hlstd{income),} \hlkwd{log}\hlstd{(life.expectancy.income}\hlopt{$}\hlstd{life.expectancy),}
+    \hlkwc{ylab} \hlstd{=} \hlstr{"Life Expectancy (log years)"}\hlstd{,} \hlkwc{xlab} \hlstd{=} \hlstr{"Per Capita Income (log USD)"}\hlstd{,}
     \hlkwc{main} \hlstd{=} \hlstr{"Transformed"}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-22-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-29-1} 
 
 \end{knitrout}
 
 \section{Categorical Data}
 \subsection{Contingency Tables}
-Shown below, Table 1.26 shows a \textbf{frequency table} for genotypes of the actn3.r577x gene.  As a frequency table, it gives the counts of each genotype within the dataset.
+
+A \textbf{frequency table} shows the counts for each category within a variable. The following \texttt{table()} command produces a frequency table for the \texttt{actn3.r577x} variable.
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Table 1.26}
+\hlcom{## Table 1.28}
 \hlkwd{addmargins}\hlstd{(}\hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{actn3.r577x))}
 \end{alltt}
 \begin{verbatim}
@@ -613,11 +834,13 @@ Shown below, Table 1.26 shows a \textbf{frequency table} for genotypes of the ac
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-Table 1.27 shows a frequency table on two variables, genotype of the actn3.r577x gene and race from the \textit{famuss} dataset.  Using the command \textit{addmargins} here gives us \textbf{marginal totals}. Because this data summarizes two categorical variables, it is called a \textbf{contingency table}.
+
+A \textbf{contingency table} summarizes data for two categorical variables, such as race and genotype in \textit{OI Biostat} Table 1.29. 
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Table 1.27}
+\hlcom{## Table 1.29}
 \hlkwd{addmargins}\hlstd{(}\hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{race, famuss}\hlopt{$}\hlstd{actn3.r577x))}
 \end{alltt}
 \begin{verbatim}
@@ -633,13 +856,15 @@ Table 1.27 shows a frequency table on two variables, genotype of the actn3.r577x
 \end{kframe}
 \end{knitrout}
 
-If we instead wanted a contingency table with proportions rather than counts, we could do that in one of two ways - either row proportions or column proportions.  Table 1.28 shows the row proportions and the column proportions are calculated just below.
+\textit{OI Biostat} Table 1.30 shows a contingency table with row proportions, computed as the counts divided by their row totals. The \texttt{prop.table()} command produces a table with row proportions, as specified by the \texttt{1} in the argument.
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Table 1.28}
-\hlstd{row.prop.table} \hlkwb{=} \hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{race, famuss}\hlopt{$}\hlstd{actn3.r577x)[}\hlnum{1}\hlopt{:}\hlnum{5}\hlstd{,]}
-\hlstd{row.prop.table} \hlopt{/} \hlkwd{rep}\hlstd{(}\hlkwd{rowSums}\hlstd{(row.prop.table),} \hlnum{3}\hlstd{)}
+\hlcom{## Table 1.30}
+\hlstd{counts.table} \hlkwb{=} \hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{race, famuss}\hlopt{$}\hlstd{actn3.r577x)}
+\hlstd{row.prop.table} \hlkwb{=} \hlkwd{prop.table}\hlstd{(counts.table,} \hlnum{1}\hlstd{)}
+\hlstd{row.prop.table}
 \end{alltt}
 \begin{verbatim}
 ##             
@@ -652,210 +877,252 @@ If we instead wanted a contingency table with proportions rather than counts, we
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-Alternatively, we could build a similar table but performing column proportions rather than row proportions as seen in Table 1.29:
+
+Alternatively, a contingency table can be created with column proportions by changing the \texttt{1} in \texttt{prop.table()} to a \texttt{2}. 
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Table 1.29}
-\hlstd{col.prop.table} \hlkwb{=} \hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{race, famuss}\hlopt{$}\hlstd{actn3.r577x)[}\hlnum{1}\hlopt{:}\hlnum{5}\hlstd{,]}
-\hlstd{col.prop.table} \hlopt{/} \hlkwd{rep}\hlstd{(}\hlkwd{colSums}\hlstd{(col.prop.table),} \hlnum{3}\hlstd{)}
+\hlcom{## Table 1.31}
+\hlstd{counts.table} \hlkwb{=} \hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{race, famuss}\hlopt{$}\hlstd{actn3.r577x)}
+\hlstd{col.prop.table} \hlkwb{=} \hlkwd{prop.table}\hlstd{(counts.table,} \hlnum{2}\hlstd{)}
+\hlstd{col.prop.table}
 \end{alltt}
 \begin{verbatim}
 ##             
 ##                      CC         CT         TT
-##   African Am 0.09248555 0.03726708 0.01915709
-##   Asian      0.08045977 0.10404624 0.09937888
-##   Caucasian  0.77639752 0.82758621 0.72832370
-##   Hispanic   0.02312139 0.06211180 0.03448276
-##   Other      0.02681992 0.06358382 0.03105590
+##   African Am 0.09248555 0.02298851 0.03105590
+##   Asian      0.12138728 0.06896552 0.09937888
+##   Caucasian  0.72254335 0.82758621 0.78260870
+##   Hispanic   0.02312139 0.03831418 0.05590062
+##   Other      0.04046243 0.04214559 0.03105590
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
 
 \subsection{Bar Plots}
-Another way to visualize categorical data is using a \textbf{bar plot}, which can present the data by its categories, and either the count or proportion of occurences within each category.  Note how the \textit{barplot} command takes as its input a table, rather than just a variable.  This is because the data needs to be sorted by its categories before plotting.  We can see Figure 1.30 below which shows two barplots of the same data, sorted on the left by counts and on the right by frequencies.
+
+A \textbf{bar plot} is a common way to display a single categorical variable, either from count data or from proportions. The \texttt{barplot()} command requires values to be input in a table format. In the below example, the \texttt{table()} command is nested within the \texttt{barplot()} command.
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Figure 1.30}
+\hlcom{## Figure 1.32}
 \hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{))}
 \hlkwd{barplot}\hlstd{(}\hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{actn3.r577x))}  \hlcom{## count barplot}
-\hlkwd{barplot}\hlstd{(}\hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{actn3.r577x)}\hlopt{/}\hlkwd{sum}\hlstd{(}\hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{actn3.r577x)))}
+\hlkwd{barplot}\hlstd{(}\hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{actn3.r577x)}\hlopt{/}\hlkwd{sum}\hlstd{(}\hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{actn3.r577x)))}  \hlcom{## frequency barplot}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-27-1} 
-\begin{kframe}\begin{alltt}
-\hlcom{## frequency barplot}
-\end{alltt}
-\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-34-1} 
+
 \end{knitrout}
+
+\newpage
 
 \subsubsection{Segmented Bar Plot}
-A segmented bar plot is a more sophisticated version of the barplots seen above.  The data is now sorted on two categorical variables, so This code is the most sophisticated thus far, so try to as best as possible work through it line by line.
+
+A \textbf{segmented bar plot} draws from a contingency table to display information about two categorical variables. The following code reproduces \textit{OI Biostat} Figure 1.33a, in which a bar plot was created using the \texttt{actn3.r577x} variable, with each group divided by the levels of race. The simplified version of the plot uses the default greyscale shading; it is also possible to specify a list of colors using \texttt{c()}. 
+
+The argument \texttt{legend} can be used to specify whether the row names or the column names are used for the legend. 
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Figure 1.31a first, create a table of the data that is}
-\hlcom{## sorted}
-\hlstd{genotype.race} \hlkwb{=} \hlkwd{matrix}\hlstd{(}\hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{actn3.r577x, famuss}\hlopt{$}\hlstd{race),}
-    \hlkwc{ncol} \hlstd{=} \hlnum{3}\hlstd{,} \hlkwc{byrow} \hlstd{= T)}
-
-\hlcom{# second, change the column and row names on the table}
-\hlkwd{colnames}\hlstd{(genotype.race)} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"CC"}\hlstd{,} \hlstr{"CT"}\hlstd{,} \hlstr{"TT"}\hlstd{)}
-\hlkwd{rownames}\hlstd{(genotype.race)} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"African Am"}\hlstd{,} \hlstr{"Asian"}\hlstd{,} \hlstr{"Caucasian"}\hlstd{,}
-    \hlstr{"Hispanic"}\hlstd{,} \hlstr{"Other"}\hlstd{)}
-
-\hlcom{# third, plot the barplot where colors are specified}
-\hlkwd{barplot}\hlstd{(genotype.race,} \hlkwc{col} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"grey"}\hlstd{,} \hlstr{"red"}\hlstd{,} \hlstr{"blue"}\hlstd{,} \hlstr{"green"}\hlstd{,}
-    \hlstr{"yellow"}\hlstd{),} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{300}\hlstd{),} \hlkwc{width} \hlstd{=} \hlnum{2}\hlstd{)}
-\hlcom{# lastly, include a legend for intepretation of your plots}
-\hlkwd{legend}\hlstd{(}\hlstr{"topright"}\hlstd{,} \hlkwc{inset} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0.05}\hlstd{,} \hlnum{0}\hlstd{),} \hlkwc{fill} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"grey"}\hlstd{,} \hlstr{"red"}\hlstd{,}
-    \hlstr{"blue"}\hlstd{,} \hlstr{"green"}\hlstd{,} \hlstr{"yellow"}\hlstd{),} \hlkwc{legend} \hlstd{=} \hlkwd{rownames}\hlstd{(genotype.race))}
+\hlcom{## Figure 1.31a}
+\hlstd{counts.table} \hlkwb{=} \hlstd{(}\hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{race, famuss}\hlopt{$}\hlstd{actn3.r577x))}
+\hlkwd{barplot}\hlstd{(counts.table,} \hlkwc{legend} \hlstd{=} \hlkwd{rownames}\hlstd{(counts.table))}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-28-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-35-1} 
+\begin{kframe}\begin{alltt}
+\hlkwd{barplot}\hlstd{(counts.table,} \hlkwc{col} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"gray"}\hlstd{,} \hlstr{"firebrick1"}\hlstd{,} \hlstr{"dodgerblue"}\hlstd{,}
+    \hlstr{"darkgreen"}\hlstd{,} \hlstr{"gold"}\hlstd{),} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{300}\hlstd{),} \hlkwc{legend} \hlstd{=} \hlkwd{rownames}\hlstd{(counts.table))}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-35-2} 
 
 \end{knitrout}
 
-If we instead wanted to make a \textbf{standardized segmented bar plot}, we could do that by creating a table of proportions (instead of counts) using the command \textit{prop.table}.  This command is similar to the \textit{table} command but it calculates the proportions for you.  The only difference in the following code from the section above is the use of a proportion table in the first step.
+
+%<<tidy = TRUE, fig.height=5, tidy.opts=list(width.cutoff=60)>>=
+%## Figure 1.31a
+%# first, create a table of the data that is sorted
+%genotype.race = matrix(table(famuss$actn3.r577x, famuss$race), ncol=3, byrow=T)
+
+%# second, change the column and row names on the table
+%colnames(genotype.race)=c("CC", "CT", "TT")
+%rownames(genotype.race)=c("African Am", "Asian", "Caucasian", "Hispanic", "Other")
+
+%# third, plot the barplot where colors are specified
+%barplot(genotype.race, col=c("grey", "red", "blue", "green", "yellow"), ylim=
+%          c(0,300), width=2)
+%# lastly, include a legend for intepretation of your plots
+%legend("topright", inset=c(.05, 0), fill=c("grey", "red", "blue", "green", "yellow"),
+%       legend=rownames(genotype.race))
+%@
+
+\newpage
+
+A \textbf{standardized segmented bar plot} uses proportions to scale the data, and draws from a contingency table with proportions. Setting \texttt{ylim} from 0 to 1.7 allows for enough empty space on the plot so that the legend does not overlap the bars.
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Figure 1.31b first, create table of proportions}
-\hlstd{prop.genotype.race} \hlkwb{<-} \hlkwd{prop.table}\hlstd{(genotype.race,} \hlnum{2}\hlstd{)}
-
-\hlcom{# second, change the column and row names on the table}
-\hlkwd{colnames}\hlstd{(prop.genotype.race)} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"CC"}\hlstd{,} \hlstr{"CT"}\hlstd{,} \hlstr{"TT"}\hlstd{)}
-\hlkwd{rownames}\hlstd{(prop.genotype.race)} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"African Am"}\hlstd{,} \hlstr{"Asian"}\hlstd{,} \hlstr{"Caucasian"}\hlstd{,}
-    \hlstr{"Hispanic"}\hlstd{,} \hlstr{"Other"}\hlstd{)}
-
-\hlcom{# second, plot the output}
-\hlkwd{barplot}\hlstd{(prop.genotype.race,} \hlkwc{col} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"grey"}\hlstd{,} \hlstr{"red"}\hlstd{,} \hlstr{"blue"}\hlstd{,} \hlstr{"green"}\hlstd{,}
-    \hlstr{"yellow"}\hlstd{),} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1.5}\hlstd{),} \hlkwc{width} \hlstd{=} \hlnum{2}\hlstd{)}
-
-\hlcom{# lastly, include a legend for intepretation of your plots}
-\hlkwd{legend}\hlstd{(}\hlstr{"topright"}\hlstd{,} \hlkwc{inset} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0.05}\hlstd{,} \hlopt{-}\hlnum{0.005}\hlstd{),} \hlkwc{fill} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"grey"}\hlstd{,}
-    \hlstr{"red"}\hlstd{,} \hlstr{"blue"}\hlstd{,} \hlstr{"green"}\hlstd{,} \hlstr{"yellow"}\hlstd{),} \hlkwc{legend} \hlstd{=} \hlkwd{rownames}\hlstd{(prop.genotype.race),}
-    \hlkwc{bty} \hlstd{=} \hlstr{"n"}\hlstd{)}
+\hlcom{## Figure 1.33b}
+\hlstd{counts.table} \hlkwb{=} \hlstd{(}\hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{race, famuss}\hlopt{$}\hlstd{actn3.r577x))}
+\hlstd{row.prop.table} \hlkwb{=} \hlkwd{prop.table}\hlstd{(counts.table,} \hlnum{2}\hlstd{)}
+\hlkwd{barplot}\hlstd{(row.prop.table,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1.7}\hlstd{),} \hlkwc{legend} \hlstd{=} \hlkwd{rownames}\hlstd{(counts.table))}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-29-1} 
-
-\end{knitrout}
-\textit{Note:} In the \textit{legend} line, the command  \textit{inset=} controls where on the plot the legend prints out.  Sometimes this specification can be a little bit bizarre so it may require some alteration to find the right spot for the legend.  
-
-If we wanted to reproduce Figure 1.32, where the bars indicate race instead of genotype, we can do the same process as above, with one exception.  In the first step, of creating the table, we must instead put the race variable first as the rows and the gene variable as the columns, as follows:
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{## Figure 1.32 Plotting two graphs next to each other}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{= (}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{)))}
-
-\hlcom{# Setting up the table and changing column/row names}
-\hlstd{race.genotype} \hlkwb{=} \hlkwd{matrix}\hlstd{(}\hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{race, famuss}\hlopt{$}\hlstd{actn3.r577x),}
-    \hlkwc{ncol} \hlstd{=} \hlnum{5}\hlstd{,} \hlkwc{byrow} \hlstd{= T)}
-\hlkwd{colnames}\hlstd{(race.genotype)} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"African Am"}\hlstd{,} \hlstr{"Asian"}\hlstd{,} \hlstr{"Caucasian"}\hlstd{,}
-    \hlstr{"Hispanic"}\hlstd{,} \hlstr{"Other"}\hlstd{)}
-\hlkwd{rownames}\hlstd{(race.genotype)} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"CC"}\hlstd{,} \hlstr{"CT"}\hlstd{,} \hlstr{"TT"}\hlstd{)}
-
-\hlcom{# Creating segmented bar plot with a legend}
-\hlkwd{barplot}\hlstd{(race.genotype,} \hlkwc{col} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"blue"}\hlstd{,} \hlstr{"green"}\hlstd{,} \hlstr{"yellow"}\hlstd{),} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}
-    \hlnum{500}\hlstd{),} \hlkwc{width} \hlstd{=} \hlnum{2}\hlstd{)}
-\hlkwd{legend}\hlstd{(}\hlstr{"topright"}\hlstd{,} \hlkwc{inset} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0}\hlstd{),} \hlkwc{fill} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"blue"}\hlstd{,} \hlstr{"green"}\hlstd{,}
-    \hlstr{"yellow"}\hlstd{),} \hlkwc{legend} \hlstd{=} \hlkwd{rownames}\hlstd{(race.genotype))}
-
-\hlcom{# Creating standardized segmented bar plot with a legend}
-\hlstd{prop.race.genotype} \hlkwb{<-} \hlkwd{prop.table}\hlstd{(race.genotype,} \hlnum{2}\hlstd{)}
-\hlkwd{barplot}\hlstd{(prop.race.genotype,} \hlkwc{col} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"blue"}\hlstd{,} \hlstr{"green"}\hlstd{,} \hlstr{"yellow"}\hlstd{),}
-    \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1.5}\hlstd{),} \hlkwc{width} \hlstd{=} \hlnum{2}\hlstd{)}
-\hlkwd{legend}\hlstd{(}\hlstr{"topright"}\hlstd{,} \hlkwc{inset} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0}\hlstd{),} \hlkwc{fill} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"blue"}\hlstd{,} \hlstr{"green"}\hlstd{,}
-    \hlstr{"yellow"}\hlstd{),} \hlkwc{legend} \hlstd{=} \hlkwd{rownames}\hlstd{(race.genotype))}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-36-1} 
+\begin{kframe}\begin{alltt}
+\hlkwd{barplot}\hlstd{(row.prop.table,} \hlkwc{col} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"gray"}\hlstd{,} \hlstr{"firebrick1"}\hlstd{,} \hlstr{"dodgerblue"}\hlstd{,}
+    \hlstr{"darkgreen"}\hlstd{,} \hlstr{"gold"}\hlstd{),} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1.7}\hlstd{),} \hlkwc{legend} \hlstd{=} \hlkwd{rownames}\hlstd{(counts.table))}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-30-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-36-2} 
 
 \end{knitrout}
 
-\subsubsection{Side-by-Side Boxplots}
-With categorical data, you can also create a \textbf{side-by-side boxplot}, as seen in Figure 1.33, which plots the boxplots for corresponding categories on the same plot.  It can be plotted as follows,
+%<<tidy = TRUE, fig.height=5, tidy.opts=list(width.cutoff=60)>>=
+%## Figure 1.31b
+%# first, create table of proportions
+%prop.genotype.race <- prop.table(genotype.race, 2)
+%
+%# second, change the column and row names on the table
+%colnames(prop.genotype.race)=c("CC", "CT", "TT")
+%rownames(prop.genotype.race)=c("African Am", "Asian", "Caucasian", "Hispanic", "Other")
+%
+%#second, plot the output
+%barplot(prop.genotype.race, col=c("grey", "red", "blue", "green", "yellow"),
+%        ylim=c(0, 1.5), width=2)
+
+%# lastly, include a legend for intepretation of your plots
+%legend("topright", inset=c(0.05, -0.005), fill=c("grey", "red", "blue", "green", "yellow"),
+%       legend=rownames(prop.genotype.race), bty = "n")
+%@
+%\textit{Note:} In the \textit{legend} line, the command  \textit{inset=} controls where on the plot the legend prints out.  Sometimes this specification can be a little bit bizarre so it may require some alteration to find the right spot for the legend.  
+
+In \texit{OI Biostat} Figure 1.34, the data from the contingency table are organized differently, with each bar representing a level of \texttt{race}. To make this change, reverse the order of the variables in \texttt{counts.table}
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Figure 1.33(a)}
+\hlcom{## Figure 1.34a}
+\hlstd{counts.table} \hlkwb{=} \hlstd{(}\hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{actn3.r577x, famuss}\hlopt{$}\hlstd{race))}  \hlcom{## change variable order}
+
+\hlkwd{barplot}\hlstd{(counts.table,} \hlkwc{col} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"dodgerblue"}\hlstd{,} \hlstr{"darkgreen"}\hlstd{,} \hlstr{"gold"}\hlstd{),}
+    \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{500}\hlstd{),} \hlkwc{legend} \hlstd{=} \hlkwd{rownames}\hlstd{(counts.table))}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-37-1} 
+\begin{kframe}\begin{alltt}
+\hlcom{## Figure 1.34b}
+\hlstd{row.prop.table} \hlkwb{=} \hlkwd{prop.table}\hlstd{(counts.table,} \hlnum{2}\hlstd{)}
+\hlkwd{barplot}\hlstd{(row.prop.table,} \hlkwc{col} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"dodgerblue"}\hlstd{,} \hlstr{"darkgreen"}\hlstd{,} \hlstr{"gold"}\hlstd{),}
+    \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{1.8}\hlstd{),} \hlkwc{legend} \hlstd{=} \hlkwd{rownames}\hlstd{(counts.table))}
+\end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-37-2} 
+
+\end{knitrout}
+
+%If we wanted to reproduce Figure 1.32, where the bars indicate race instead of %genotype, we can do the same process as above, with one exception.  In the first step, %of creating the table, we must instead put the race variable first as the rows and the %gene variable as the columns, as follows:
+%<<tidy = TRUE, fig.height=4, tidy.opts=list(width.cutoff=60)>>=
+%## Figure 1.32
+%# Plotting two graphs next to each other
+%par(mfrow=(c(1,2)))
+%
+%# Setting up the table and changing column/row names
+%race.genotype = matrix(table(famuss$race, famuss$actn3.r577x), ncol=5, byrow=T)
+%colnames(race.genotype)=c("African Am", "Asian", "Caucasian", "Hispanic", "Other")
+%rownames(race.genotype)=c("CC", "CT", "TT")
+%
+%# Creating segmented bar plot with a legend
+%barplot(race.genotype, col=c("blue", "green", "yellow"), ylim=c(0,500), width=2)
+%legend("topright", inset=c(0, 0), fill=c("blue", "green", "yellow"), 
+%      legend=rownames(race.genotype))
+%
+%# Creating standardized segmented bar plot with a legend
+%prop.race.genotype <- prop.table(race.genotype, 2)
+%barplot(prop.race.genotype, col=c("blue", "green", "yellow"), ylim=c(0, 1.5), width=2)
+%legend("topright", inset=c(0, 0), fill=c("blue", "green", "yellow"), 
+%       legend=rownames(race.genotype))
+%@
+
+\subsection{Comparing numerical data across groups}
+
+\subsubsection{Side-by-side boxplots}
+
+The \textbf{side-by-side} boxplot is a useful tool for comparing the distribution of numerical data across categories. \textit{OI Biostat} Figure 1.35a shows a side-by-side boxplot for percent change in non-dominant arm strength grouped by genotype. The response variable $y$ comes before the tilde and the explanatory variable $x$; in this case, the response variable is percent change in strength.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Figure 1.335(a)}
 \hlkwd{boxplot}\hlstd{(famuss}\hlopt{$}\hlstd{ndrm.ch} \hlopt{~} \hlstd{famuss}\hlopt{$}\hlstd{actn3.r577x,}
     \hlkwc{ylab} \hlstd{=} \hlstr{"% Change in Non-Dominant Arm Strength"}\hlstd{,}
     \hlkwc{xlab} \hlstd{=} \hlstr{"Genotype"}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-31-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-38-1} 
 
 \end{knitrout}
 
-Another example of a larger side-by-side boxplot can be seen in Figure 1.34, created as follows,
+\textit{OI Biostat} Figure 1.36 shows a larger side-by-side boxplot which compares the distribution of frog clutch sizes for different altitudes.
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Figure 1.34}
+\hlcom{## Figure 1.36}
 \hlkwd{boxplot}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{~} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{altitude,}
     \hlkwc{xlab} \hlstd{=} \hlstr{"Clutch Volume"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"Altitude"}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-32-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-39-1} 
 
 \end{knitrout}
 
-\subsubsection{Hollow Histogram}
-Using categorical data, we can also plot histograms for each category on top of each other on one single plot, using a \textbf{hollow histogram}.  This can be done as follows,
+\subsubsection{Hollow histograms}
+
+A \textbf{hollow histogram} plots the outlines of histograms for each group onto the same axes. To plot a hollow histogram, specify any axis limits and labels in the command for the first histogram; the subsequent histograms require the argument \texttt{add = T} in order for them to be overlaid on top of the first plot.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Figure 1.33(b)}
-\hlkwd{hist}\hlstd{(famuss}\hlopt{$}\hlstd{ndrm.ch[famuss}\hlopt{$}\hlstd{actn3.r577x} \hlopt{==} \hlstr{"CC"}\hlstd{],} \hlkwc{breaks} \hlstd{=} \hlnum{20}\hlstd{,} \hlkwc{border} \hlstd{=} \hlstr{"blue"}\hlstd{,}
-    \hlkwc{xlab} \hlstd{=} \hlstr{"% Change in Non-Dominant Arm Strength"}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{50}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}
-        \hlnum{250}\hlstd{))}
-\hlkwd{hist}\hlstd{(famuss}\hlopt{$}\hlstd{ndrm.ch[famuss}\hlopt{$}\hlstd{actn3.r577x} \hlopt{==} \hlstr{"CT"}\hlstd{],} \hlkwc{breaks} \hlstd{=} \hlnum{20}\hlstd{,} \hlkwc{border} \hlstd{=} \hlstr{"green"}\hlstd{,}
-    \hlkwc{add} \hlstd{= T)}
-\hlkwd{hist}\hlstd{(famuss}\hlopt{$}\hlstd{ndrm.ch[famuss}\hlopt{$}\hlstd{actn3.r577x} \hlopt{==} \hlstr{"TT"}\hlstd{],} \hlkwc{breaks} \hlstd{=} \hlnum{20}\hlstd{,} \hlkwc{border} \hlstd{=} \hlstr{"red"}\hlstd{,}
-    \hlkwc{add} \hlstd{= T)}
+\hlcom{## Figure 1.35(b)}
+\hlkwd{hist}\hlstd{(famuss}\hlopt{$}\hlstd{ndrm.ch[famuss}\hlopt{$}\hlstd{actn3.r577x} \hlopt{==} \hlstr{"CC"}\hlstd{],} \hlkwc{breaks} \hlstd{=} \hlnum{20}\hlstd{,} \hlkwc{border} \hlstd{=} \hlstr{"dodgerblue"}\hlstd{,}
+     \hlkwc{xlab} \hlstd{=} \hlstr{"% Change in Non-Dominant Arm Strength"}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{50}\hlstd{),} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{250}\hlstd{),}
+     \hlkwc{main} \hlstd{=} \hlstr{"Percent Change in Non-Dominant Arm Strength by Genotype"}\hlstd{)}
+\hlkwd{hist}\hlstd{(famuss}\hlopt{$}\hlstd{ndrm.ch[famuss}\hlopt{$}\hlstd{actn3.r577x} \hlopt{==} \hlstr{"CT"}\hlstd{],} \hlkwc{breaks} \hlstd{=} \hlnum{20}\hlstd{,} \hlkwc{border} \hlstd{=} \hlstr{"darkgreen"}\hlstd{,}
+     \hlkwc{add} \hlstd{= T)}
+\hlkwd{hist}\hlstd{(famuss}\hlopt{$}\hlstd{ndrm.ch[famuss}\hlopt{$}\hlstd{actn3.r577x} \hlopt{==} \hlstr{"TT"}\hlstd{],} \hlkwc{breaks} \hlstd{=} \hlnum{20}\hlstd{,} \hlkwc{border} \hlstd{=} \hlstr{"firebrick1"}\hlstd{,}
+     \hlkwc{add} \hlstd{= T)}
+
+\hlkwd{legend}\hlstd{(}\hlstr{'topright'}\hlstd{,}
+       \hlkwc{col} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{"dodgerblue"}\hlstd{,} \hlstr{"darkgreen"}\hlstd{,} \hlstr{"firebrick1"}\hlstd{),}
+       \hlkwc{lwd} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{1}\hlstd{,} \hlnum{1}\hlstd{),}     \hlcom{## line width}
+       \hlkwc{legend} \hlstd{=} \hlkwd{c}\hlstd{(}\hlstr{'CC'}\hlstd{,} \hlstr{'CT'}\hlstd{,} \hlstr{'TT'}\hlstd{))}    \hlcom{##legend labels}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-33-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-40-1} 
 
 \end{knitrout}
 
 \section{Genomic Data}
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{## Table 1.36}
-\hlstd{subset.golub} \hlkwb{=} \hlstd{Golub[}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{,} \hlnum{3}\hlstd{,}
-    \hlnum{4}\hlstd{,} \hlnum{5}\hlstd{,} \hlnum{6}\hlstd{),} \hlkwd{c}\hlstd{(}\hlstr{"Samples"}\hlstd{,} \hlstr{"Gender"}\hlstd{,}
-    \hlstr{"cancer"}\hlstd{,} \hlstr{"AFFX.BioB.5.at"}\hlstd{,}
-    \hlstr{"AFFX.BioB.M.at"}\hlstd{,} \hlstr{"AFFX.BioB.3.at"}\hlstd{)]}
-\hlstd{subset.golub}
-\end{alltt}
-\begin{verbatim}
-##    Samples Gender cancer AFFX.BioB.5.at AFFX.BioB.M.at AFFX.BioB.3.at
-## 39      39      F   allB     -1363.2764      -1058.585    -541.469194
-## 40      40      F   allB      -796.2851      -1167.103       7.538493
-## 42      42      F   allB      -679.1392      -1069.832    -690.301829
-## 47      47      M   allB     -1164.4002      -1109.940    -990.127218
-## 48      48      F   allB     -1299.6538      -1401.999   -1077.543813
-## 49      49      M   allB     -1251.6207      -1236.344   -1587.702224
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
+
+% JV: Golub data (golub_exprs_pheno) needs to be added to the package
+
+% JV: Add material from 102 section 2 to this section, as an exercise? Doesn't seem useful to just reproduce the figures in OI Biostat 1.6 here.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Figure 1.37}
-\hlkwd{boxplot}\hlstd{(Golub[,} \hlnum{7}\hlopt{:}\hlnum{9}\hlstd{])}
+\hlkwd{boxplot}\hlstd{(golub.exprs.pheno[,} \hlnum{7}\hlopt{:}\hlnum{9}\hlstd{])}
 \end{alltt}
-\end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-35-1} 
 
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in boxplot(golub.exprs.pheno[, 7:9]): object 'golub.exprs.pheno' not found}}\end{kframe}
 \end{knitrout}
 
 
