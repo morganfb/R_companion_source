@@ -1,0 +1,13 @@
+*.toc
+*.xml
+*.out
+*.idx
+*.bib
+*.gz
+*.log
+*.bbl
+*.blg
+
+*.Rhistory
+
+
