@@ -1,0 +1,106 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in,bottom=.5in,includehead,includefoot]{geometry}
+\usepackage{hyperref}
+\usepackage{alltt}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+\title{Open Intro Biostat R Companion: \\ Chapter 3}
+\author{Morgan F. Breitmeyer}
+\date{}
+ 
+\begin{document}
+\maketitle
+\tableofcontents
+\vspace{1cm}
+
+Chapter 3 presents the idea of several known and commonly used distributions.  R is a powerful source for accessing and using these distributions.  
+
+\section{Normal Distribution}
+We have learned that the \textbf{normal distribution} can be written as 
+\[ N(\mu, \sigma) \]
+where $\mu$ is the mean of the distribution and $\sigma$ is the standard deviation.  Using this idea, 
+we can create a standard normal distribution in one of two ways: 
+
+\subsection{Direct Plot}
+We can use a function in R called the \textit{dnorm} function which for a given posible value of the distribution, returns the probability of the distribution holding that value.  
+<<fig.height=3, fig.width=4, fig.align = "center">>=
+## getting a list of values to evaluate distribution
+X = seq(-4, 4, 0.01)
+## getting normal distribution value of the given X values 
+Y = dnorm(X, mean = 0, sd = 1) 
+## plotting results 
+plot(X,Y, type = "l") 
+@
+
+\subsection{Through Simulation}
+The second method involves sampling randomly from the known normal distribution to simulate the probabilities that we drew directly in the above method.  In this case, we use the function \textit{rnorm}, which takes $n$ number of random samples from the normal distribution with the given mean and standard deviation.  In the \textit{hist} command, we include the specification that \textit{freq = FALSE} to make the plot reflect percentages rather than frequency counts.  
+<<fig.height=3, fig.width=4, fig.align = "center">>=
+set.seed(1) 
+x <- rnorm(n = 100000, mean = 0, sd = 1)
+hist(x, breaks = 100, freq = FALSE) 
+@
+
+\subsection{A Comparison} 
+To see how comparable the two methods are, we can plot them on the same graph as follows.  
+<<fig.height=3, fig.width=4, fig.align = "center">>=
+hist(x, freq = FALSE, breaks = 100)
+lines(X,Y, col = "red")
+@
+Note that the two show very similar results.  For practical purposes, we typically use \textit{dnorm} as it only requires one command and is the asymptotic result of simulations, rather than an approximation.  
+
+\subsection{Probability Functions}
+For the normal distribution, there are two more functions that are very useful, \textit{pnorm} and \textit{qnorm}. The \textit{pnorm} tells you the percentage of the normal distribution that is less than or equal to the value you put in.  This corresponds to the gray area in the below plot and can be written as $pnorm(X) = P(normal < X)$.  On the other hand, the \textit{qnorm} function is the inverse function, instead giving the $X$ value such that the given percentage of the distribution is less than or equal to that value.  
+<<echo = FALSE, fig.height=4, fig.width=4, fig.align = "center">>=
+plot(X,Y, type = "l")
+these <- which(X < 0)
+polygon(c(X[these[1]], X[these], X[rev(these)[1]]),
+        c(0, Y[these], 0),
+        col = '#CCCCCC')
+@
+
+An example of using these two functions is as follows 
+<<>>=
+pnorm(0, mean = 0, sd = 1)
+qnorm(0.5, mean = 0, sd = 1)
+@
+
+\section{Binomial Distribution}
+The functions we saw above for the normal distribution can be similarly used for the \textbf{binomial distribution} as follows where the necessary arguments are \textit{size} and \textit{prob}
+\begin{itemize} 
+\item \textit{dbinom}
+\item \textit{rbinom}
+\item \textit{pbinom}
+\item \textit{qbinom}
+\end{itemize}
+
+\section{Poisson Distribution}
+Similarly, we can build out the functions for the \textbf{poisson distribution} as the following where the necessary argument is \textit{lambda}
+\begin{itemize} 
+\item \textit{dbinom}
+\item \textit{rbinom}
+\item \textit{pbinom}
+\item \textit{qbinom}
+\end{itemize}
+
+\section{Geometric Distribution}
+We can follow the same pattern for the \textbf{geometric distribution} to get the following where the necessary argument is \textit{prob}
+\begin{itemize} 
+\item \textit{dgeom}
+\item \textit{rgeom}
+\item \textit{pgeom}
+\item \textit{qgeom}
+\end{itemize}
+
+\section{Negative Binomial Distribution}
+Finally, we can follow the same pattern for the \textbf{negative binomial distribution} to get the following where the necessary arguments are \textit{prob} and \textit{size}
+\begin{itemize} 
+\item \textit{dnbinom}
+\item \textit{rnbinom}
+\item \textit{pnbinom}
+\item \textit{qnbinom}
+\end{itemize}
+
+\end{document}
