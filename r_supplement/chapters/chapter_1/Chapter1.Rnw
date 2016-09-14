@@ -51,7 +51,7 @@ This chapter introduces basic commands for manipulating datasets, including how 
 
 \section{Case study: preventing peanut allergies}
 
-The \textt{LEAP} dataset contains the results of the "Learning Early About Peanut Allergy" (LEAP) study, an experiment conducted to assess whether early exposure to peanut products reduces the probability of peanut allergies developing. To access the documentation associated with the dataset, run the following command: 
+The \texttt{LEAP} dataset contains the results of the "Learning Early About Peanut Allergy" (LEAP) study, an experiment conducted to assess whether early exposure to peanut products reduces the probability of peanut allergies developing. To access the documentation associated with the dataset, run the following command: 
 
 <<eval=FALSE>>=
 help(LEAP)
@@ -237,7 +237,7 @@ sd(frog.altitude.data$clutch.volume)
 %sd(frog.altitude.data$clutch.volume)        ## compare to R function value
 %@
 
-Variability can also be measured using the textbf{interquartile range (IQR)}, which equals the third quartile (the $75^{th}$ percentile) minus the first quartile (the $25^{th}$ percentile). 
+Variability can also be measured using the \textbf{interquartile range (IQR)}, which equals the third quartile (the $75^{th}$ percentile) minus the first quartile (the $25^{th}$ percentile). 
 
 <<>>=
 IQR(frog.altitude.data$clutch.volume)
@@ -342,7 +342,7 @@ Like the \texttt{hist()} function, the \texttt{boxplot()} function also takes se
 %\item $xlim$: the range of values you would like the x-axis to have; of the form $c(lower bound, upper bound)$; fairly meaningless for a boxplot
 %\item $ylim$: the range of values you would like the y-axis to have; of the form $c(lower bound, upper bound)$; be careful not to specify too much here because you can eliminate data of importance to the boxplot
 %\item $main$: the title you would like the whole plot to have; must be in quotation marks
-\end{itemize}
+% \end{itemize}
 
 The following command reproduces a simplified version of \textit{OI Biostat} Figure 1.19. 
 
@@ -357,7 +357,7 @@ boxplot(x = frog.altitude.data$clutch.volume, ylab = 'Clutch Volume', axes = TRU
 \subsection{Scatterplots and correlation}
 \textbf{Scatterplots} can be used to visualize the relationship between two numerical variables. In the \texttt{plot()} command, either a comma or a tilde can be used between the variable names; i.e., \texttt{plot(x,y)} versus \texttt{plot(y $\sim$ x)}.
 
-<<fig.height=4, fig.width=4>>=
+<<fig.height=4, fig.width=4, fig.align="center">>=
 plot(frog.altitude.data$body.size, frog.altitude.data$clutch.volume)
 @
 
@@ -604,7 +604,7 @@ barplot(row.prop.table, col=c("gray", "firebrick1", "dodgerblue", "darkgreen", "
 %@
 %\textit{Note:} In the \textit{legend} line, the command  \textit{inset=} controls where on the plot the legend prints out.  Sometimes this specification can be a little bit bizarre so it may require some alteration to find the right spot for the legend.  
 
-In \texit{OI Biostat} Figure 1.34, the data from the contingency table are organized differently, with each bar representing a level of \texttt{race}. To make this change, reverse the order of the variables in \texttt{counts.table}
+In \textit{OI Biostat} Figure 1.34, the data from the contingency table are organized differently, with each bar representing a level of \texttt{race}. To make this change, reverse the order of the variables in \texttt{counts.table}
 
 <<tidy = TRUE, fig.height=4, tidy.opts=list(width.cutoff=60)>>=
 ## Figure 1.34a
@@ -692,4 +692,4 @@ boxplot(golub.exprs.pheno[,7:9])
 @
 
 
-\end{document}
+% \end{document}

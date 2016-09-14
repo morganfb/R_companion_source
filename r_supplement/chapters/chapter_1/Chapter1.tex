@@ -1,53 +1,4 @@
-\documentclass[11pt]{article}\usepackage[]{graphicx}\usepackage[]{color}
-%% maxwidth is the original width if it is less than linewidth
-%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
-\makeatletter
-\def\maxwidth{ %
-  \ifdim\Gin@nat@width>\linewidth
-    \linewidth
-  \else
-    \Gin@nat@width
-  \fi
-}
-\makeatother
-
-\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
-\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
-\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
-\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
-\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
-\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
-\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
-\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
-\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
-
-\usepackage{framed}
-\makeatletter
-\newenvironment{kframe}{%
- \def\at@end@of@kframe{}%
- \ifinner\ifhmode%
-  \def\at@end@of@kframe{\end{minipage}}%
-  \begin{minipage}{\columnwidth}%
- \fi\fi%
- \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
- \colorbox{shadecolor}{##1}\hskip-\fboxsep
-     % There is no \\@totalrightmargin, so:
-     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
- \MakeFramed {\advance\hsize-\width
-   \@totalleftmargin\z@ \linewidth\hsize
-   \@setminipage}}%
- {\par\unskip\endMakeFramed%
- \at@end@of@kframe}
-\makeatother
-
-\definecolor{shadecolor}{rgb}{.97, .97, .97}
-\definecolor{messagecolor}{rgb}{0, 0, 0}
-\definecolor{warningcolor}{rgb}{1, 0, 1}
-\definecolor{errorcolor}{rgb}{1, 0, 0}
-\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
-
-\usepackage{alltt}
+% \documentclass[11pt]{article}
 
 \usepackage[margin=1in,bottom=.5in,includehead,includefoot]{geometry}
 \usepackage{hyperref}
@@ -66,7 +17,7 @@
 \title{Open Intro Biostat R Companion: \\ Chapter 1}
 \author{Morgan F. Breitmeyer}
 \date{}
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
 \begin{document}
 
 %%JV: apparently this is only needed when using sweave instead of knitr
@@ -108,7 +59,7 @@ This chapter introduces basic commands for manipulating datasets, including how 
 
 \section{Case study: preventing peanut allergies}
 
-The \textt{LEAP} dataset contains the results of the "Learning Early About Peanut Allergy" (LEAP) study, an experiment conducted to assess whether early exposure to peanut products reduces the probability of peanut allergies developing. To access the documentation associated with the dataset, run the following command: 
+The \texttt{LEAP} dataset contains the results of the "Learning Early About Peanut Allergy" (LEAP) study, an experiment conducted to assess whether early exposure to peanut products reduces the probability of peanut allergies developing. To access the documentation associated with the dataset, run the following command: 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -199,8 +150,8 @@ Alternatively, since there are 6 columns in the dataset, the command \texttt{LEA
 ## 1      LEAP_100522 Peanut Consumption            PASS OFC
 ## 2      LEAP_103358 Peanut Consumption            PASS OFC
 ## 3      LEAP_105069   Peanut Avoidance            PASS OFC
-## 529    LEAP_994047   Peanut Avoidance            PASS OFC
-## 530    LEAP_997608 Peanut Consumption            PASS OFC
+## 639    LEAP_994047   Peanut Avoidance            PASS OFC
+## 640    LEAP_997608 Peanut Consumption            PASS OFC
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -266,11 +217,11 @@ Similarly, matrix notation can be used to create \textit{OI Biostat} Table 1.5.
                        \hlstr{"ndrm.ch"}\hlstd{)]}
 \end{alltt}
 \begin{verbatim}
-##        sex age      race height weight actn3.r577x ndrm.ch
-## 1   Female  27 Caucasian   65.0    199          CC    40.0
-## 2     Male  36 Caucasian   71.7    189          CT    25.0
-## 3   Female  24 Caucasian   65.0    134          CT    40.0
-## 595 Female  30 Caucasian   64.0    134          CC    43.8
+##         sex age      race height weight actn3.r577x ndrm.ch
+## 1    Female  27 Caucasian   65.0    199          CC    40.0
+## 2      Male  36 Caucasian   71.7    189          CT    25.0
+## 3    Female  24 Caucasian   65.0    134          CT    40.0
+## 1348 Female  30 Caucasian   64.0    134          CC    43.8
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -451,7 +402,7 @@ Alternatively, use the \textsf{R} functions \texttt{var()} and \texttt{sd()}:
 %sd(frog.altitude.data$clutch.volume)        ## compare to R function value
 %@
 
-Variability can also be measured using the textbf{interquartile range (IQR)}, which equals the third quartile (the $75^{th}$ percentile) minus the first quartile (the $25^{th}$ percentile). 
+Variability can also be measured using the \textbf{interquartile range (IQR)}, which equals the third quartile (the $75^{th}$ percentile) minus the first quartile (the $25^{th}$ percentile). 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -613,7 +564,7 @@ Like the \texttt{hist()} function, the \texttt{boxplot()} function also takes se
 %\item $xlim$: the range of values you would like the x-axis to have; of the form $c(lower bound, upper bound)$; fairly meaningless for a boxplot
 %\item $ylim$: the range of values you would like the y-axis to have; of the form $c(lower bound, upper bound)$; be careful not to specify too much here because you can eliminate data of importance to the boxplot
 %\item $main$: the title you would like the whole plot to have; must be in quotation marks
-\end{itemize}
+% \end{itemize}
 
 The following command reproduces a simplified version of \textit{OI Biostat} Figure 1.19. 
 
@@ -640,7 +591,12 @@ The following command reproduces a simplified version of \textit{OI Biostat} Fig
 \hlkwd{plot}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{body.size, frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-23-1} 
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-23-1} 
+
+}
+
+
 
 \end{knitrout}
 
@@ -1003,7 +959,7 @@ A \textbf{standardized segmented bar plot} uses proportions to scale the data, a
 %@
 %\textit{Note:} In the \textit{legend} line, the command  \textit{inset=} controls where on the plot the legend prints out.  Sometimes this specification can be a little bit bizarre so it may require some alteration to find the right spot for the legend.  
 
-In \texit{OI Biostat} Figure 1.34, the data from the contingency table are organized differently, with each bar representing a level of \texttt{race}. To make this change, reverse the order of the variables in \texttt{counts.table}
+In \textit{OI Biostat} Figure 1.34, the data from the contingency table are organized differently, with each bar representing a level of \texttt{race}. To make this change, reverse the order of the variables in \texttt{counts.table}
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
