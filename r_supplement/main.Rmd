@@ -1,0 +1,12 @@
+---  
+title: My Report  
+output: 
+  pdf_document:
+    toc: yes 
+---
+
+```{r child = 'chapters/chapter_1/Chapter1.Rnw'}
+```
+
+#```{r child = 'chapter2.Rmd'}
+#```

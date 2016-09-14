@@ -1,0 +1,9 @@
+\documentclass{article}
+
+\begin{document}
+
+<<child-demo, child='chapters/chapter_1/Chapter1.Rnw'>>=
+@
+
+
+\end{document}
