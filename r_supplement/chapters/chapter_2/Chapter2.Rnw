@@ -1,29 +1,4 @@
-\documentclass[11pt]{article}
-
-\usepackage[margin=1in,bottom=.5in,includehead,includefoot]{geometry}
-\usepackage{hyperref}
-\usepackage{alltt}
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-
-%comment these lines out to revert to default font
-\usepackage{kpfonts}
-\usepackage[T1]{fontenc}
-\usepackage{inconsolata}
-
-\def\labelitemi{--}
-
-\title{Open Intro Biostat R Companion: \\ Chapter 2}
-\author{Morgan F. Breitmeyer}
-\date{}
-
-\begin{document}
-
-%\maketitle
-
-\tableofcontents
-\vspace{1cm}
+\vspace{0.5cm} 
 
 This chapter focuses on the material covered in \textit{OI Biostat} Chapter 2, Section 2.5. While simple conditional probability problems are easily solved by hand with a basic calculator, \textsf{R} can be useful for more elaborate scenarios like those that involve Bayes' Theorem.
 
@@ -282,5 +257,3 @@ ppv
 %ppv.sim = num.true.pos/num.pos.test  
 %ppv.sim
 %@
-
-\end{document}

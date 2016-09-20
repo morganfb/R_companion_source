@@ -1,22 +1,6 @@
-\documentclass[11pt]{article}
+\vspace{0.5cm} 
 
-\usepackage[margin=1in,bottom=.5in,includehead,includefoot]{geometry}
-\usepackage{hyperref}
-\usepackage{alltt}
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-
-\title{Open Intro Biostat R Companion: \\ Chapter 3}
-\author{Morgan F. Breitmeyer}
-\date{}
- 
-\begin{document}
-\maketitle
-\tableofcontents
-\vspace{1cm}
-
-Chapter 3 presents the idea of several known and commonly used distributions.  R is a powerful source for accessing and using these distributions.  
+Chapter 3 presents the idea of several known and commonly used distributions.  R is a powerful source for accessing and using these distributions.
 
 \section{Normal Distribution}
 We have learned that the \textbf{normal distribution} can be written as 
@@ -52,7 +36,11 @@ lines(X,Y, col = "red")
 Note that the two show very similar results.  For practical purposes, we typically use \textit{dnorm} as it only requires one command and is the asymptotic result of simulations, rather than an approximation.  
 
 \subsection{Probability Functions}
-For the normal distribution, there are two more functions that are very useful, \textit{pnorm} and \textit{qnorm}. The \textit{pnorm} tells you the percentage of the normal distribution that is less than or equal to the value you put in.  This corresponds to the gray area in the below plot and can be written as $pnorm(X) = P(normal < X)$.  On the other hand, the \textit{qnorm} function is the inverse function, instead giving the $X$ value such that the given percentage of the distribution is less than or equal to that value.  
+For the normal distribution, there are two more functions that are very useful, \textit{pnorm} and \textit{qnorm}. 
+
+\subsubsection{pnorm} 
+The function \textit{pnorm} tells you the percentage of the normal distribution that is less than or equal to the value you put in.  This corresponds to the gray area in the below plot and can be written as $pnorm(x, mean = \mu, sd = \sigma)$ which is equivalent to $P(X < x)$ where $X \sim N(\mu, \sigma)$ and $x$ is the point of interest.    
+ 
 <<echo = FALSE, fig.height=4, fig.width=4, fig.align = "center">>=
 plot(X,Y, type = "l")
 these <- which(X < 0)
@@ -61,11 +49,24 @@ polygon(c(X[these[1]], X[these], X[rev(these)[1]]),
         col = '#CCCCCC')
 @
 
-An example of using these two functions is as follows 
-<<>>=
-pnorm(0, mean = 0, sd = 1)
-qnorm(0.5, mean = 0, sd = 1)
-@
+For some example scenarios, where we want to find a proportion of the normal distribution given $x$ or $z$, we can use the following configurations of \textit{pnorm()}: 
+\begin{itemize}
+\item $pnorm(z) = P(Z \leq z)$ 
+\item $pnorm(z, lower.tail = FALSE) = P(Z > z)$ 
+\item $pnorm(x, \mu, \sigma) = P(X \leq x)$ where $X = \sigma Z + \mu$ 
+\item $pnorm(x, \mu, \sigma, lower.tail = FALSE) = P(X > x)$ where $X = \sigma Z + \mu$ 
+\end{itemize}
+
+\subsubsection{qnorm} 
+On the other hand, the \textit{qnorm} function is the inverse function, instead giving the $X$ value such that the given percentage of the distribution is less than or equal to that value. This function takes a known probability and returns a value on the normal distribution that is corresponding.  
+
+Some sample configurations of using \textit{qnorm()} can be as follows,  
+\begin{itemize}
+\item $qnorm(p) = P(Z \leq z)$ 
+\item $qnorm(p, lower.tail = FALSE) = P(Z > z)$ 
+\item $qnorm(p, \mu, \sigma) = P(X \leq x)$ where $X = \sigma Z + \mu$ 
+\item $qnorm(p, \mu, \sigma, lower.tail = FALSE) = P(X > x)$ where $X = \sigma Z + \mu$ 
+\end{itemize}
 
 \section{Binomial Distribution}
 The functions we saw above for the normal distribution can be similarly used for the \textbf{binomial distribution} as follows where the necessary arguments are \textit{size} and \textit{prob}
@@ -75,6 +76,37 @@ The functions we saw above for the normal distribution can be similarly used for
 \item \textit{pbinom}
 \item \textit{qbinom}
 \end{itemize}
+
+Similar to the above example with the normal distribution, we can use these functions in multiple ways to work with the binomial distribution.  
+
+\subsection{Accessing the Binomial Distribution}
+As we did above, we can directly access the binomial distribution using the \textit{dbinom} function as follows: 
+<<fig.height=3, fig.width=6, fig.align = "center">>=
+## Splitting the graphics window into two panes 
+par(mfrow=c(1,2))
+## Directly plotting the binomial distribution
+ # getting a list of values to evaluate distribution
+X = seq(0, 10, 1)
+ # getting normal distribution value of the given X values 
+Y = dbinom(X, size = 10, prob = .25)
+ # plotting results 
+plot(X,Y, type = "s", main = "Direct Plot", xlim = c(0,10)) 
+
+## Instead Using Simulation
+set.seed(1) 
+x <- rbinom(n = 100000, size = 10, prob = .25)
+hist(x, breaks = 10, freq = FALSE,right = FALSE, main = "Simulation", xlim = c(0,10))
+box()
+@
+
+\subsection{Comparison of the Methods}
+<<fig.height=3, fig.width=3, fig.align = "center">>=
+hist(x, breaks = 10, freq = FALSE,right = FALSE) 
+lines(X,Y, type = "s", col = "red")
+@
+
+\section{Continuous and Discrete Distributions}
+
 
 \section{Poisson Distribution}
 Similarly, we can build out the functions for the \textbf{poisson distribution} as the following where the necessary argument is \textit{lambda}
@@ -103,4 +135,4 @@ Finally, we can follow the same pattern for the \textbf{negative binomial distri
 \item \textit{qnbinom}
 \end{itemize}
 
-\end{document}
+

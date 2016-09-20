@@ -1,9 +1,57 @@
-\documentclass{article}
+\documentclass{report}
+
+\usepackage[margin=1in,bottom=.5in,includehead,includefoot]{geometry}
+\usepackage{hyperref}
+\usepackage{alltt}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{minitoc}
+\fancyhf{}
+
+%comment these lines out to revert to default font
+\usepackage{kpfonts}
+\usepackage[T1]{fontenc}
+\usepackage{inconsolata}
 
 \begin{document}
 
+%% CREATE A TITLE PAGE 
+%% WRITE A PREFACE 
+%JV: Will eventually need a longer introduction with some details about downloading R, R Studio, etc. Also clarify the relationship between what OI Biostat shows vs. this book (e.g., difference between figures)
+
+\setcounter{tocdepth}{1}
+\dominitoc
+\tableofcontents
+
+\newpage 
+\setcounter{chapter}{-1}
+\chapter{Preface}
+\minitoc
+<<child-demo, child='chapters/chapter_0/Chapter0.Rnw'>>=
+@
+
+\newpage 
+\chapter{Introduction to Basic Techniques}
+\minitoc
 <<child-demo, child='chapters/chapter_1/Chapter1.Rnw'>>=
 @
 
+\newpage 
+\chapter{Using R for Probabilities}
+\minitoc
+<<child-demo, child='chapters/chapter_2/Chapter2.Rnw'>>=
+@
+
+\newpage 
+\chapter{Distributions}
+\minitoc
+<<child-demo, child='chapters/chapter_3/Chapter3.Rnw'>>=
+@
+
+\newpage 
+\chapter{Chapter 4 - Name this}
+\minitoc
+<<child-demo, child='chapters/chapter_4/Chapter4.Rnw'>>=
+@
 
 \end{document}

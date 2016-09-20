@@ -1,51 +1,4 @@
-\documentclass[11pt]{article}
-
-\usepackage[margin=1in,bottom=.5in,includehead,includefoot]{geometry}
-\usepackage{hyperref}
-\usepackage{alltt}
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-
-%comment these lines out to revert to default font
-\usepackage{kpfonts}
-\usepackage[T1]{fontenc}
-\usepackage{inconsolata}
-
-\def\labelitemi{--}
-
-\title{Open Intro Biostat R Companion: \\ Chapter 1}
-\author{Morgan F. Breitmeyer}
-\date{}
-
-\begin{document}
-
-%%JV: apparently this is only needed when using sweave instead of knitr
-%\SweaveOpts{concordance=TRUE}
-
-%\maketitle
-
-\tableofcontents
-
-%JV: Will eventually need a longer introduction with some details about downloading R, R Studio, etc. Also clarify the relationship between what OI Biostat shows vs. this book (e.g., difference between figures)
-
-\vspace{1cm}
-This text is a companion to \textit{Introductory Statistics for the Life and Biomedical Sciences}; while the main text focuses on statistical concepts and ideas, this supplement provides details about how to use the statistical computing language \textsf{R}.
-
-All the datasets used in the text can be accessed by downloading the OIBiostat package from \textsf{R}. Run the following command to download the package:
-
-%% These commands aren't going to work until we have uploaded the package to CRAN. Just skip it for now and require below.
-<<eval = FALSE>>=
-install.packages("OIBioStat")  ## make sure to include the quotations
-@
-
-The above command only needs to be run once. Each time a dataset in the package is needed, run the following command: 
-
-<<warning = FALSE, message = FALSE>>=
-require(OIBioStat) ## note the lack of quotations here
-@
-
-%%% start of Chapter 1
+\vspace{0.5cm} 
 
 This chapter introduces basic commands for manipulating datasets, including how to calculate numerical summaries, create tables from data, and make graphical plots. 
 
@@ -128,7 +81,7 @@ famuss[c(1,2,3,595),c( "sex", "age", "race", "height", "weight", "actn3.r577x",
                        "ndrm.ch")]
 @
 
-\stepcounter{section}
+\stepcounter{subsection}
 \section{Numerical Data}
 
 Numerical summaries can be quickly and easily calculated using \textsf{R}. The \texttt{summary()} command is one way to access several numerical summaries at once, including the minimum and maximum values of a variable:
@@ -269,11 +222,10 @@ mean(frog.altitude.data$clutch.volume[less.than.2000])
 sd(frog.altitude.data$clutch.volume[less.than.2000])
 @
 
-\subsection{Visualizing distributions of data: histograms and boxplots}
+\subsection{Visualizing distributions of data}
 While most numerical summaries can be calculated by hand, \textsf{R} is essential for creating graphical summaries.
 
 \subsubsection{Histograms}
-
 A \textbf{histogram} provides a view of data density. Observations are sorted into different bins based on their value, and the histogram shows the number of observations in each bin. The following command produces a histogram of the \texttt{clutch.volume} variable.
 
 <<fig.height=3.5, fig.width=5.5>>=
@@ -408,7 +360,7 @@ plot(frog.altitude.data$clutch.volume~frog.altitude.data$body.size, col = "dodge
 
 Simplified versions of \textit{OI Biostat} Figures 1.21, 1.22, and 1.23 can also be reproduced using \texttt{plot()}.
 
-\subsubsection{Correlation}
+\subsection{Correlation}
 
 \textbf{Correlation} is a numerical measure of the strength of a linear relationship. The formula for correlation uses the pairing of the two variables, just as the scatterplot does in a graph, so the data used in calculating correlation is a set of $n$ ordered pairs $(x_1,y_1), (x_2,y_2), \ldots, (x_n, y_n) $.
 
@@ -538,7 +490,7 @@ barplot(table(famuss$actn3.r577x)/sum(table(famuss$actn3.r577x)))  ## frequency 
 
 \newpage
 
-\subsubsection{Segmented Bar Plot}
+\subsection{Segmented Bar Plot}
 
 A \textbf{segmented bar plot} draws from a contingency table to display information about two categorical variables. The following code reproduces \textit{OI Biostat} Figure 1.33a, in which a bar plot was created using the \texttt{actn3.r577x} variable, with each group divided by the levels of race. The simplified version of the plot uses the default greyscale shading; it is also possible to specify a list of colors using \texttt{c()}. 
 
@@ -643,7 +595,6 @@ barplot(row.prop.table, col=c("dodgerblue", "darkgreen", "gold"),
 %@
 
 \subsection{Comparing numerical data across groups}
-
 \subsubsection{Side-by-side boxplots}
 
 The \textbf{side-by-side} boxplot is a useful tool for comparing the distribution of numerical data across categories. \textit{OI Biostat} Figure 1.35a shows a side-by-side boxplot for percent change in non-dominant arm strength grouped by genotype. The response variable $y$ comes before the tilde and the explanatory variable $x$; in this case, the response variable is percent change in strength.
@@ -661,7 +612,7 @@ boxplot(famuss$ndrm.ch ~ famuss$actn3.r577x,
 boxplot(frog.altitude.data$clutch.volume ~ frog.altitude.data$altitude, xlab = "Clutch Volume", ylab = "Altitude")
 @
 
-\subsubsection{Hollow histograms}
+\subsubsection{Hollow Histograms}
 
 A \textbf{hollow histogram} plots the outlines of histograms for each group onto the same axes. To plot a hollow histogram, specify any axis limits and labels in the command for the first histogram; the subsequent histograms require the argument \texttt{add = T} in order for them to be overlaid on top of the first plot.
 
@@ -691,5 +642,3 @@ legend('topright',
 boxplot(golub.exprs.pheno[,7:9])
 @
 
-
-% \end{document}
