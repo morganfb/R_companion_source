@@ -51,10 +51,10 @@
 <<child-demo, child='chapters/chapter_3/Chapter3.Rnw'>>=
 @
 
-\newpage 
-\chapter{Chapter 4 - Name this}
-\minitoc
-<<child-demo, child='chapters/chapter_4/Chapter4.Rnw'>>=
-@
+%' \newpage 
+%' \chapter{Chapter 4 - Name this}
+%' \minitoc
+%' <<child-demo, child='chapters/chapter_4/Chapter4.Rnw'>>=
+%' @
 
 \end{document}

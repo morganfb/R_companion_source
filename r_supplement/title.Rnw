@@ -2,10 +2,10 @@
     \begin{center}
         \vspace*{1cm}
         
-        \textbf{Book Title}
+        \textbf{An Introductory Text on Using R As a Statistical Computing Software}
         
         \vspace{0.5cm}
-        Book Subtitle
+        For Use in the Biomedical and Life Sciences 
         
         \vspace{1.5cm}
         
