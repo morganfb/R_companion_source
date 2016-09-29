@@ -15,7 +15,10 @@
 
 \begin{document}
 
-%% CREATE A TITLE PAGE 
+\minitoc
+<<child-demo, child='title.Rnw'>>=
+@
+
 %% WRITE A PREFACE 
 %JV: Will eventually need a longer introduction with some details about downloading R, R Studio, etc. Also clarify the relationship between what OI Biostat shows vs. this book (e.g., difference between figures)
 

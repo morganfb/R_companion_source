@@ -69,7 +69,11 @@ Some sample configurations of using \textit{qnorm()} can be as follows,
 \end{itemize}
 
 \section{Binomial Distribution}
-The functions we saw above for the normal distribution can be similarly used for the \textbf{binomial distribution} as follows where the necessary arguments are \textit{size} and \textit{prob}
+We can write a random variable which follows a \textbf{binomial distribution} as
+\[ X \sim Binom(n,p) \]
+where $n$ represents the sample size and $p$ represents the probability of success.  
+
+The functions we saw above for the normal distribution can be similarly used for the binomial as follows where the necessary arguments are \textit{size} and \textit{prob}, corresponding respectively to $n$ and $p$ in our above representation of the binomial.
 \begin{itemize} 
 \item \textit{dbinom}
 \item \textit{rbinom}
@@ -100,39 +104,54 @@ box()
 @
 
 \subsection{Comparison of the Methods}
+Instead of side by side, we can superimpose the two graphs for direct comparison.  
 <<fig.height=3, fig.width=3, fig.align = "center">>=
 hist(x, breaks = 10, freq = FALSE,right = FALSE) 
 lines(X,Y, type = "s", col = "red")
 @
 
 \section{Continuous and Discrete Distributions}
+Using the binomial distribution highlights an important feature of distributions that we must consider: whether the random variable is \textbf{discrete} or \textbf{continuous}.  A discrete distribution can only take on specified values, typically the integers. The binomial is a great example of this - it can be any integer greater than or equal to zero.  For example, the possible values of a binomial are \{0, 1, 2, 3, ...\}.  
+
+On the other hand, a continuous distribution can take on any real number within a specified range.  For example, looking at the standard normal distribution, a list of some possible values could be \{0, 0.1, 0.01, 0.001, 0.0001, ...\}.  This is a limited list of the infinite list of possible values that a continuous distribution could take on.  
+
+The reason we care about the classification of a random variable as discrete or continous is that it affects how we use our probability functions in $R$.  Let's walk through an example to see the difference.  Suppose we have a normally distributed random variable, $X$, and a binomially distributed random variable, $Y$. 
+\[ X \sim N(0,1) \; \; \; \; \; \; \; \; \; \; \; \;  Y \sim Binom(15,0.5) \]
+If we wanted to know for these two distributions, the probability of being less than 2, we would consider $P(X < 2)$ and $P(Y < 2)$.  However, for the binomial distribution $P(Y<2) = P(Y \leq 1) = P(Y=0) + P(Y=1)$ because there is a discrete set of possible values that $Y$ can take on.  $Y$ can only take on the integer values, and less than 2, that just leaves 0 and 1, whereas the normal distribution can take on any non-integer value in that interval, which is an infinite number of values.  For the normal distribution, solving for $P(Y<2)$ is mathematically equivalent to $P(Y \leq 2)$ because it is continuous.  
+
+So to solve for these probabilities, we would use \textit{pnorm} and \textit{pbinom}, but we have to be careful with the discrete binomial case because these functions automatically give the less than or equal to probability, not just the less than probability.  The correct commands to use would be 
+<<>>=
+pnorm(2) 
+pbinom(1, size = 15, prob=0.5)
+@
+
+To summarize, we would use the binomial probaility functions as follows, 
+\begin{itemize} 
+\item $dbinom(x,n,p) = P(X = x)$ 
+\item $pbinom(x,n,p) = P(X \leq x)$ 
+\item $pbinom(x,n,p, lower.tail = FALSE) = P(X > x)$ 
+\end{itemize} 
 
 
-\section{Poisson Distribution}
+\section{Other Distributions}
+\subsection{Poisson Distribution}
 Similarly, we can build out the functions for the \textbf{poisson distribution} as the following where the necessary argument is \textit{lambda}
 \begin{itemize} 
-\item \textit{dbinom}
-\item \textit{rbinom}
-\item \textit{pbinom}
-\item \textit{qbinom}
+\item $dpoisson(x, lambda) = P(X = x)$ 
+\item $ppois(x, lambda) = P(X \leq x)$ 
+\item $ppois(x, lambda, lower.tail = FALSE) = P(X > x)$ 
 \end{itemize}
 
-\section{Geometric Distribution}
+\subsection{Geometric Distribution}
 We can follow the same pattern for the \textbf{geometric distribution} to get the following where the necessary argument is \textit{prob}
 \begin{itemize} 
-\item \textit{dgeom}
-\item \textit{rgeom}
-\item \textit{pgeom}
-\item \textit{qgeom}
+\item $dgeom(x,prob) = P(X = x)$ 
+\item $pgeom(x,prob) = P(X \leq x)$
 \end{itemize}
 
-\section{Negative Binomial Distribution}
+\subsection{Negative Binomial Distribution}
 Finally, we can follow the same pattern for the \textbf{negative binomial distribution} to get the following where the necessary arguments are \textit{prob} and \textit{size}
 \begin{itemize} 
-\item \textit{dnbinom}
-\item \textit{rnbinom}
-\item \textit{pnbinom}
-\item \textit{qnbinom}
+\item $dnbinom(x,n,p) = P(X = x)$ 
+\item $pnbinom(x,n,p) = P(X \leq x)$ 
 \end{itemize}
-
-

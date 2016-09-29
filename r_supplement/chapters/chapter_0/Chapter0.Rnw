@@ -1,14 +1,14 @@
 This text is a companion to \textit{Introductory Statistics for the Life and Biomedical Sciences}; while the main text focuses on statistical concepts and ideas, this supplement provides details about how to use the statistical computing language \textsf{R}.
 
-All the datasets used in the text can be accessed by downloading the OIBiostat package from \textsf{R}. Run the following command to download the package:
-
-%% These commands aren't going to work until we have uploaded the package to CRAN. Just skip it for now and require below.
+%' % All the datasets used in the text can be accessed by downloading the OIBiostat package from \textsf{R}. Run the following command to download the package:
+%' 
+%' %% These commands aren't going to work until we have uploaded the package to CRAN. Just skip it for now and require below.
 <<eval = FALSE>>=
 install.packages("OIBioStat")  ## make sure to include the quotations
 @
-
-The above command only needs to be run once. Each time a dataset in the package is needed, run the following command: 
-
+%' 
+%' The above command only needs to be run once. Each time a dataset in the package is needed, run the following command: 
+%' 
 <<warning = FALSE, message = FALSE>>=
 require(OIBioStat) ## note the lack of quotations here
 @
