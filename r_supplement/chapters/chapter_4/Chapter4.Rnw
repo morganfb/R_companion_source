@@ -1,2 +1,186 @@
 \vspace{0.5cm} 
 
+\section{Taking a Sample of a Dataset}
+The main text talks through the importance of using a sample of data as a reflection of the population as a whole.  The two steps for doing this are as follows
+\begin{enumerate}
+\item Of the total number of datapoints you have (equal to the length of the dataset), select a random sampling of them, of size $n$.  This is done with the \textit{sample()} command below.  $x$ is a list of the row indeces, and \textit{sample} returns a random list of values in that list of length $n$. 
+\item Taking the output of the \textit{sample} command, pair these indeces with the dataset to get the corresponding rows (or columns).  
+\end{enumerate}
+
+%% Figure out what this seed should be to recreate the book examples perfectly!
+<<>>=
+set.seed(25)
+# Step 1: Take a sample of the row indeces 
+indeces = sample(x = (1:nrow(yrbss)), size = 100, replace = FALSE)
+# Step 2: Pull those corresponding individuals from the dataset 
+samp = yrbss[indeces,]
+@
+
+Standard histograms plots of some of the variables on this dataset can be plotted.  
+<<fig.height=5, fig.width=6.5, fig.align = "center">>=
+## Figure 4.4 
+par(mfrow=c(2,2))
+hist(samp$height, main = "Height")
+hist(samp$weight, main = "Weight")
+hist(samp$physically.active.7d, main = "Physical Activity in Past Week")
+hist(samp$strength.training.7d, main = "Lifting Weights in Past Week")
+@
+
+\section{Variability in Estimates}
+The sample parameters can be calculated as well as the population parameters.  
+<<>>=
+mean(samp$physically.active.7d, na.rm = TRUE)
+mean(yrbss$physically.active.7d, na.rm = TRUE) 
+
+median(samp$physically.active.7d, na.rm = TRUE)
+median(yrbss$physically.active.7d, na.rm = TRUE) 
+
+sd(samp$physically.active.7d, na.rm = TRUE)
+sd(yrbss$physically.active.7d, na.rm = TRUE) 
+@
+
+\subsection{Sampling Distribution for the Mean}
+The concept of a sampling distribution highlights the fact that sampling is a random process, and every sample is likely to be quite different than any other.  For this reason, sampling distributions are created, which represent the accumulated information of a large number of random samples.  
+
+The following steps can be used to create a \textbf{sampling distribution of the sample mean}.  
+<<fig.height=3, fig.width=6, fig.align = "center">>=
+## Figure 4.7
+# Step 1: Create an empty list to put values in 
+means = rep(NA, 1000)
+
+# Step 2: Use a "for" loop to collect 1000 samples 
+for(ii in 1:1000){
+  # Step 2a: Get the random sample 
+  indeces = sample(x = (1:nrow(yrbss)), size = 100, replace = FALSE)
+  samp = yrbss[indeces,]
+  # Step 2b: Take the mean of the sample and store it 
+  means[ii] = mean(samp$physically.active.7d, na.rm = TRUE)
+}
+
+# Step 3: Plot your results 
+par(mfrow = c(1,2))
+hist(means, breaks = 30)
+qqnorm(means)
+@
+
+The more samples are taken, the more accurately will the distribution be depicted.  Figure 4.8 demonstrates this below 
+<<eval =FALSE, fig.height=3, fig.width=6, fig.align = "center">>=
+## Figure 4.8
+means = rep(NA, 100000)
+for(ii in 1:100000){
+  indeces = sample(x = (1:nrow(yrbss)), size = 100, replace = FALSE)
+  samp = yrbss[indeces,]
+  means[ii] = mean(samp$physically.active.7d, na.rm = TRUE)
+}
+
+par(mfrow = c(1,2))
+hist(means, breaks = 30)
+qqnorm(means)
+@
+
+\section{Confidence Intervals}
+The first formula introduced in the text for calculating confidence intervals is as follows, 
+\[ \text{ point estimate } \pm 1.96 \cdot \text{SE } \] 
+<<>>= 
+## Example 4.3 
+xbar = mean(samp$physically.active.7d, na.rm = TRUE)
+std.error = sd(samp$physically.active.7d, na.rm = TRUE)/sqrt(length(samp$physically.active.7d))
+ci = c(xbar - 1.96*std.error, xbar + 1.96*std.error)
+ci
+@
+
+To generalize this formula, a standard normal distribution can be used to obtain $z^*$, giving the following 
+\[ \bar{x} \pm z^* \cdot \text{SE } \]
+$R$ can be used to calculate $z^*$ and then using that value, to solve for the confidence interval.  A key point here is that we want the middle 95\% of the distribution, which divides the remaining 5\% between the two tails.  This is equivalent to 
+<<>>=
+## Example 4.3 (version 2)
+perc = .95 
+z = qnorm(p = perc + (1-perc)/2, lower.tail = TRUE) 
+z
+ci = c(xbar - 1.96*std.error, xbar + 1.96*std.error)
+ci
+@
+
+<<>>=
+## Example 4.6 
+perc = .99 
+z = qnorm(p = perc + (1-perc)/2, lower.tail = TRUE) 
+z
+@
+
+<<>>=
+## Example 4.8 
+ci = c(xbar - z*std.error, xbar + z*std.error)
+ci
+@
+
+
+Example 4.10 is an excellent example of how to clean up data.  The main text restricts the sample to adults over 21 with reported BMI values.  The steps below show how to find the individuals who are children or who have missing data and how to remove them from the sample.  Often times, when using a sample of a large population, a process similar to this one must be used.  Missing data can be problematic for analyses of the data, so understanding how to clean up the data appropriately is quite important. 
+<<fig.height=3, fig.width=4, fig.align = "center">>=
+## Example 4.10 
+# Collect the sample of size 200
+set.seed(6578)
+indeces = sample(1:length(NHANES$ID), size = 200)
+nhanes.sample = NHANES[indeces,]
+
+# First remove the children from the sample
+children = which(nhanes.sample$Age < 21)  #Find children 
+nhanes.sample = nhanes.sample[-children, ]       #Remove them from the sample
+
+# Secondly, remove the people with missing BMI
+# missing = which(is.na(nhanes.sample$BMI))  #Find missing values
+# nhanes.sample = nhanes.sample[-missing, ]       #Remove them from the sample
+
+hist(nhanes.sample$BMI, breaks = "FD") ## This gives Figure 4.10
+
+# Locate where the outlier is occuring 
+x = which(nhanes.sample$BMI == max(nhanes.sample$BMI, na.rm = TRUE))
+# Remove the outlier 
+nhanes.sample = nhanes.sample[-x,]
+# Plot again to confirm that it was removed 
+hist(nhanes.sample$BMI)
+mean(nhanes.sample$BMI)
+
+# Calculate sample statistics and confidence interval
+xbar = mean(nhanes.sample$BMI, na.rm = TRUE)
+se = sd(nhanes.sample$BMI, na.rm=TRUE)/sqrt(length(nhanes.sample$BMI))
+perc = .95
+z = qnorm(p = perc + (1-perc)/2, lower.tail = TRUE) 
+ci = c(xbar - z*se, xbar + z*se)
+ci
+@
+
+\section{Hypothesis Testing}
+If you have calculated your test statistic by hand, $R$ can easily be used to get the p-value using the function \textit{pnorm()} as in Chapter 3.  The example that is worked through in the main text can be completed as follows.  Note that \textit{lower.tail = FALSE} because the alternative hypothesis here is 
+\[ H_A: \mu_{bmi} > 21.7 \]
+which implies that the upper tail must be considered.  
+<<>>=
+xbar = 29.7 
+mu = 21.7 
+s = 7.7 
+n = 150 
+
+t = (xbar - mu)/(s/sqrt(n))
+pnorm(t, lower.tail = FALSE)
+@
+
+In $R$, all of the steps of hypothesis testing can be done with one single function, \textit{t.test()}.  This gives the test statistic, the p-value, and the confidence interval.  The function takes the data as an argument, $x$, the null hypothesis value, as $mu$, and the alternative hypothesis type, as $alternative$, which can be \textit{"less", "greater",} or \textit{"two.sided"}.  
+
+The example shown below gives a comparison of doing the method by hand, as well as using the function.  
+<<>>=
+## Example 4.13
+# Method 1 
+xbar = mean(nhanes.sample$SleepHrsNight, na.rm = TRUE)
+s = sd(nhanes.sample$SleepHrsNight, na.rm = TRUE)
+mu = 7 
+n = length(nhanes.sample$SleepHrsNight)
+t = (xbar - mu)/(s/sqrt(n))
+t 
+p = pnorm(t, lower.tail = TRUE)
+p 
+
+# Method 2 
+t.test(x = nhanes.sample$SleepHrsNight, mu = mu, alternative = "less")
+@
+%% check here if it should be lower.tail false or true 
+

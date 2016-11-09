@@ -5,11 +5,10 @@ Chapter 3 presents the idea of several known and commonly used distributions.  R
 \section{Normal Distribution}
 We have learned that the \textbf{normal distribution} can be written as 
 \[ N(\mu, \sigma) \]
-where $\mu$ is the mean of the distribution and $\sigma$ is the standard deviation.  Using this idea, 
-we can create a standard normal distribution in one of two ways: 
+where $\mu$ is the mean of the distribution and $\sigma$ is the standard deviation.  Using this idea, a standard normal distribution can be created in one of two ways: 
 
 \subsection{Direct Plot}
-We can use a function in R called the \textit{dnorm} function which for a given posible value of the distribution, returns the probability of the distribution holding that value.  
+There is a function in R called the \textit{dnorm} function, which, for a given posible value of the distribution, returns the probability of the distribution holding that value.  
 <<fig.height=3, fig.width=4, fig.align = "center">>=
 ## getting a list of values to evaluate distribution
 X = seq(-4, 4, 0.01)
@@ -20,7 +19,7 @@ plot(X,Y, type = "l")
 @
 
 \subsection{Through Simulation}
-The second method involves sampling randomly from the known normal distribution to simulate the probabilities that we drew directly in the above method.  In this case, we use the function \textit{rnorm}, which takes $n$ number of random samples from the normal distribution with the given mean and standard deviation.  In the \textit{hist} command, we include the specification that \textit{freq = FALSE} to make the plot reflect percentages rather than frequency counts.  
+The second method involves sampling randomly from the known normal distribution to simulate the probabilities that we drew directly in the above method.  In this case, the function \textit{rnorm} takes $n$ number of random samples from the normal distribution with the given mean and standard deviation.  In the \textit{hist} command, the specification that \textit{freq = FALSE} should be included to make the plot reflect percentages rather than frequency counts.  
 <<fig.height=3, fig.width=4, fig.align = "center">>=
 set.seed(1) 
 x <- rnorm(n = 100000, mean = 0, sd = 1)
@@ -28,18 +27,19 @@ hist(x, breaks = 100, freq = FALSE)
 @
 
 \subsection{A Comparison} 
-To see how comparable the two methods are, we can plot them on the same graph as follows.  
+Plotting both methods on the same graphs is useful for comparison as follows.  
 <<fig.height=3, fig.width=4, fig.align = "center">>=
 hist(x, freq = FALSE, breaks = 100)
 lines(X,Y, col = "red")
 @
-Note that the two show very similar results.  For practical purposes, we typically use \textit{dnorm} as it only requires one command and is the asymptotic result of simulations, rather than an approximation.  
+
+Note that the two show very similar results.  For practical purposes, \textit{dnorm} is typically used as it only requires one command and is the asymptotic result of simulations, rather than an approximation.  
 
 \subsection{Probability Functions}
 For the normal distribution, there are two more functions that are very useful, \textit{pnorm} and \textit{qnorm}. 
 
 \subsubsection{pnorm} 
-The function \textit{pnorm} tells you the percentage of the normal distribution that is less than or equal to the value you put in.  This corresponds to the gray area in the below plot and can be written as $pnorm(x, mean = \mu, sd = \sigma)$ which is equivalent to $P(X < x)$ where $X \sim N(\mu, \sigma)$ and $x$ is the point of interest.    
+The function \textit{pnorm} tells the percentage of the normal distribution that is less than or equal to the value that is put in.  This corresponds to the gray area in the below plot and can be written as $pnorm(x, mean = \mu, sd = \sigma)$ which is equivalent to $P(X < x)$ where $X \sim N(\mu, \sigma)$ and $x$ is the point of interest.    
  
 <<echo = FALSE, fig.height=4, fig.width=4, fig.align = "center">>=
 plot(X,Y, type = "l")
@@ -49,13 +49,41 @@ polygon(c(X[these[1]], X[these], X[rev(these)[1]]),
         col = '#CCCCCC')
 @
 
-For some example scenarios, where we want to find a proportion of the normal distribution given $x$ or $z$, we can use the following configurations of \textit{pnorm()}: 
+For some example scenarios, where the goal is to find a proportion of the normal distribution given $x$ or $z$, the following configurations of \textit{pnorm()} can be used: 
 \begin{itemize}
 \item $pnorm(z) = P(Z \leq z)$ 
 \item $pnorm(z, lower.tail = FALSE) = P(Z > z)$ 
 \item $pnorm(x, \mu, \sigma) = P(X \leq x)$ where $X = \sigma Z + \mu$ 
 \item $pnorm(x, \mu, \sigma, lower.tail = FALSE) = P(X > x)$ where $X = \sigma Z + \mu$ 
 \end{itemize}
+
+
+\vspace{.75cm}
+Several examples that are shown in the text can be evaluated as follows.  Keep note that for every question, there are multiple methods to arrive at the same answer.  The two main methods involve approximating to a standard normal distribution and allowing R to do all the work for you.  
+<<>>=
+## Example 3.5
+pnorm(q = 1)
+@
+
+<<>>=
+## Example 3.7 
+# using the approximation to the standard normal 
+pnorm(q = 0.43, lower.tail = FALSE)
+1 - pnorm(q = 0.43)
+# using the actual normal distribution 
+pnorm(q = 1630, mean = 1500, sd = 300, lower.tail = FALSE) 
+1 - pnorm(q = 1630, mean = 1500, sd = 300) 
+
+@
+
+<<tidy = TRUE>>=
+## Example 3.10
+# using standard normal approximation 
+pnorm(1.21, lower.tail = TRUE) - pnorm(-0.30, lower.tail = TRUE)
+# using actual distribution
+pnorm(q = 74, mean = 70, sd = 3.3, lower.tail = TRUE) - pnorm(q = 69, mean = 70, sd = 3.3, lower.tail = TRUE)
+@
+
 
 \subsubsection{qnorm} 
 On the other hand, the \textit{qnorm} function is the inverse function, instead giving the $X$ value such that the given percentage of the distribution is less than or equal to that value. This function takes a known probability and returns a value on the normal distribution that is corresponding.  
@@ -68,12 +96,90 @@ Some sample configurations of using \textit{qnorm()} can be as follows,
 \item $qnorm(p, \mu, \sigma, lower.tail = FALSE) = P(X > x)$ where $X = \sigma Z + \mu$ 
 \end{itemize}
 
+\vspace{.5cm}
+Working through an example in the main text, 
+<<>>=
+## Example 3.12 
+# using standard normal 
+70 + 3.3*qnorm(0.4)
+# one step function 
+qnorm(p = .4, mean = 70, sd = 3.3)
+@
+
+\subsection{Evaluating the Normal Approximation} 
+It is of interest to test the normality of a distriubtion in order to determine if approximation with a normal distribution is appropriate. There are two methods in $R$ that can be used to test this.  The first involves plotting the data with a histogram and then superimposing a line on top with the corresponding mean and standard deviation of the data.  The more closely that the histogram matches the line, the more appropriate a normal approximation would be.  
+
+The second method utilizes the function \textit{qqnorm()}, which plots the residual differences between the observed data and the theoretical normal distribution that would match.  A line can be plotted on top of this plot, using \textit{qqline()}, which demonstrates how a perfect match would appear.  Deviation of the dots on the plot from the line shows lack of fit for the normal approimation.  
+
+Both of these methods can be seen below in this recreation of \textit{Figure 3.10} from the main text.  The rows show the first and second methods respectively, while the columns show a progressively better fit to the normal from left to right.  
+%%PUT THIS DATA INTO OIBIOSTAT PACKAGE 
+<<tidy = TRUE,fig.align = "center">>=
+obs1 <- c(-0.01, 1.39, 1.598, 0.383, -0.084, -0.475, -0.105, -1.062, 0.607, 0.539, 0.871, 0.45, -0.039, 1.256, 0.55, -0.333, -0.252, 1.187, -0.916, 0.677, -1.324, -1.773, 1.813, 0.023, -2.291, -1.361, 0.642, 0.249, -0.132, 1.345, 0.629, -1.274, 0.435, 0.043, 0.55, -0.465, 0.756, -0.396, -0.767, 1.348)
+
+obs2 <- c(-0.78, -0.552, -0.027, 0.33, -0.964, 0.865, -0.112, 0.075, -0.392, 0.365, -1.738, 0.491, -0.245, 0.436, 0.016, -0.202, 1.322, 0.515, 0.333, -0.28, -0.843, 0.181, -0.284, -0.409, 0.542, 0.117, -0.194, -0.415, 1.362, 0.826, 1.099, -1.243, -0.265, -0.387, 0.901, 0.706, -0.353, -1.05, 0.081, -1.102, -2.705, -0.142, -0.608, 0.661, -0.616, 1.025, -1.384, 0.337, 1.14, 0.523, -0.662, 0.19, 1.468, 2.38, -0.351, -2.125, 1.141, 1.149, -0.448, 1.166, -0.269, -0.145, -1.319, -0.445, 0.34, -1.789, -0.626, -1.302, 2.441, -2.016, 0.333, -0.019, 0.457, -0.706, 0.236, 0.496, -0.02, -0.228, -1.756, -1.309, 0.564, 1.597, -0.172, -0.369, 0.478, -0.854, -0.52, -0.045, 1.654, 1.122, -0.155, 0.281, 0.205, 0.096, -2.303, -1.399, -0.877, -1.205, 0.02, 0.563)
+
+obs3 <- c(0.673, -0.538, -0.703, -0.004, -1.395, -0.354, 0.415, 1.097, 0.74, 0.657, -0.759, 0.415, 2.094, -0.662, -0.161, 0.293, 0.057, -1.487, -1.822, 1.192, 2.186, -0.26, 0.453, -0.267, -0.049, -1.075, -0.959, -2.338, 0.512, 2.365, 0.56, -0.812, 0.363, -0.731, -0.644, -0.448, -0.024, -0.024, -1.133, -0.692, 1.233, 0.566, 1.109, -2.215, 0.494, 0.011, -2.785, -0.59, -0.895, -1.084, -0.848, -0.129, 1.132, -0.851, -0.419, -0.232, -0.789, -2.018, 1.302, -1.276, -0.592, 1.578, 0.474, -0.437, 0.3, 0.145, 0.263, -2.189, -0.265, -0.02, 0.85, 1.523, 0.938, 0.651, -1.866, -2.202, 0.083, -0.816, 1.082, 1.448, -1.563, -0.145, -1.168, 1.633, -0.472, 0.173, -1.592, 0.623, -0.674, -1.336, -0.059, 0.209, 0.152, -0.345, -0.686, 2.494, -0.616, 0.615, -0.718, 1.748, 0.011, -0.936, -0.196, 0.839, -0.099, 0.216, -0.036, -0.687, 1.126, -0.024, -0.239, 1.475, 1.548, -1.254, -1.513, 0.635, 0.482, 1.068, -0.814, 1.171, -0.509, -0.733, -0.32, 0.05, -0.359, -0.22, 0.269, 1.581, -0.967, 1.725, 0.322, -0.176, -0.655, 2.362, -0.004, -1.209, 0.622, -1.125, 1.767, -0.053, 0.066, 0.049, 0.45, 0.302, -0.172, -1.237, 0.072, -1.007, 0.312, -0.647, -0.759, 0.753, -1.179, 0.984, 1.947, -0.653, -0.34, -0.669, -0.066, -1.774, -1.409, -0.875, -0.225, -0.775, -0.657, 0.812, 2.278, 0.25, 1.206, -0.646, -0.693, -0.545, -1.44, -1.548, -0.924, 0.408, 1.135, 1.173, 1.472, -0.578, -0.04, 0.422, -0.214, 0.983, -1.605, -0.6, -0.641, -0.501, 0.795, 0.542, -1.471, 0.185, 0.504, 3.559, 0.487, 0.406, 0.318, 1.485, 0.217, 0.409, -0.005, -0.351, -0.932, 1.504, 0.528, -2.061, -1.405, -0.256, 2.293, 0.385, 0.363, 0.928, 1.455, -0.317, 0.804, -1.358, 1.137, -1.072, 0.015, -0.905, 1.768, -0.562, -1.268, 0.284, -0.952, -1.163, -0.352, 0.507, 0.194, 0.579, 0.345, 1.171, -1.009, 0.622, -1.311, 0.407, 0.277, -0.191, -1.417, 0.089, -1.607, 0.012, -1.355, 0.267, 2.723, -1.16, -2.613, 0.161, -0.371, -0.331, 0.726, 1.389, 1.111, -0.911, -0.74, -0.818, 1.667, 0.714, -0.262, 0.045, 0.009, -0.022, -0.508, -1.423, 0.229, 0.765, -0.549, 0.587, 0.183, -0.091, 0.501, 0.452, 1.927, -0.237, 0.697, 0.181, -1.044, 0.605, 1.178, 1.047, 1.405, 1.686, -0.382, 1.217, 0.499, 0.271, 0.662, 0.562, 0.528, 0.684, -0.751, 1.843, 1.063, -1.828, 1.345, 0.077, 0.943, 1.048, 1.637, -0.535, 0.664, 0.433, -0.559, -0.141, 0.663, 0.777, 1.442, -0.685, -0.451, 0.265, 0.727, -1.206, 0.339, -0.32, 0.079, -0.052, 0.097, 0.827, -2.121, 0.57, -2.563, 0.663, -1.115, 0.176, 0.786, 0.783, 1.068, -1.734, 1.255, 0.79, -0.721, -0.028, 0.514, -0.963, -2.052, -1.195, 0.091, 0.187, 0.61, -1.61, -0.066, 2.733, -0.853, -1.175, 1.079, -0.58, 0.033, 1.213, 0.367, -0.567, -0.107, 0.188, -0.091, -0.932, -0.11, -1.312, 0.968, 0.698, 1.089, 0.695, 1.309, 1.017, 0.677, 0.471, -1.524, -1.82, 0.256, 0.397, -0.489, 1.734, -0.297, 0.075, 0.533, 0.165, 0.814, -1.915, -0.332, 1.035, -0.858, 1.07, 0.532, -0.016, 1.932, -0.564, -0.018, -0.542, 1.048, 0.759, 1.575, -1.263, -0.667, -1.195, -0.179, 0.337, 0.257, 0.356, 0.375, -1.326, 0.509, 0.975)
+
+par(mfrow=c(2,3))
+
+hist(obs1, breaks = 12, xlim = c(-3,3), freq = FALSE, col = "light blue", main= ' ')
+x1 <- seq(min(obs1) - 2, max(obs1) + 2, 0.01)
+y1 <- dnorm(x1, mean(obs1), sd(obs1))
+lines(x1, y1, lwd = 1.5)
+
+hist(obs2, breaks = 12, xlim = c(-3,3), freq = FALSE, col = "light green", main= ' ')
+x2 <- seq(min(obs2) - 2, max(obs2) + 2, 0.01)
+y2 <- dnorm(x2, mean(obs2), sd(obs2))
+lines(x2, y2, lwd = 1.5)
+
+hist(obs3, breaks = 12, xlim = c(-3,3), freq = FALSE, col = "yellow", main= ' ')
+x3 <- seq(min(obs3) - 2, max(obs3) + 2, 0.01)
+y3 <- dnorm(x3, mean(obs3), sd(obs3))
+lines(x3, y3, lwd = 1.5)
+
+qqnorm(obs1, col = "light blue", main= ' ')
+qqline(obs1)
+
+qqnorm(obs2, col = "light green", main= ' ')
+qqline(obs2)
+
+qqnorm(obs3, col = "yellow", main= ' ')
+qqline(obs3)
+@
+
+
+
+<<tidy = TRUE, fig.height=3.5, fig.width=6, fig.align = "center">>=
+par(mfrow=c(1,2))
+obs <- c(-110, -9, -60, 316, -200, -196,
+         320, -160, 31, 331, 1731, 21,
+         -926, -475, 914, -300, -15, 1,
+         -29, 829, 761, 227, -141, -672,
+         352, 385, 24, 103, -826, 95,
+         115, 39, -9, -1000, -35, -200,
+         -200, 235, 70, 307, 135, 60,
+         -100, -295, -1000, 361, -95,
+         337, 3712, -255)
+
+x <- seq(min(obs) - 3000,
+         max(obs) + 3000,
+         1)
+y <- dnorm(x, mean(obs), sd(obs))
+
+hist(obs, freq = FALSE)
+lines(x, y)
+
+qqnorm(obs)
+qqline(obs)
+@
+
+
 \section{Binomial Distribution}
-We can write a random variable which follows a \textbf{binomial distribution} as
+A random variable which follows a \textbf{binomial distribution} can be written as
 \[ X \sim Binom(n,p) \]
 where $n$ represents the sample size and $p$ represents the probability of success.  
 
-The functions we saw above for the normal distribution can be similarly used for the binomial as follows where the necessary arguments are \textit{size} and \textit{prob}, corresponding respectively to $n$ and $p$ in our above representation of the binomial.
+The functions seen above for the normal distribution can be similarly used for the binomial as follows where the necessary arguments are \textit{size} and \textit{prob}, corresponding respectively to $n$ and $p$ in our above representation of the binomial.
 \begin{itemize} 
 \item \textit{dbinom}
 \item \textit{rbinom}
@@ -81,10 +187,10 @@ The functions we saw above for the normal distribution can be similarly used for
 \item \textit{qbinom}
 \end{itemize}
 
-Similar to the above example with the normal distribution, we can use these functions in multiple ways to work with the binomial distribution.  
+Similar to the above example with the normal distribution, these functions can be used in multiple ways to work with the binomial distribution.  
 
 \subsection{Accessing the Binomial Distribution}
-As we did above, we can directly access the binomial distribution using the \textit{dbinom} function as follows: 
+As above, the binomial distribution can be accessed directly with \textit{dbinom} as follows: 
 <<fig.height=3, fig.width=6, fig.align = "center">>=
 ## Splitting the graphics window into two panes 
 par(mfrow=c(1,2))
@@ -104,54 +210,104 @@ box()
 @
 
 \subsection{Comparison of the Methods}
-Instead of side by side, we can superimpose the two graphs for direct comparison.  
+Superimposing the graphs is another useful mechanism for direct comparison of the two methods. 
 <<fig.height=3, fig.width=3, fig.align = "center">>=
 hist(x, breaks = 10, freq = FALSE,right = FALSE) 
 lines(X,Y, type = "s", col = "red")
 @
 
-\section{Continuous and Discrete Distributions}
-Using the binomial distribution highlights an important feature of distributions that we must consider: whether the random variable is \textbf{discrete} or \textbf{continuous}.  A discrete distribution can only take on specified values, typically the integers. The binomial is a great example of this - it can be any integer greater than or equal to zero.  For example, the possible values of a binomial are \{0, 1, 2, 3, ...\}.  
+\subsection{Continuous and Discrete Distributions}
+Using the binomial distribution highlights an important feature of distributions that must be considered: whether the random variable is \textbf{discrete} or \textbf{continuous}.  A discrete distribution can only take on specified values, typically the integers. The binomial is a great example of this - it can be any integer greater than or equal to zero.  For example, the possible values of a binomial are \{0, 1, 2, 3, ...\}.  
 
 On the other hand, a continuous distribution can take on any real number within a specified range.  For example, looking at the standard normal distribution, a list of some possible values could be \{0, 0.1, 0.01, 0.001, 0.0001, ...\}.  This is a limited list of the infinite list of possible values that a continuous distribution could take on.  
 
-The reason we care about the classification of a random variable as discrete or continous is that it affects how we use our probability functions in $R$.  Let's walk through an example to see the difference.  Suppose we have a normally distributed random variable, $X$, and a binomially distributed random variable, $Y$. 
+The reason we care about the classification of a random variable as discrete or continous is that it affects the implementation of probability functions in $R$.  Let's walk through an example to see the difference.  Consider a normally distributed random variable, $X$, and a binomially distributed random variable, $Y$. 
 \[ X \sim N(0,1) \; \; \; \; \; \; \; \; \; \; \; \;  Y \sim Binom(15,0.5) \]
-If we wanted to know for these two distributions, the probability of being less than 2, we would consider $P(X < 2)$ and $P(Y < 2)$.  However, for the binomial distribution $P(Y<2) = P(Y \leq 1) = P(Y=0) + P(Y=1)$ because there is a discrete set of possible values that $Y$ can take on.  $Y$ can only take on the integer values, and less than 2, that just leaves 0 and 1, whereas the normal distribution can take on any non-integer value in that interval, which is an infinite number of values.  For the normal distribution, solving for $P(Y<2)$ is mathematically equivalent to $P(Y \leq 2)$ because it is continuous.  
+If the goal is to determine the probability of being less than 2 for each of these two distributions, this would be equivalent to $P(X < 2)$ and $P(Y < 2)$.  However, for the binomial distribution $P(Y<2) = P(Y \leq 1) = P(Y=0) + P(Y=1)$ because there is a discrete set of possible values that $Y$ can take on.  $Y$ can only take on the integer values, and less than 2, that just leaves 0 and 1, whereas the normal distribution can take on any non-integer value in that interval, which is an infinite number of values.  For the normal distribution, solving for $P(Y<2)$ is mathematically equivalent to $P(Y \leq 2)$ because it is continuous.  
 
-So to solve for these probabilities, we would use \textit{pnorm} and \textit{pbinom}, but we have to be careful with the discrete binomial case because these functions automatically give the less than or equal to probability, not just the less than probability.  The correct commands to use would be 
-<<>>=
-pnorm(2) 
-pbinom(1, size = 15, prob=0.5)
-@
-
-To summarize, we would use the binomial probaility functions as follows, 
+To solve for these probabilities, use \textit{pnorm} and \textit{pbinom}, noting that for the discrete binomial case, these functions automatically give the less than or equal to probability, not just the less than probability.  The correct commands can be seen through the following examples from the text. 
+\subsection{Examples of the Binomial}
+\vspace{0.5cm}
+To summarize, the binomial probaility functions can be used as follows, 
 \begin{itemize} 
 \item $dbinom(x,n,p) = P(X = x)$ 
 \item $pbinom(x,n,p) = P(X \leq x)$ 
 \item $pbinom(x,n,p, lower.tail = FALSE) = P(X > x)$ 
 \end{itemize} 
 
+<<>>=
+## Example 3.19 
+dbinom(1, size = 4, prob = 0.35)
+@
+
+<<>>=
+## Example 3.23
+dbinom(3, size = 8, prob = 0.35)
+@
+
+<<>>=
+## Example 3.24
+pbinom(3, size = 8, prob = 0.35, lower.tail = TRUE)
+@
+
+<<>>=
+## Example 3.27 
+pnorm(59, mean = (400*0.2), sd = sqrt(400*0.2*(1-0.2)), lower.tail = TRUE)
+pbinom(59, prob = .2, size = 400)
+@
+
 
 \section{Other Distributions}
 \subsection{Poisson Distribution}
-Similarly, we can build out the functions for the \textbf{poisson distribution} as the following where the necessary argument is \textit{lambda}
+Similarly, the functions for the \textbf{poisson distribution} are the following where the necessary argument is \textit{lambda}
 \begin{itemize} 
 \item $dpoisson(x, lambda) = P(X = x)$ 
 \item $ppois(x, lambda) = P(X \leq x)$ 
 \item $ppois(x, lambda, lower.tail = FALSE) = P(X > x)$ 
 \end{itemize}
 
+\subsubsection{Example of the Poisson}
+
+<<>>=
+## Example 3.28 
+dpois(x = 2, lambda = 4.4*7)
+@
+
+
+
 \subsection{Geometric Distribution}
-We can follow the same pattern for the \textbf{geometric distribution} to get the following where the necessary argument is \textit{prob}
+The same pattern can be applied for the \textbf{geometric distribution} to get the following where the necessary argument is \textit{prob}
 \begin{itemize} 
 \item $dgeom(x,prob) = P(X = x)$ 
 \item $pgeom(x,prob) = P(X \leq x)$
 \end{itemize}
 
+\subsubsection{Examples of the Geometric}
+Note here that using the dgeom function requires an input of $k-1$, because this function returns the probability of $k$ failures before the first success, ending with a total of $k$ turns.  
+<<>>=
+## Example 3.31
+dgeom(x = 1-1, prob = 0.35)
+dgeom(x = 2-1, prob = 0.35)
+dgeom(x = 3-1, prob = 0.35)
+@
+
+<<>>=
+## Example 3.35
+pgeom(q = (4-1), prob = 0.35)
+@
+
 \subsection{Negative Binomial Distribution}
-Finally, we can follow the same pattern for the \textbf{negative binomial distribution} to get the following where the necessary arguments are \textit{prob} and \textit{size}
+Finally, for the \textbf{negative binomial distribution}, the necessary arguments are \textit{prob} and \textit{size} and can be implemented as follows, 
 \begin{itemize} 
 \item $dnbinom(x,n,p) = P(X = x)$ 
 \item $pnbinom(x,n,p) = P(X \leq x)$ 
 \end{itemize}
+
+\subsubsection{Example of the Negative Binomial}
+
+%% WHY ISNT THIS ANSWER WORKING OUT CORRECTLY? 
+<<>>=
+## Example 3.38 
+dnbinom(x = 4, size = 6, prob = 0.8)
+@
+

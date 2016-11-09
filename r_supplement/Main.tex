@@ -1152,11 +1152,11 @@ A \textbf{hollow histogram} plots the outlines of histograms for each group onto
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{boxplot}\hlstd{(golub.exprs.pheno[,} \hlnum{7}\hlopt{:}\hlnum{9}\hlstd{])}
+\hlkwd{boxplot}\hlstd{(Golub[,} \hlnum{7}\hlopt{:}\hlnum{9}\hlstd{])}
 \end{alltt}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-41-1} 
 
-
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in boxplot(golub.exprs.pheno[, 7:9]): object 'golub.exprs.pheno' not found}}\end{kframe}
 \end{knitrout}
 
 
@@ -1484,11 +1484,10 @@ Chapter 3 presents the idea of several known and commonly used distributions.  R
 \section{Normal Distribution}
 We have learned that the \textbf{normal distribution} can be written as 
 \[ N(\mu, \sigma) \]
-where $\mu$ is the mean of the distribution and $\sigma$ is the standard deviation.  Using this idea, 
-we can create a standard normal distribution in one of two ways: 
+where $\mu$ is the mean of the distribution and $\sigma$ is the standard deviation.  Using this idea, a standard normal distribution can be created in one of two ways: 
 
 \subsection{Direct Plot}
-We can use a function in R called the \textit{dnorm} function which for a given posible value of the distribution, returns the probability of the distribution holding that value.  
+There is a function in R called the \textit{dnorm} function, which, for a given posible value of the distribution, returns the probability of the distribution holding that value.  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -1510,7 +1509,7 @@ We can use a function in R called the \textit{dnorm} function which for a given 
 \end{knitrout}
 
 \subsection{Through Simulation}
-The second method involves sampling randomly from the known normal distribution to simulate the probabilities that we drew directly in the above method.  In this case, we use the function \textit{rnorm}, which takes $n$ number of random samples from the normal distribution with the given mean and standard deviation.  In the \textit{hist} command, we include the specification that \textit{freq = FALSE} to make the plot reflect percentages rather than frequency counts.  
+The second method involves sampling randomly from the known normal distribution to simulate the probabilities that we drew directly in the above method.  In this case, the function \textit{rnorm} takes $n$ number of random samples from the normal distribution with the given mean and standard deviation.  In the \textit{hist} command, the specification that \textit{freq = FALSE} should be included to make the plot reflect percentages rather than frequency counts.  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -1529,7 +1528,7 @@ The second method involves sampling randomly from the known normal distribution 
 \end{knitrout}
 
 \subsection{A Comparison} 
-To see how comparable the two methods are, we can plot them on the same graph as follows.  
+Plotting both methods on the same graphs is useful for comparison as follows.  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -1545,13 +1544,14 @@ To see how comparable the two methods are, we can plot them on the same graph as
 
 
 \end{knitrout}
-Note that the two show very similar results.  For practical purposes, we typically use \textit{dnorm} as it only requires one command and is the asymptotic result of simulations, rather than an approximation.  
+
+Note that the two show very similar results.  For practical purposes, \textit{dnorm} is typically used as it only requires one command and is the asymptotic result of simulations, rather than an approximation.  
 
 \subsection{Probability Functions}
 For the normal distribution, there are two more functions that are very useful, \textit{pnorm} and \textit{qnorm}. 
 
 \subsubsection{pnorm} 
-The function \textit{pnorm} tells you the percentage of the normal distribution that is less than or equal to the value you put in.  This corresponds to the gray area in the below plot and can be written as $pnorm(x, mean = \mu, sd = \sigma)$ which is equivalent to $P(X < x)$ where $X \sim N(\mu, \sigma)$ and $x$ is the point of interest.    
+The function \textit{pnorm} tells the percentage of the normal distribution that is less than or equal to the value that is put in.  This corresponds to the gray area in the below plot and can be written as $pnorm(x, mean = \mu, sd = \sigma)$ which is equivalent to $P(X < x)$ where $X \sim N(\mu, \sigma)$ and $x$ is the point of interest.    
  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
@@ -1564,13 +1564,81 @@ The function \textit{pnorm} tells you the percentage of the normal distribution 
 
 \end{knitrout}
 
-For some example scenarios, where we want to find a proportion of the normal distribution given $x$ or $z$, we can use the following configurations of \textit{pnorm()}: 
+For some example scenarios, where the goal is to find a proportion of the normal distribution given $x$ or $z$, the following configurations of \textit{pnorm()} can be used: 
 \begin{itemize}
 \item $pnorm(z) = P(Z \leq z)$ 
 \item $pnorm(z, lower.tail = FALSE) = P(Z > z)$ 
 \item $pnorm(x, \mu, \sigma) = P(X \leq x)$ where $X = \sigma Z + \mu$ 
 \item $pnorm(x, \mu, \sigma, lower.tail = FALSE) = P(X > x)$ where $X = \sigma Z + \mu$ 
 \end{itemize}
+
+
+\vspace{.75cm}
+Several examples that are shown in the text can be evaluated as follows.  Keep note that for every question, there are multiple methods to arrive at the same answer.  The two main methods involve approximating to a standard normal distribution and allowing R to do all the work for you.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 3.5}
+\hlkwd{pnorm}\hlstd{(}\hlkwc{q} \hlstd{=} \hlnum{1}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.8413447
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 3.7 }
+\hlcom{# using the approximation to the standard normal }
+\hlkwd{pnorm}\hlstd{(}\hlkwc{q} \hlstd{=} \hlnum{0.43}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.3335978
+\end{verbatim}
+\begin{alltt}
+\hlnum{1} \hlopt{-} \hlkwd{pnorm}\hlstd{(}\hlkwc{q} \hlstd{=} \hlnum{0.43}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.3335978
+\end{verbatim}
+\begin{alltt}
+\hlcom{# using the actual normal distribution }
+\hlkwd{pnorm}\hlstd{(}\hlkwc{q} \hlstd{=} \hlnum{1630}\hlstd{,} \hlkwc{mean} \hlstd{=} \hlnum{1500}\hlstd{,} \hlkwc{sd} \hlstd{=} \hlnum{300}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.3323863
+\end{verbatim}
+\begin{alltt}
+\hlnum{1} \hlopt{-} \hlkwd{pnorm}\hlstd{(}\hlkwc{q} \hlstd{=} \hlnum{1630}\hlstd{,} \hlkwc{mean} \hlstd{=} \hlnum{1500}\hlstd{,} \hlkwc{sd} \hlstd{=} \hlnum{300}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.3323863
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 3.10 using standard normal approximation}
+\hlkwd{pnorm}\hlstd{(}\hlnum{1.21}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)} \hlopt{-} \hlkwd{pnorm}\hlstd{(}\hlopt{-}\hlnum{0.3}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.504772
+\end{verbatim}
+\begin{alltt}
+\hlcom{# using actual distribution}
+\hlkwd{pnorm}\hlstd{(}\hlkwc{q} \hlstd{=} \hlnum{74}\hlstd{,} \hlkwc{mean} \hlstd{=} \hlnum{70}\hlstd{,} \hlkwc{sd} \hlstd{=} \hlnum{3.3}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)} \hlopt{-} \hlkwd{pnorm}\hlstd{(}\hlkwc{q} \hlstd{=} \hlnum{69}\hlstd{,} \hlkwc{mean} \hlstd{=} \hlnum{70}\hlstd{,}
+    \hlkwc{sd} \hlstd{=} \hlnum{3.3}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.5063336
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \subsubsection{qnorm} 
 On the other hand, the \textit{qnorm} function is the inverse function, instead giving the $X$ value such that the given percentage of the distribution is less than or equal to that value. This function takes a known probability and returns a value on the normal distribution that is corresponding.  
@@ -1583,12 +1651,171 @@ Some sample configurations of using \textit{qnorm()} can be as follows,
 \item $qnorm(p, \mu, \sigma, lower.tail = FALSE) = P(X > x)$ where $X = \sigma Z + \mu$ 
 \end{itemize}
 
+\vspace{.5cm}
+Working through an example in the main text, 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 3.12 }
+\hlcom{# using standard normal }
+\hlnum{70} \hlopt{+} \hlnum{3.3}\hlopt{*}\hlkwd{qnorm}\hlstd{(}\hlnum{0.4}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 69.16395
+\end{verbatim}
+\begin{alltt}
+\hlcom{# one step function }
+\hlkwd{qnorm}\hlstd{(}\hlkwc{p} \hlstd{=} \hlnum{.4}\hlstd{,} \hlkwc{mean} \hlstd{=} \hlnum{70}\hlstd{,} \hlkwc{sd} \hlstd{=} \hlnum{3.3}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 69.16395
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsection{Evaluating the Normal Approximation} 
+It is of interest to test the normality of a distriubtion in order to determine if approximation with a normal distribution is appropriate. There are two methods in $R$ that can be used to test this.  The first involves plotting the data with a histogram and then superimposing a line on top with the corresponding mean and standard deviation of the data.  The more closely that the histogram matches the line, the more appropriate a normal approximation would be.  
+
+The second method utilizes the function \textit{qqnorm()}, which plots the residual differences between the observed data and the theoretical normal distribution that would match.  A line can be plotted on top of this plot, using \textit{qqline()}, which demonstrates how a perfect match would appear.  Deviation of the dots on the plot from the line shows lack of fit for the normal approimation.  
+
+Both of these methods can be seen below in this recreation of \textit{Figure 3.10} from the main text.  The rows show the first and second methods respectively, while the columns show a progressively better fit to the normal from left to right.  
+%%PUT THIS DATA INTO OIBIOSTAT PACKAGE 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{obs1} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{0.01}\hlstd{,} \hlnum{1.39}\hlstd{,} \hlnum{1.598}\hlstd{,} \hlnum{0.383}\hlstd{,} \hlopt{-}\hlnum{0.084}\hlstd{,} \hlopt{-}\hlnum{0.475}\hlstd{,} \hlopt{-}\hlnum{0.105}\hlstd{,} \hlopt{-}\hlnum{1.062}\hlstd{,} \hlnum{0.607}\hlstd{,}
+    \hlnum{0.539}\hlstd{,} \hlnum{0.871}\hlstd{,} \hlnum{0.45}\hlstd{,} \hlopt{-}\hlnum{0.039}\hlstd{,} \hlnum{1.256}\hlstd{,} \hlnum{0.55}\hlstd{,} \hlopt{-}\hlnum{0.333}\hlstd{,} \hlopt{-}\hlnum{0.252}\hlstd{,} \hlnum{1.187}\hlstd{,} \hlopt{-}\hlnum{0.916}\hlstd{,}
+    \hlnum{0.677}\hlstd{,} \hlopt{-}\hlnum{1.324}\hlstd{,} \hlopt{-}\hlnum{1.773}\hlstd{,} \hlnum{1.813}\hlstd{,} \hlnum{0.023}\hlstd{,} \hlopt{-}\hlnum{2.291}\hlstd{,} \hlopt{-}\hlnum{1.361}\hlstd{,} \hlnum{0.642}\hlstd{,} \hlnum{0.249}\hlstd{,} \hlopt{-}\hlnum{0.132}\hlstd{,}
+    \hlnum{1.345}\hlstd{,} \hlnum{0.629}\hlstd{,} \hlopt{-}\hlnum{1.274}\hlstd{,} \hlnum{0.435}\hlstd{,} \hlnum{0.043}\hlstd{,} \hlnum{0.55}\hlstd{,} \hlopt{-}\hlnum{0.465}\hlstd{,} \hlnum{0.756}\hlstd{,} \hlopt{-}\hlnum{0.396}\hlstd{,} \hlopt{-}\hlnum{0.767}\hlstd{,}
+    \hlnum{1.348}\hlstd{)}
+
+\hlstd{obs2} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{0.78}\hlstd{,} \hlopt{-}\hlnum{0.552}\hlstd{,} \hlopt{-}\hlnum{0.027}\hlstd{,} \hlnum{0.33}\hlstd{,} \hlopt{-}\hlnum{0.964}\hlstd{,} \hlnum{0.865}\hlstd{,} \hlopt{-}\hlnum{0.112}\hlstd{,} \hlnum{0.075}\hlstd{,} \hlopt{-}\hlnum{0.392}\hlstd{,}
+    \hlnum{0.365}\hlstd{,} \hlopt{-}\hlnum{1.738}\hlstd{,} \hlnum{0.491}\hlstd{,} \hlopt{-}\hlnum{0.245}\hlstd{,} \hlnum{0.436}\hlstd{,} \hlnum{0.016}\hlstd{,} \hlopt{-}\hlnum{0.202}\hlstd{,} \hlnum{1.322}\hlstd{,} \hlnum{0.515}\hlstd{,} \hlnum{0.333}\hlstd{,}
+    \hlopt{-}\hlnum{0.28}\hlstd{,} \hlopt{-}\hlnum{0.843}\hlstd{,} \hlnum{0.181}\hlstd{,} \hlopt{-}\hlnum{0.284}\hlstd{,} \hlopt{-}\hlnum{0.409}\hlstd{,} \hlnum{0.542}\hlstd{,} \hlnum{0.117}\hlstd{,} \hlopt{-}\hlnum{0.194}\hlstd{,} \hlopt{-}\hlnum{0.415}\hlstd{,} \hlnum{1.362}\hlstd{,}
+    \hlnum{0.826}\hlstd{,} \hlnum{1.099}\hlstd{,} \hlopt{-}\hlnum{1.243}\hlstd{,} \hlopt{-}\hlnum{0.265}\hlstd{,} \hlopt{-}\hlnum{0.387}\hlstd{,} \hlnum{0.901}\hlstd{,} \hlnum{0.706}\hlstd{,} \hlopt{-}\hlnum{0.353}\hlstd{,} \hlopt{-}\hlnum{1.05}\hlstd{,} \hlnum{0.081}\hlstd{,}
+    \hlopt{-}\hlnum{1.102}\hlstd{,} \hlopt{-}\hlnum{2.705}\hlstd{,} \hlopt{-}\hlnum{0.142}\hlstd{,} \hlopt{-}\hlnum{0.608}\hlstd{,} \hlnum{0.661}\hlstd{,} \hlopt{-}\hlnum{0.616}\hlstd{,} \hlnum{1.025}\hlstd{,} \hlopt{-}\hlnum{1.384}\hlstd{,} \hlnum{0.337}\hlstd{,} \hlnum{1.14}\hlstd{,}
+    \hlnum{0.523}\hlstd{,} \hlopt{-}\hlnum{0.662}\hlstd{,} \hlnum{0.19}\hlstd{,} \hlnum{1.468}\hlstd{,} \hlnum{2.38}\hlstd{,} \hlopt{-}\hlnum{0.351}\hlstd{,} \hlopt{-}\hlnum{2.125}\hlstd{,} \hlnum{1.141}\hlstd{,} \hlnum{1.149}\hlstd{,} \hlopt{-}\hlnum{0.448}\hlstd{,}
+    \hlnum{1.166}\hlstd{,} \hlopt{-}\hlnum{0.269}\hlstd{,} \hlopt{-}\hlnum{0.145}\hlstd{,} \hlopt{-}\hlnum{1.319}\hlstd{,} \hlopt{-}\hlnum{0.445}\hlstd{,} \hlnum{0.34}\hlstd{,} \hlopt{-}\hlnum{1.789}\hlstd{,} \hlopt{-}\hlnum{0.626}\hlstd{,} \hlopt{-}\hlnum{1.302}\hlstd{,} \hlnum{2.441}\hlstd{,}
+    \hlopt{-}\hlnum{2.016}\hlstd{,} \hlnum{0.333}\hlstd{,} \hlopt{-}\hlnum{0.019}\hlstd{,} \hlnum{0.457}\hlstd{,} \hlopt{-}\hlnum{0.706}\hlstd{,} \hlnum{0.236}\hlstd{,} \hlnum{0.496}\hlstd{,} \hlopt{-}\hlnum{0.02}\hlstd{,} \hlopt{-}\hlnum{0.228}\hlstd{,} \hlopt{-}\hlnum{1.756}\hlstd{,}
+    \hlopt{-}\hlnum{1.309}\hlstd{,} \hlnum{0.564}\hlstd{,} \hlnum{1.597}\hlstd{,} \hlopt{-}\hlnum{0.172}\hlstd{,} \hlopt{-}\hlnum{0.369}\hlstd{,} \hlnum{0.478}\hlstd{,} \hlopt{-}\hlnum{0.854}\hlstd{,} \hlopt{-}\hlnum{0.52}\hlstd{,} \hlopt{-}\hlnum{0.045}\hlstd{,} \hlnum{1.654}\hlstd{,}
+    \hlnum{1.122}\hlstd{,} \hlopt{-}\hlnum{0.155}\hlstd{,} \hlnum{0.281}\hlstd{,} \hlnum{0.205}\hlstd{,} \hlnum{0.096}\hlstd{,} \hlopt{-}\hlnum{2.303}\hlstd{,} \hlopt{-}\hlnum{1.399}\hlstd{,} \hlopt{-}\hlnum{0.877}\hlstd{,} \hlopt{-}\hlnum{1.205}\hlstd{,} \hlnum{0.02}\hlstd{,}
+    \hlnum{0.563}\hlstd{)}
+
+\hlstd{obs3} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlnum{0.673}\hlstd{,} \hlopt{-}\hlnum{0.538}\hlstd{,} \hlopt{-}\hlnum{0.703}\hlstd{,} \hlopt{-}\hlnum{0.004}\hlstd{,} \hlopt{-}\hlnum{1.395}\hlstd{,} \hlopt{-}\hlnum{0.354}\hlstd{,} \hlnum{0.415}\hlstd{,} \hlnum{1.097}\hlstd{,} \hlnum{0.74}\hlstd{,}
+    \hlnum{0.657}\hlstd{,} \hlopt{-}\hlnum{0.759}\hlstd{,} \hlnum{0.415}\hlstd{,} \hlnum{2.094}\hlstd{,} \hlopt{-}\hlnum{0.662}\hlstd{,} \hlopt{-}\hlnum{0.161}\hlstd{,} \hlnum{0.293}\hlstd{,} \hlnum{0.057}\hlstd{,} \hlopt{-}\hlnum{1.487}\hlstd{,} \hlopt{-}\hlnum{1.822}\hlstd{,}
+    \hlnum{1.192}\hlstd{,} \hlnum{2.186}\hlstd{,} \hlopt{-}\hlnum{0.26}\hlstd{,} \hlnum{0.453}\hlstd{,} \hlopt{-}\hlnum{0.267}\hlstd{,} \hlopt{-}\hlnum{0.049}\hlstd{,} \hlopt{-}\hlnum{1.075}\hlstd{,} \hlopt{-}\hlnum{0.959}\hlstd{,} \hlopt{-}\hlnum{2.338}\hlstd{,} \hlnum{0.512}\hlstd{,}
+    \hlnum{2.365}\hlstd{,} \hlnum{0.56}\hlstd{,} \hlopt{-}\hlnum{0.812}\hlstd{,} \hlnum{0.363}\hlstd{,} \hlopt{-}\hlnum{0.731}\hlstd{,} \hlopt{-}\hlnum{0.644}\hlstd{,} \hlopt{-}\hlnum{0.448}\hlstd{,} \hlopt{-}\hlnum{0.024}\hlstd{,} \hlopt{-}\hlnum{0.024}\hlstd{,} \hlopt{-}\hlnum{1.133}\hlstd{,}
+    \hlopt{-}\hlnum{0.692}\hlstd{,} \hlnum{1.233}\hlstd{,} \hlnum{0.566}\hlstd{,} \hlnum{1.109}\hlstd{,} \hlopt{-}\hlnum{2.215}\hlstd{,} \hlnum{0.494}\hlstd{,} \hlnum{0.011}\hlstd{,} \hlopt{-}\hlnum{2.785}\hlstd{,} \hlopt{-}\hlnum{0.59}\hlstd{,} \hlopt{-}\hlnum{0.895}\hlstd{,}
+    \hlopt{-}\hlnum{1.084}\hlstd{,} \hlopt{-}\hlnum{0.848}\hlstd{,} \hlopt{-}\hlnum{0.129}\hlstd{,} \hlnum{1.132}\hlstd{,} \hlopt{-}\hlnum{0.851}\hlstd{,} \hlopt{-}\hlnum{0.419}\hlstd{,} \hlopt{-}\hlnum{0.232}\hlstd{,} \hlopt{-}\hlnum{0.789}\hlstd{,} \hlopt{-}\hlnum{2.018}\hlstd{,} \hlnum{1.302}\hlstd{,}
+    \hlopt{-}\hlnum{1.276}\hlstd{,} \hlopt{-}\hlnum{0.592}\hlstd{,} \hlnum{1.578}\hlstd{,} \hlnum{0.474}\hlstd{,} \hlopt{-}\hlnum{0.437}\hlstd{,} \hlnum{0.3}\hlstd{,} \hlnum{0.145}\hlstd{,} \hlnum{0.263}\hlstd{,} \hlopt{-}\hlnum{2.189}\hlstd{,} \hlopt{-}\hlnum{0.265}\hlstd{,}
+    \hlopt{-}\hlnum{0.02}\hlstd{,} \hlnum{0.85}\hlstd{,} \hlnum{1.523}\hlstd{,} \hlnum{0.938}\hlstd{,} \hlnum{0.651}\hlstd{,} \hlopt{-}\hlnum{1.866}\hlstd{,} \hlopt{-}\hlnum{2.202}\hlstd{,} \hlnum{0.083}\hlstd{,} \hlopt{-}\hlnum{0.816}\hlstd{,} \hlnum{1.082}\hlstd{,}
+    \hlnum{1.448}\hlstd{,} \hlopt{-}\hlnum{1.563}\hlstd{,} \hlopt{-}\hlnum{0.145}\hlstd{,} \hlopt{-}\hlnum{1.168}\hlstd{,} \hlnum{1.633}\hlstd{,} \hlopt{-}\hlnum{0.472}\hlstd{,} \hlnum{0.173}\hlstd{,} \hlopt{-}\hlnum{1.592}\hlstd{,} \hlnum{0.623}\hlstd{,} \hlopt{-}\hlnum{0.674}\hlstd{,}
+    \hlopt{-}\hlnum{1.336}\hlstd{,} \hlopt{-}\hlnum{0.059}\hlstd{,} \hlnum{0.209}\hlstd{,} \hlnum{0.152}\hlstd{,} \hlopt{-}\hlnum{0.345}\hlstd{,} \hlopt{-}\hlnum{0.686}\hlstd{,} \hlnum{2.494}\hlstd{,} \hlopt{-}\hlnum{0.616}\hlstd{,} \hlnum{0.615}\hlstd{,} \hlopt{-}\hlnum{0.718}\hlstd{,}
+    \hlnum{1.748}\hlstd{,} \hlnum{0.011}\hlstd{,} \hlopt{-}\hlnum{0.936}\hlstd{,} \hlopt{-}\hlnum{0.196}\hlstd{,} \hlnum{0.839}\hlstd{,} \hlopt{-}\hlnum{0.099}\hlstd{,} \hlnum{0.216}\hlstd{,} \hlopt{-}\hlnum{0.036}\hlstd{,} \hlopt{-}\hlnum{0.687}\hlstd{,} \hlnum{1.126}\hlstd{,}
+    \hlopt{-}\hlnum{0.024}\hlstd{,} \hlopt{-}\hlnum{0.239}\hlstd{,} \hlnum{1.475}\hlstd{,} \hlnum{1.548}\hlstd{,} \hlopt{-}\hlnum{1.254}\hlstd{,} \hlopt{-}\hlnum{1.513}\hlstd{,} \hlnum{0.635}\hlstd{,} \hlnum{0.482}\hlstd{,} \hlnum{1.068}\hlstd{,} \hlopt{-}\hlnum{0.814}\hlstd{,}
+    \hlnum{1.171}\hlstd{,} \hlopt{-}\hlnum{0.509}\hlstd{,} \hlopt{-}\hlnum{0.733}\hlstd{,} \hlopt{-}\hlnum{0.32}\hlstd{,} \hlnum{0.05}\hlstd{,} \hlopt{-}\hlnum{0.359}\hlstd{,} \hlopt{-}\hlnum{0.22}\hlstd{,} \hlnum{0.269}\hlstd{,} \hlnum{1.581}\hlstd{,} \hlopt{-}\hlnum{0.967}\hlstd{,}
+    \hlnum{1.725}\hlstd{,} \hlnum{0.322}\hlstd{,} \hlopt{-}\hlnum{0.176}\hlstd{,} \hlopt{-}\hlnum{0.655}\hlstd{,} \hlnum{2.362}\hlstd{,} \hlopt{-}\hlnum{0.004}\hlstd{,} \hlopt{-}\hlnum{1.209}\hlstd{,} \hlnum{0.622}\hlstd{,} \hlopt{-}\hlnum{1.125}\hlstd{,} \hlnum{1.767}\hlstd{,}
+    \hlopt{-}\hlnum{0.053}\hlstd{,} \hlnum{0.066}\hlstd{,} \hlnum{0.049}\hlstd{,} \hlnum{0.45}\hlstd{,} \hlnum{0.302}\hlstd{,} \hlopt{-}\hlnum{0.172}\hlstd{,} \hlopt{-}\hlnum{1.237}\hlstd{,} \hlnum{0.072}\hlstd{,} \hlopt{-}\hlnum{1.007}\hlstd{,} \hlnum{0.312}\hlstd{,}
+    \hlopt{-}\hlnum{0.647}\hlstd{,} \hlopt{-}\hlnum{0.759}\hlstd{,} \hlnum{0.753}\hlstd{,} \hlopt{-}\hlnum{1.179}\hlstd{,} \hlnum{0.984}\hlstd{,} \hlnum{1.947}\hlstd{,} \hlopt{-}\hlnum{0.653}\hlstd{,} \hlopt{-}\hlnum{0.34}\hlstd{,} \hlopt{-}\hlnum{0.669}\hlstd{,} \hlopt{-}\hlnum{0.066}\hlstd{,}
+    \hlopt{-}\hlnum{1.774}\hlstd{,} \hlopt{-}\hlnum{1.409}\hlstd{,} \hlopt{-}\hlnum{0.875}\hlstd{,} \hlopt{-}\hlnum{0.225}\hlstd{,} \hlopt{-}\hlnum{0.775}\hlstd{,} \hlopt{-}\hlnum{0.657}\hlstd{,} \hlnum{0.812}\hlstd{,} \hlnum{2.278}\hlstd{,} \hlnum{0.25}\hlstd{,} \hlnum{1.206}\hlstd{,}
+    \hlopt{-}\hlnum{0.646}\hlstd{,} \hlopt{-}\hlnum{0.693}\hlstd{,} \hlopt{-}\hlnum{0.545}\hlstd{,} \hlopt{-}\hlnum{1.44}\hlstd{,} \hlopt{-}\hlnum{1.548}\hlstd{,} \hlopt{-}\hlnum{0.924}\hlstd{,} \hlnum{0.408}\hlstd{,} \hlnum{1.135}\hlstd{,} \hlnum{1.173}\hlstd{,} \hlnum{1.472}\hlstd{,}
+    \hlopt{-}\hlnum{0.578}\hlstd{,} \hlopt{-}\hlnum{0.04}\hlstd{,} \hlnum{0.422}\hlstd{,} \hlopt{-}\hlnum{0.214}\hlstd{,} \hlnum{0.983}\hlstd{,} \hlopt{-}\hlnum{1.605}\hlstd{,} \hlopt{-}\hlnum{0.6}\hlstd{,} \hlopt{-}\hlnum{0.641}\hlstd{,} \hlopt{-}\hlnum{0.501}\hlstd{,} \hlnum{0.795}\hlstd{,}
+    \hlnum{0.542}\hlstd{,} \hlopt{-}\hlnum{1.471}\hlstd{,} \hlnum{0.185}\hlstd{,} \hlnum{0.504}\hlstd{,} \hlnum{3.559}\hlstd{,} \hlnum{0.487}\hlstd{,} \hlnum{0.406}\hlstd{,} \hlnum{0.318}\hlstd{,} \hlnum{1.485}\hlstd{,} \hlnum{0.217}\hlstd{,} \hlnum{0.409}\hlstd{,}
+    \hlopt{-}\hlnum{0.005}\hlstd{,} \hlopt{-}\hlnum{0.351}\hlstd{,} \hlopt{-}\hlnum{0.932}\hlstd{,} \hlnum{1.504}\hlstd{,} \hlnum{0.528}\hlstd{,} \hlopt{-}\hlnum{2.061}\hlstd{,} \hlopt{-}\hlnum{1.405}\hlstd{,} \hlopt{-}\hlnum{0.256}\hlstd{,} \hlnum{2.293}\hlstd{,} \hlnum{0.385}\hlstd{,}
+    \hlnum{0.363}\hlstd{,} \hlnum{0.928}\hlstd{,} \hlnum{1.455}\hlstd{,} \hlopt{-}\hlnum{0.317}\hlstd{,} \hlnum{0.804}\hlstd{,} \hlopt{-}\hlnum{1.358}\hlstd{,} \hlnum{1.137}\hlstd{,} \hlopt{-}\hlnum{1.072}\hlstd{,} \hlnum{0.015}\hlstd{,} \hlopt{-}\hlnum{0.905}\hlstd{,}
+    \hlnum{1.768}\hlstd{,} \hlopt{-}\hlnum{0.562}\hlstd{,} \hlopt{-}\hlnum{1.268}\hlstd{,} \hlnum{0.284}\hlstd{,} \hlopt{-}\hlnum{0.952}\hlstd{,} \hlopt{-}\hlnum{1.163}\hlstd{,} \hlopt{-}\hlnum{0.352}\hlstd{,} \hlnum{0.507}\hlstd{,} \hlnum{0.194}\hlstd{,} \hlnum{0.579}\hlstd{,}
+    \hlnum{0.345}\hlstd{,} \hlnum{1.171}\hlstd{,} \hlopt{-}\hlnum{1.009}\hlstd{,} \hlnum{0.622}\hlstd{,} \hlopt{-}\hlnum{1.311}\hlstd{,} \hlnum{0.407}\hlstd{,} \hlnum{0.277}\hlstd{,} \hlopt{-}\hlnum{0.191}\hlstd{,} \hlopt{-}\hlnum{1.417}\hlstd{,} \hlnum{0.089}\hlstd{,}
+    \hlopt{-}\hlnum{1.607}\hlstd{,} \hlnum{0.012}\hlstd{,} \hlopt{-}\hlnum{1.355}\hlstd{,} \hlnum{0.267}\hlstd{,} \hlnum{2.723}\hlstd{,} \hlopt{-}\hlnum{1.16}\hlstd{,} \hlopt{-}\hlnum{2.613}\hlstd{,} \hlnum{0.161}\hlstd{,} \hlopt{-}\hlnum{0.371}\hlstd{,} \hlopt{-}\hlnum{0.331}\hlstd{,}
+    \hlnum{0.726}\hlstd{,} \hlnum{1.389}\hlstd{,} \hlnum{1.111}\hlstd{,} \hlopt{-}\hlnum{0.911}\hlstd{,} \hlopt{-}\hlnum{0.74}\hlstd{,} \hlopt{-}\hlnum{0.818}\hlstd{,} \hlnum{1.667}\hlstd{,} \hlnum{0.714}\hlstd{,} \hlopt{-}\hlnum{0.262}\hlstd{,} \hlnum{0.045}\hlstd{,}
+    \hlnum{0.009}\hlstd{,} \hlopt{-}\hlnum{0.022}\hlstd{,} \hlopt{-}\hlnum{0.508}\hlstd{,} \hlopt{-}\hlnum{1.423}\hlstd{,} \hlnum{0.229}\hlstd{,} \hlnum{0.765}\hlstd{,} \hlopt{-}\hlnum{0.549}\hlstd{,} \hlnum{0.587}\hlstd{,} \hlnum{0.183}\hlstd{,} \hlopt{-}\hlnum{0.091}\hlstd{,}
+    \hlnum{0.501}\hlstd{,} \hlnum{0.452}\hlstd{,} \hlnum{1.927}\hlstd{,} \hlopt{-}\hlnum{0.237}\hlstd{,} \hlnum{0.697}\hlstd{,} \hlnum{0.181}\hlstd{,} \hlopt{-}\hlnum{1.044}\hlstd{,} \hlnum{0.605}\hlstd{,} \hlnum{1.178}\hlstd{,} \hlnum{1.047}\hlstd{,}
+    \hlnum{1.405}\hlstd{,} \hlnum{1.686}\hlstd{,} \hlopt{-}\hlnum{0.382}\hlstd{,} \hlnum{1.217}\hlstd{,} \hlnum{0.499}\hlstd{,} \hlnum{0.271}\hlstd{,} \hlnum{0.662}\hlstd{,} \hlnum{0.562}\hlstd{,} \hlnum{0.528}\hlstd{,} \hlnum{0.684}\hlstd{,} \hlopt{-}\hlnum{0.751}\hlstd{,}
+    \hlnum{1.843}\hlstd{,} \hlnum{1.063}\hlstd{,} \hlopt{-}\hlnum{1.828}\hlstd{,} \hlnum{1.345}\hlstd{,} \hlnum{0.077}\hlstd{,} \hlnum{0.943}\hlstd{,} \hlnum{1.048}\hlstd{,} \hlnum{1.637}\hlstd{,} \hlopt{-}\hlnum{0.535}\hlstd{,} \hlnum{0.664}\hlstd{,}
+    \hlnum{0.433}\hlstd{,} \hlopt{-}\hlnum{0.559}\hlstd{,} \hlopt{-}\hlnum{0.141}\hlstd{,} \hlnum{0.663}\hlstd{,} \hlnum{0.777}\hlstd{,} \hlnum{1.442}\hlstd{,} \hlopt{-}\hlnum{0.685}\hlstd{,} \hlopt{-}\hlnum{0.451}\hlstd{,} \hlnum{0.265}\hlstd{,} \hlnum{0.727}\hlstd{,}
+    \hlopt{-}\hlnum{1.206}\hlstd{,} \hlnum{0.339}\hlstd{,} \hlopt{-}\hlnum{0.32}\hlstd{,} \hlnum{0.079}\hlstd{,} \hlopt{-}\hlnum{0.052}\hlstd{,} \hlnum{0.097}\hlstd{,} \hlnum{0.827}\hlstd{,} \hlopt{-}\hlnum{2.121}\hlstd{,} \hlnum{0.57}\hlstd{,} \hlopt{-}\hlnum{2.563}\hlstd{,}
+    \hlnum{0.663}\hlstd{,} \hlopt{-}\hlnum{1.115}\hlstd{,} \hlnum{0.176}\hlstd{,} \hlnum{0.786}\hlstd{,} \hlnum{0.783}\hlstd{,} \hlnum{1.068}\hlstd{,} \hlopt{-}\hlnum{1.734}\hlstd{,} \hlnum{1.255}\hlstd{,} \hlnum{0.79}\hlstd{,} \hlopt{-}\hlnum{0.721}\hlstd{,}
+    \hlopt{-}\hlnum{0.028}\hlstd{,} \hlnum{0.514}\hlstd{,} \hlopt{-}\hlnum{0.963}\hlstd{,} \hlopt{-}\hlnum{2.052}\hlstd{,} \hlopt{-}\hlnum{1.195}\hlstd{,} \hlnum{0.091}\hlstd{,} \hlnum{0.187}\hlstd{,} \hlnum{0.61}\hlstd{,} \hlopt{-}\hlnum{1.61}\hlstd{,} \hlopt{-}\hlnum{0.066}\hlstd{,}
+    \hlnum{2.733}\hlstd{,} \hlopt{-}\hlnum{0.853}\hlstd{,} \hlopt{-}\hlnum{1.175}\hlstd{,} \hlnum{1.079}\hlstd{,} \hlopt{-}\hlnum{0.58}\hlstd{,} \hlnum{0.033}\hlstd{,} \hlnum{1.213}\hlstd{,} \hlnum{0.367}\hlstd{,} \hlopt{-}\hlnum{0.567}\hlstd{,} \hlopt{-}\hlnum{0.107}\hlstd{,}
+    \hlnum{0.188}\hlstd{,} \hlopt{-}\hlnum{0.091}\hlstd{,} \hlopt{-}\hlnum{0.932}\hlstd{,} \hlopt{-}\hlnum{0.11}\hlstd{,} \hlopt{-}\hlnum{1.312}\hlstd{,} \hlnum{0.968}\hlstd{,} \hlnum{0.698}\hlstd{,} \hlnum{1.089}\hlstd{,} \hlnum{0.695}\hlstd{,} \hlnum{1.309}\hlstd{,}
+    \hlnum{1.017}\hlstd{,} \hlnum{0.677}\hlstd{,} \hlnum{0.471}\hlstd{,} \hlopt{-}\hlnum{1.524}\hlstd{,} \hlopt{-}\hlnum{1.82}\hlstd{,} \hlnum{0.256}\hlstd{,} \hlnum{0.397}\hlstd{,} \hlopt{-}\hlnum{0.489}\hlstd{,} \hlnum{1.734}\hlstd{,} \hlopt{-}\hlnum{0.297}\hlstd{,}
+    \hlnum{0.075}\hlstd{,} \hlnum{0.533}\hlstd{,} \hlnum{0.165}\hlstd{,} \hlnum{0.814}\hlstd{,} \hlopt{-}\hlnum{1.915}\hlstd{,} \hlopt{-}\hlnum{0.332}\hlstd{,} \hlnum{1.035}\hlstd{,} \hlopt{-}\hlnum{0.858}\hlstd{,} \hlnum{1.07}\hlstd{,} \hlnum{0.532}\hlstd{,}
+    \hlopt{-}\hlnum{0.016}\hlstd{,} \hlnum{1.932}\hlstd{,} \hlopt{-}\hlnum{0.564}\hlstd{,} \hlopt{-}\hlnum{0.018}\hlstd{,} \hlopt{-}\hlnum{0.542}\hlstd{,} \hlnum{1.048}\hlstd{,} \hlnum{0.759}\hlstd{,} \hlnum{1.575}\hlstd{,} \hlopt{-}\hlnum{1.263}\hlstd{,} \hlopt{-}\hlnum{0.667}\hlstd{,}
+    \hlopt{-}\hlnum{1.195}\hlstd{,} \hlopt{-}\hlnum{0.179}\hlstd{,} \hlnum{0.337}\hlstd{,} \hlnum{0.257}\hlstd{,} \hlnum{0.356}\hlstd{,} \hlnum{0.375}\hlstd{,} \hlopt{-}\hlnum{1.326}\hlstd{,} \hlnum{0.509}\hlstd{,} \hlnum{0.975}\hlstd{)}
+
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,} \hlnum{3}\hlstd{))}
+
+\hlkwd{hist}\hlstd{(obs1,} \hlkwc{breaks} \hlstd{=} \hlnum{12}\hlstd{,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{3}\hlstd{,} \hlnum{3}\hlstd{),} \hlkwc{freq} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"light blue"}\hlstd{,} \hlkwc{main} \hlstd{=} \hlstr{" "}\hlstd{)}
+\hlstd{x1} \hlkwb{<-} \hlkwd{seq}\hlstd{(}\hlkwd{min}\hlstd{(obs1)} \hlopt{-} \hlnum{2}\hlstd{,} \hlkwd{max}\hlstd{(obs1)} \hlopt{+} \hlnum{2}\hlstd{,} \hlnum{0.01}\hlstd{)}
+\hlstd{y1} \hlkwb{<-} \hlkwd{dnorm}\hlstd{(x1,} \hlkwd{mean}\hlstd{(obs1),} \hlkwd{sd}\hlstd{(obs1))}
+\hlkwd{lines}\hlstd{(x1, y1,} \hlkwc{lwd} \hlstd{=} \hlnum{1.5}\hlstd{)}
+
+\hlkwd{hist}\hlstd{(obs2,} \hlkwc{breaks} \hlstd{=} \hlnum{12}\hlstd{,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{3}\hlstd{,} \hlnum{3}\hlstd{),} \hlkwc{freq} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"light green"}\hlstd{,}
+    \hlkwc{main} \hlstd{=} \hlstr{" "}\hlstd{)}
+\hlstd{x2} \hlkwb{<-} \hlkwd{seq}\hlstd{(}\hlkwd{min}\hlstd{(obs2)} \hlopt{-} \hlnum{2}\hlstd{,} \hlkwd{max}\hlstd{(obs2)} \hlopt{+} \hlnum{2}\hlstd{,} \hlnum{0.01}\hlstd{)}
+\hlstd{y2} \hlkwb{<-} \hlkwd{dnorm}\hlstd{(x2,} \hlkwd{mean}\hlstd{(obs2),} \hlkwd{sd}\hlstd{(obs2))}
+\hlkwd{lines}\hlstd{(x2, y2,} \hlkwc{lwd} \hlstd{=} \hlnum{1.5}\hlstd{)}
+
+\hlkwd{hist}\hlstd{(obs3,} \hlkwc{breaks} \hlstd{=} \hlnum{12}\hlstd{,} \hlkwc{xlim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{3}\hlstd{,} \hlnum{3}\hlstd{),} \hlkwc{freq} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"yellow"}\hlstd{,} \hlkwc{main} \hlstd{=} \hlstr{" "}\hlstd{)}
+\hlstd{x3} \hlkwb{<-} \hlkwd{seq}\hlstd{(}\hlkwd{min}\hlstd{(obs3)} \hlopt{-} \hlnum{2}\hlstd{,} \hlkwd{max}\hlstd{(obs3)} \hlopt{+} \hlnum{2}\hlstd{,} \hlnum{0.01}\hlstd{)}
+\hlstd{y3} \hlkwb{<-} \hlkwd{dnorm}\hlstd{(x3,} \hlkwd{mean}\hlstd{(obs3),} \hlkwd{sd}\hlstd{(obs3))}
+\hlkwd{lines}\hlstd{(x3, y3,} \hlkwc{lwd} \hlstd{=} \hlnum{1.5}\hlstd{)}
+
+\hlkwd{qqnorm}\hlstd{(obs1,} \hlkwc{col} \hlstd{=} \hlstr{"light blue"}\hlstd{,} \hlkwc{main} \hlstd{=} \hlstr{" "}\hlstd{)}
+\hlkwd{qqline}\hlstd{(obs1)}
+
+\hlkwd{qqnorm}\hlstd{(obs2,} \hlkwc{col} \hlstd{=} \hlstr{"light green"}\hlstd{,} \hlkwc{main} \hlstd{=} \hlstr{" "}\hlstd{)}
+\hlkwd{qqline}\hlstd{(obs2)}
+
+\hlkwd{qqnorm}\hlstd{(obs3,} \hlkwc{col} \hlstd{=} \hlstr{"yellow"}\hlstd{,} \hlkwc{main} \hlstd{=} \hlstr{" "}\hlstd{)}
+\hlkwd{qqline}\hlstd{(obs3)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-1} 
+
+}
+
+
+
+\end{knitrout}
+
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{))}
+\hlstd{obs} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlopt{-}\hlnum{110}\hlstd{,} \hlopt{-}\hlnum{9}\hlstd{,} \hlopt{-}\hlnum{60}\hlstd{,} \hlnum{316}\hlstd{,} \hlopt{-}\hlnum{200}\hlstd{,} \hlopt{-}\hlnum{196}\hlstd{,} \hlnum{320}\hlstd{,} \hlopt{-}\hlnum{160}\hlstd{,} \hlnum{31}\hlstd{,} \hlnum{331}\hlstd{,} \hlnum{1731}\hlstd{,} \hlnum{21}\hlstd{,} \hlopt{-}\hlnum{926}\hlstd{,}
+    \hlopt{-}\hlnum{475}\hlstd{,} \hlnum{914}\hlstd{,} \hlopt{-}\hlnum{300}\hlstd{,} \hlopt{-}\hlnum{15}\hlstd{,} \hlnum{1}\hlstd{,} \hlopt{-}\hlnum{29}\hlstd{,} \hlnum{829}\hlstd{,} \hlnum{761}\hlstd{,} \hlnum{227}\hlstd{,} \hlopt{-}\hlnum{141}\hlstd{,} \hlopt{-}\hlnum{672}\hlstd{,} \hlnum{352}\hlstd{,} \hlnum{385}\hlstd{,} \hlnum{24}\hlstd{,} \hlnum{103}\hlstd{,}
+    \hlopt{-}\hlnum{826}\hlstd{,} \hlnum{95}\hlstd{,} \hlnum{115}\hlstd{,} \hlnum{39}\hlstd{,} \hlopt{-}\hlnum{9}\hlstd{,} \hlopt{-}\hlnum{1000}\hlstd{,} \hlopt{-}\hlnum{35}\hlstd{,} \hlopt{-}\hlnum{200}\hlstd{,} \hlopt{-}\hlnum{200}\hlstd{,} \hlnum{235}\hlstd{,} \hlnum{70}\hlstd{,} \hlnum{307}\hlstd{,} \hlnum{135}\hlstd{,} \hlnum{60}\hlstd{,} \hlopt{-}\hlnum{100}\hlstd{,}
+    \hlopt{-}\hlnum{295}\hlstd{,} \hlopt{-}\hlnum{1000}\hlstd{,} \hlnum{361}\hlstd{,} \hlopt{-}\hlnum{95}\hlstd{,} \hlnum{337}\hlstd{,} \hlnum{3712}\hlstd{,} \hlopt{-}\hlnum{255}\hlstd{)}
+
+\hlstd{x} \hlkwb{<-} \hlkwd{seq}\hlstd{(}\hlkwd{min}\hlstd{(obs)} \hlopt{-} \hlnum{3000}\hlstd{,} \hlkwd{max}\hlstd{(obs)} \hlopt{+} \hlnum{3000}\hlstd{,} \hlnum{1}\hlstd{)}
+\hlstd{y} \hlkwb{<-} \hlkwd{dnorm}\hlstd{(x,} \hlkwd{mean}\hlstd{(obs),} \hlkwd{sd}\hlstd{(obs))}
+
+\hlkwd{hist}\hlstd{(obs,} \hlkwc{freq} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\hlkwd{lines}\hlstd{(x, y)}
+
+\hlkwd{qqnorm}\hlstd{(obs)}
+\hlkwd{qqline}\hlstd{(obs)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-56-1} 
+
+}
+
+
+
+\end{knitrout}
+
+
 \section{Binomial Distribution}
-We can write a random variable which follows a \textbf{binomial distribution} as
+A random variable which follows a \textbf{binomial distribution} can be written as
 \[ X \sim Binom(n,p) \]
 where $n$ represents the sample size and $p$ represents the probability of success.  
 
-The functions we saw above for the normal distribution can be similarly used for the binomial as follows where the necessary arguments are \textit{size} and \textit{prob}, corresponding respectively to $n$ and $p$ in our above representation of the binomial.
+The functions seen above for the normal distribution can be similarly used for the binomial as follows where the necessary arguments are \textit{size} and \textit{prob}, corresponding respectively to $n$ and $p$ in our above representation of the binomial.
 \begin{itemize} 
 \item \textit{dbinom}
 \item \textit{rbinom}
@@ -1596,10 +1823,10 @@ The functions we saw above for the normal distribution can be similarly used for
 \item \textit{qbinom}
 \end{itemize}
 
-Similar to the above example with the normal distribution, we can use these functions in multiple ways to work with the binomial distribution.  
+Similar to the above example with the normal distribution, these functions can be used in multiple ways to work with the binomial distribution.  
 
 \subsection{Accessing the Binomial Distribution}
-As we did above, we can directly access the binomial distribution using the \textit{dbinom} function as follows: 
+As above, the binomial distribution can be accessed directly with \textit{dbinom} as follows: 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -1621,7 +1848,7 @@ As we did above, we can directly access the binomial distribution using the \tex
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-51-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-57-1} 
 
 }
 
@@ -1630,7 +1857,7 @@ As we did above, we can directly access the binomial distribution using the \tex
 \end{knitrout}
 
 \subsection{Comparison of the Methods}
-Instead of side by side, we can superimpose the two graphs for direct comparison.  
+Superimposing the graphs is another useful mechanism for direct comparison of the two methods. 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -1639,7 +1866,7 @@ Instead of side by side, we can superimpose the two graphs for direct comparison
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-52-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-58-1} 
 
 }
 
@@ -1647,68 +1874,516 @@ Instead of side by side, we can superimpose the two graphs for direct comparison
 
 \end{knitrout}
 
-\section{Continuous and Discrete Distributions}
-Using the binomial distribution highlights an important feature of distributions that we must consider: whether the random variable is \textbf{discrete} or \textbf{continuous}.  A discrete distribution can only take on specified values, typically the integers. The binomial is a great example of this - it can be any integer greater than or equal to zero.  For example, the possible values of a binomial are \{0, 1, 2, 3, ...\}.  
+\subsection{Continuous and Discrete Distributions}
+Using the binomial distribution highlights an important feature of distributions that must be considered: whether the random variable is \textbf{discrete} or \textbf{continuous}.  A discrete distribution can only take on specified values, typically the integers. The binomial is a great example of this - it can be any integer greater than or equal to zero.  For example, the possible values of a binomial are \{0, 1, 2, 3, ...\}.  
 
 On the other hand, a continuous distribution can take on any real number within a specified range.  For example, looking at the standard normal distribution, a list of some possible values could be \{0, 0.1, 0.01, 0.001, 0.0001, ...\}.  This is a limited list of the infinite list of possible values that a continuous distribution could take on.  
 
-The reason we care about the classification of a random variable as discrete or continous is that it affects how we use our probability functions in $R$.  Let's walk through an example to see the difference.  Suppose we have a normally distributed random variable, $X$, and a binomially distributed random variable, $Y$. 
+The reason we care about the classification of a random variable as discrete or continous is that it affects the implementation of probability functions in $R$.  Let's walk through an example to see the difference.  Consider a normally distributed random variable, $X$, and a binomially distributed random variable, $Y$. 
 \[ X \sim N(0,1) \; \; \; \; \; \; \; \; \; \; \; \;  Y \sim Binom(15,0.5) \]
-If we wanted to know for these two distributions, the probability of being less than 2, we would consider $P(X < 2)$ and $P(Y < 2)$.  However, for the binomial distribution $P(Y<2) = P(Y \leq 1) = P(Y=0) + P(Y=1)$ because there is a discrete set of possible values that $Y$ can take on.  $Y$ can only take on the integer values, and less than 2, that just leaves 0 and 1, whereas the normal distribution can take on any non-integer value in that interval, which is an infinite number of values.  For the normal distribution, solving for $P(Y<2)$ is mathematically equivalent to $P(Y \leq 2)$ because it is continuous.  
+If the goal is to determine the probability of being less than 2 for each of these two distributions, this would be equivalent to $P(X < 2)$ and $P(Y < 2)$.  However, for the binomial distribution $P(Y<2) = P(Y \leq 1) = P(Y=0) + P(Y=1)$ because there is a discrete set of possible values that $Y$ can take on.  $Y$ can only take on the integer values, and less than 2, that just leaves 0 and 1, whereas the normal distribution can take on any non-integer value in that interval, which is an infinite number of values.  For the normal distribution, solving for $P(Y<2)$ is mathematically equivalent to $P(Y \leq 2)$ because it is continuous.  
 
-So to solve for these probabilities, we would use \textit{pnorm} and \textit{pbinom}, but we have to be careful with the discrete binomial case because these functions automatically give the less than or equal to probability, not just the less than probability.  The correct commands to use would be 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlkwd{pnorm}\hlstd{(}\hlnum{2}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.9772499
-\end{verbatim}
-\begin{alltt}
-\hlkwd{pbinom}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwc{size} \hlstd{=} \hlnum{15}\hlstd{,} \hlkwc{prob}\hlstd{=}\hlnum{0.5}\hlstd{)}
-\end{alltt}
-\begin{verbatim}
-## [1] 0.0004882812
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-
-To summarize, we would use the binomial probaility functions as follows, 
+To solve for these probabilities, use \textit{pnorm} and \textit{pbinom}, noting that for the discrete binomial case, these functions automatically give the less than or equal to probability, not just the less than probability.  The correct commands can be seen through the following examples from the text. 
+\subsection{Examples of the Binomial}
+\vspace{0.5cm}
+To summarize, the binomial probaility functions can be used as follows, 
 \begin{itemize} 
 \item $dbinom(x,n,p) = P(X = x)$ 
 \item $pbinom(x,n,p) = P(X \leq x)$ 
 \item $pbinom(x,n,p, lower.tail = FALSE) = P(X > x)$ 
 \end{itemize} 
 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 3.19 }
+\hlkwd{dbinom}\hlstd{(}\hlnum{1}\hlstd{,} \hlkwc{size} \hlstd{=} \hlnum{4}\hlstd{,} \hlkwc{prob} \hlstd{=} \hlnum{0.35}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.384475
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 3.23}
+\hlkwd{dbinom}\hlstd{(}\hlnum{3}\hlstd{,} \hlkwc{size} \hlstd{=} \hlnum{8}\hlstd{,} \hlkwc{prob} \hlstd{=} \hlnum{0.35}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.2785858
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 3.24}
+\hlkwd{pbinom}\hlstd{(}\hlnum{3}\hlstd{,} \hlkwc{size} \hlstd{=} \hlnum{8}\hlstd{,} \hlkwc{prob} \hlstd{=} \hlnum{0.35}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.7063994
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 3.27 }
+\hlkwd{pnorm}\hlstd{(}\hlnum{59}\hlstd{,} \hlkwc{mean} \hlstd{= (}\hlnum{400}\hlopt{*}\hlnum{0.2}\hlstd{),} \hlkwc{sd} \hlstd{=} \hlkwd{sqrt}\hlstd{(}\hlnum{400}\hlopt{*}\hlnum{0.2}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlnum{0.2}\hlstd{)),} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.004332448
+\end{verbatim}
+\begin{alltt}
+\hlkwd{pbinom}\hlstd{(}\hlnum{59}\hlstd{,} \hlkwc{prob} \hlstd{=} \hlnum{.2}\hlstd{,} \hlkwc{size} \hlstd{=} \hlnum{400}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.004111644
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \section{Other Distributions}
 \subsection{Poisson Distribution}
-Similarly, we can build out the functions for the \textbf{poisson distribution} as the following where the necessary argument is \textit{lambda}
+Similarly, the functions for the \textbf{poisson distribution} are the following where the necessary argument is \textit{lambda}
 \begin{itemize} 
 \item $dpoisson(x, lambda) = P(X = x)$ 
 \item $ppois(x, lambda) = P(X \leq x)$ 
 \item $ppois(x, lambda, lower.tail = FALSE) = P(X > x)$ 
 \end{itemize}
 
+\subsubsection{Example of the Poisson}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 3.28 }
+\hlkwd{dpois}\hlstd{(}\hlkwc{x} \hlstd{=} \hlnum{2}\hlstd{,} \hlkwc{lambda} \hlstd{=} \hlnum{4.4}\hlopt{*}\hlnum{7}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 1.99435e-11
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
 \subsection{Geometric Distribution}
-We can follow the same pattern for the \textbf{geometric distribution} to get the following where the necessary argument is \textit{prob}
+The same pattern can be applied for the \textbf{geometric distribution} to get the following where the necessary argument is \textit{prob}
 \begin{itemize} 
 \item $dgeom(x,prob) = P(X = x)$ 
 \item $pgeom(x,prob) = P(X \leq x)$
 \end{itemize}
 
+\subsubsection{Examples of the Geometric}
+Note here that using the dgeom function requires an input of $k-1$, because this function returns the probability of $k$ failures before the first success, ending with a total of $k$ turns.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 3.31}
+\hlkwd{dgeom}\hlstd{(}\hlkwc{x} \hlstd{=} \hlnum{1}\hlopt{-}\hlnum{1}\hlstd{,} \hlkwc{prob} \hlstd{=} \hlnum{0.35}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.35
+\end{verbatim}
+\begin{alltt}
+\hlkwd{dgeom}\hlstd{(}\hlkwc{x} \hlstd{=} \hlnum{2}\hlopt{-}\hlnum{1}\hlstd{,} \hlkwc{prob} \hlstd{=} \hlnum{0.35}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.2275
+\end{verbatim}
+\begin{alltt}
+\hlkwd{dgeom}\hlstd{(}\hlkwc{x} \hlstd{=} \hlnum{3}\hlopt{-}\hlnum{1}\hlstd{,} \hlkwc{prob} \hlstd{=} \hlnum{0.35}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.147875
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 3.35}
+\hlkwd{pgeom}\hlstd{(}\hlkwc{q} \hlstd{= (}\hlnum{4}\hlopt{-}\hlnum{1}\hlstd{),} \hlkwc{prob} \hlstd{=} \hlnum{0.35}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.8214938
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 \subsection{Negative Binomial Distribution}
-Finally, we can follow the same pattern for the \textbf{negative binomial distribution} to get the following where the necessary arguments are \textit{prob} and \textit{size}
+Finally, for the \textbf{negative binomial distribution}, the necessary arguments are \textit{prob} and \textit{size} and can be implemented as follows, 
 \begin{itemize} 
 \item $dnbinom(x,n,p) = P(X = x)$ 
 \item $pnbinom(x,n,p) = P(X \leq x)$ 
 \end{itemize}
 
-%' \newpage 
-%' \chapter{Chapter 4 - Name this}
-%' \minitoc
-%' <<child-demo, child='chapters/chapter_4/Chapter4.Rnw'>>=
-%' @
+\subsubsection{Example of the Negative Binomial}
+
+%% WHY ISNT THIS ANSWER WORKING OUT CORRECTLY? 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 3.38 }
+\hlkwd{dnbinom}\hlstd{(}\hlkwc{x} \hlstd{=} \hlnum{4}\hlstd{,} \hlkwc{size} \hlstd{=} \hlnum{6}\hlstd{,} \hlkwc{prob} \hlstd{=} \hlnum{0.8}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.05284823
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\newpage
+\chapter{Foundations for Inference}
+\minitoc
+
+\vspace{0.5cm} 
+
+\section{Taking a Sample of a Dataset}
+The main text talks through the importance of using a sample of data as a reflection of the population as a whole.  The two steps for doing this are as follows
+\begin{enumerate}
+\item Of the total number of datapoints you have (equal to the length of the dataset), select a random sampling of them, of size $n$.  This is done with the \textit{sample()} command below.  $x$ is a list of the row indeces, and \textit{sample} returns a random list of values in that list of length $n$. 
+\item Taking the output of the \textit{sample} command, pair these indeces with the dataset to get the corresponding rows (or columns).  
+\end{enumerate}
+
+%% Figure out what this seed should be to recreate the book examples perfectly!
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{set.seed}\hlstd{(}\hlnum{25}\hlstd{)}
+\hlcom{# Step 1: Take a sample of the row indeces }
+\hlstd{indeces} \hlkwb{=} \hlkwd{sample}\hlstd{(}\hlkwc{x} \hlstd{= (}\hlnum{1}\hlopt{:}\hlkwd{nrow}\hlstd{(yrbss)),} \hlkwc{size} \hlstd{=} \hlnum{100}\hlstd{,} \hlkwc{replace} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\hlcom{# Step 2: Pull those corresponding individuals from the dataset }
+\hlstd{samp} \hlkwb{=} \hlstd{yrbss[indeces,]}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Standard histograms plots of some of the variables on this dataset can be plotted.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Figure 4.4 }
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
+\hlkwd{hist}\hlstd{(samp}\hlopt{$}\hlstd{height,} \hlkwc{main} \hlstd{=} \hlstr{"Height"}\hlstd{)}
+\hlkwd{hist}\hlstd{(samp}\hlopt{$}\hlstd{weight,} \hlkwc{main} \hlstd{=} \hlstr{"Weight"}\hlstd{)}
+\hlkwd{hist}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{main} \hlstd{=} \hlstr{"Physical Activity in Past Week"}\hlstd{)}
+\hlkwd{hist}\hlstd{(samp}\hlopt{$}\hlstd{strength.training.7d,} \hlkwc{main} \hlstd{=} \hlstr{"Lifting Weights in Past Week"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-68-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\section{Variability in Estimates}
+The sample parameters can be calculated as well as the population parameters.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{mean}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 3.739583
+\end{verbatim}
+\begin{alltt}
+\hlkwd{mean}\hlstd{(yrbss}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 3.903005
+\end{verbatim}
+\begin{alltt}
+\hlkwd{median}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+\begin{alltt}
+\hlkwd{median}\hlstd{(yrbss}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+\begin{alltt}
+\hlkwd{sd}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 2.608669
+\end{verbatim}
+\begin{alltt}
+\hlkwd{sd}\hlstd{(yrbss}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 2.564105
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsection{Sampling Distribution for the Mean}
+The concept of a sampling distribution highlights the fact that sampling is a random process, and every sample is likely to be quite different than any other.  For this reason, sampling distributions are created, which represent the accumulated information of a large number of random samples.  
+
+The following steps can be used to create a \textbf{sampling distribution of the sample mean}.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Figure 4.7}
+\hlcom{# Step 1: Create an empty list to put values in }
+\hlstd{means} \hlkwb{=} \hlkwd{rep}\hlstd{(}\hlnum{NA}\hlstd{,} \hlnum{1000}\hlstd{)}
+
+\hlcom{# Step 2: Use a "for" loop to collect 1000 samples }
+\hlkwa{for}\hlstd{(ii} \hlkwa{in} \hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{)\{}
+  \hlcom{# Step 2a: Get the random sample }
+  \hlstd{indeces} \hlkwb{=} \hlkwd{sample}\hlstd{(}\hlkwc{x} \hlstd{= (}\hlnum{1}\hlopt{:}\hlkwd{nrow}\hlstd{(yrbss)),} \hlkwc{size} \hlstd{=} \hlnum{100}\hlstd{,} \hlkwc{replace} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+  \hlstd{samp} \hlkwb{=} \hlstd{yrbss[indeces,]}
+  \hlcom{# Step 2b: Take the mean of the sample and store it }
+  \hlstd{means[ii]} \hlkwb{=} \hlkwd{mean}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{\}}
+
+\hlcom{# Step 3: Plot your results }
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{))}
+\hlkwd{hist}\hlstd{(means,} \hlkwc{breaks} \hlstd{=} \hlnum{30}\hlstd{)}
+\hlkwd{qqnorm}\hlstd{(means)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-70-1} 
+
+}
+
+
+
+\end{knitrout}
+
+The more samples are taken, the more accurately will the distribution be depicted.  Figure 4.8 demonstrates this below 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Figure 4.8}
+\hlstd{means} \hlkwb{=} \hlkwd{rep}\hlstd{(}\hlnum{NA}\hlstd{,} \hlnum{100000}\hlstd{)}
+\hlkwa{for}\hlstd{(ii} \hlkwa{in} \hlnum{1}\hlopt{:}\hlnum{100000}\hlstd{)\{}
+  \hlstd{indeces} \hlkwb{=} \hlkwd{sample}\hlstd{(}\hlkwc{x} \hlstd{= (}\hlnum{1}\hlopt{:}\hlkwd{nrow}\hlstd{(yrbss)),} \hlkwc{size} \hlstd{=} \hlnum{100}\hlstd{,} \hlkwc{replace} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+  \hlstd{samp} \hlkwb{=} \hlstd{yrbss[indeces,]}
+  \hlstd{means[ii]} \hlkwb{=} \hlkwd{mean}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{\}}
+
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{))}
+\hlkwd{hist}\hlstd{(means,} \hlkwc{breaks} \hlstd{=} \hlnum{30}\hlstd{)}
+\hlkwd{qqnorm}\hlstd{(means)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\section{Confidence Intervals}
+The first formula introduced in the text for calculating confidence intervals is as follows, 
+\[ \text{ point estimate } \pm 1.96 \cdot \text{SE } \] 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 4.3 }
+\hlstd{xbar} \hlkwb{=} \hlkwd{mean}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{std.error} \hlkwb{=} \hlkwd{sd}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}\hlopt{/}\hlkwd{sqrt}\hlstd{(}\hlkwd{length}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d))}
+\hlstd{ci} \hlkwb{=} \hlkwd{c}\hlstd{(xbar} \hlopt{-} \hlnum{1.96}\hlopt{*}\hlstd{std.error, xbar} \hlopt{+} \hlnum{1.96}\hlopt{*}\hlstd{std.error)}
+\hlstd{ci}
+\end{alltt}
+\begin{verbatim}
+## [1] 3.317699 4.324406
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+To generalize this formula, a standard normal distribution can be used to obtain $z^*$, giving the following 
+\[ \bar{x} \pm z^* \cdot \text{SE } \]
+$R$ can be used to calculate $z^*$ and then using that value, to solve for the confidence interval.  A key point here is that we want the middle 95\% of the distribution, which divides the remaining 5\% between the two tails.  This is equivalent to 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 4.3 (version 2)}
+\hlstd{perc} \hlkwb{=} \hlnum{.95}
+\hlstd{z} \hlkwb{=} \hlkwd{qnorm}\hlstd{(}\hlkwc{p} \hlstd{= perc} \hlopt{+} \hlstd{(}\hlnum{1}\hlopt{-}\hlstd{perc)}\hlopt{/}\hlnum{2}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{z}
+\end{alltt}
+\begin{verbatim}
+## [1] 1.959964
+\end{verbatim}
+\begin{alltt}
+\hlstd{ci} \hlkwb{=} \hlkwd{c}\hlstd{(xbar} \hlopt{-} \hlnum{1.96}\hlopt{*}\hlstd{std.error, xbar} \hlopt{+} \hlnum{1.96}\hlopt{*}\hlstd{std.error)}
+\hlstd{ci}
+\end{alltt}
+\begin{verbatim}
+## [1] 3.317699 4.324406
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 4.6 }
+\hlstd{perc} \hlkwb{=} \hlnum{.99}
+\hlstd{z} \hlkwb{=} \hlkwd{qnorm}\hlstd{(}\hlkwc{p} \hlstd{= perc} \hlopt{+} \hlstd{(}\hlnum{1}\hlopt{-}\hlstd{perc)}\hlopt{/}\hlnum{2}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{z}
+\end{alltt}
+\begin{verbatim}
+## [1] 2.575829
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 4.8 }
+\hlstd{ci} \hlkwb{=} \hlkwd{c}\hlstd{(xbar} \hlopt{-} \hlstd{z}\hlopt{*}\hlstd{std.error, xbar} \hlopt{+} \hlstd{z}\hlopt{*}\hlstd{std.error)}
+\hlstd{ci}
+\end{alltt}
+\begin{verbatim}
+## [1] 3.159546 4.482559
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+Example 4.10 is an excellent example of how to clean up data.  The main text restricts the sample to adults over 21 with reported BMI values.  The steps below show how to find the individuals who are children or who have missing data and how to remove them from the sample.  Often times, when using a sample of a large population, a process similar to this one must be used.  Missing data can be problematic for analyses of the data, so understanding how to clean up the data appropriately is quite important. 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 4.10 }
+\hlcom{# Collect the sample of size 200}
+\hlkwd{set.seed}\hlstd{(}\hlnum{6578}\hlstd{)}
+\hlstd{indeces} \hlkwb{=} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(NHANES}\hlopt{$}\hlstd{ID),} \hlkwc{size} \hlstd{=} \hlnum{200}\hlstd{)}
+\hlstd{nhanes.sample} \hlkwb{=} \hlstd{NHANES[indeces,]}
+
+\hlcom{# First remove the children from the sample}
+\hlstd{children} \hlkwb{=} \hlkwd{which}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{Age} \hlopt{<} \hlnum{21}\hlstd{)}  \hlcom{#Find children }
+\hlstd{nhanes.sample} \hlkwb{=} \hlstd{nhanes.sample[}\hlopt{-}\hlstd{children, ]}       \hlcom{#Remove them from the sample}
+
+\hlcom{# Secondly, remove the people with missing BMI}
+\hlcom{# missing = which(is.na(nhanes.sample$BMI))  #Find missing values}
+\hlcom{# nhanes.sample = nhanes.sample[-missing, ]       #Remove them from the sample}
+
+\hlkwd{hist}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI,} \hlkwc{breaks} \hlstd{=} \hlstr{"FD"}\hlstd{)} \hlcom{## This gives Figure 4.10}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-76-1} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlcom{# Locate where the outlier is occuring }
+\hlstd{x} \hlkwb{=} \hlkwd{which}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI} \hlopt{==} \hlkwd{max}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{))}
+\hlcom{# Remove the outlier }
+\hlstd{nhanes.sample} \hlkwb{=} \hlstd{nhanes.sample[}\hlopt{-}\hlstd{x,]}
+\hlcom{# Plot again to confirm that it was removed }
+\hlkwd{hist}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-76-2} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{mean}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI)}
+\end{alltt}
+\begin{verbatim}
+## [1] 29.44035
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Calculate sample statistics and confidence interval}
+\hlstd{xbar} \hlkwb{=} \hlkwd{mean}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{se} \hlkwb{=} \hlkwd{sd}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI,} \hlkwc{na.rm}\hlstd{=}\hlnum{TRUE}\hlstd{)}\hlopt{/}\hlkwd{sqrt}\hlstd{(}\hlkwd{length}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI))}
+\hlstd{perc} \hlkwb{=} \hlnum{.95}
+\hlstd{z} \hlkwb{=} \hlkwd{qnorm}\hlstd{(}\hlkwc{p} \hlstd{= perc} \hlopt{+} \hlstd{(}\hlnum{1}\hlopt{-}\hlstd{perc)}\hlopt{/}\hlnum{2}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{ci} \hlkwb{=} \hlkwd{c}\hlstd{(xbar} \hlopt{-} \hlstd{z}\hlopt{*}\hlstd{se, xbar} \hlopt{+} \hlstd{z}\hlopt{*}\hlstd{se)}
+\hlstd{ci}
+\end{alltt}
+\begin{verbatim}
+## [1] 28.43266 30.44805
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section{Hypothesis Testing}
+If you have calculated your test statistic by hand, $R$ can easily be used to get the p-value using the function \textit{pnorm()} as in Chapter 3.  The example that is worked through in the main text can be completed as follows.  Note that \textit{lower.tail = FALSE} because the alternative hypothesis here is 
+\[ H_A: \mu_{bmi} > 21.7 \]
+which implies that the upper tail must be considered.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{xbar} \hlkwb{=} \hlnum{29.7}
+\hlstd{mu} \hlkwb{=} \hlnum{21.7}
+\hlstd{s} \hlkwb{=} \hlnum{7.7}
+\hlstd{n} \hlkwb{=} \hlnum{150}
+
+\hlstd{t} \hlkwb{=} \hlstd{(xbar} \hlopt{-} \hlstd{mu)}\hlopt{/}\hlstd{(s}\hlopt{/}\hlkwd{sqrt}\hlstd{(n))}
+\hlkwd{pnorm}\hlstd{(t,} \hlkwc{lower.tail} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 2.15779e-37
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+In $R$, all of the steps of hypothesis testing can be done with one single function, \textit{t.test()}.  This gives the test statistic, the p-value, and the confidence interval.  The function takes the data as an argument, $x$, the null hypothesis value, as $mu$, and the alternative hypothesis type, as $alternative$, which can be \textit{"less", "greater",} or \textit{"two.sided"}.  
+
+The example shown below gives a comparison of doing the method by hand, as well as using the function.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 4.13}
+\hlcom{# Method 1 }
+\hlstd{xbar} \hlkwb{=} \hlkwd{mean}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{SleepHrsNight,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{s} \hlkwb{=} \hlkwd{sd}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{SleepHrsNight,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{mu} \hlkwb{=} \hlnum{7}
+\hlstd{n} \hlkwb{=} \hlkwd{length}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{SleepHrsNight)}
+\hlstd{t} \hlkwb{=} \hlstd{(xbar} \hlopt{-} \hlstd{mu)}\hlopt{/}\hlstd{(s}\hlopt{/}\hlkwd{sqrt}\hlstd{(n))}
+\hlstd{t}
+\end{alltt}
+\begin{verbatim}
+## [1] -3.196762
+\end{verbatim}
+\begin{alltt}
+\hlstd{p} \hlkwb{=} \hlkwd{pnorm}\hlstd{(t,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{p}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.0006948986
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Method 2 }
+\hlkwd{t.test}\hlstd{(}\hlkwc{x} \hlstd{= nhanes.sample}\hlopt{$}\hlstd{SleepHrsNight,} \hlkwc{mu} \hlstd{= mu,} \hlkwc{alternative} \hlstd{=} \hlstr{"less"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	One Sample t-test
+## 
+## data:  nhanes.sample$SleepHrsNight
+## t = -3.1968, df = 140, p-value = 0.0008591
+## alternative hypothesis: true mean is less than 7
+## 95 percent confidence interval:
+##      -Inf 6.815391
+## sample estimates:
+## mean of x 
+##  6.617021
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+%% check here if it should be lower.tail false or true 
+
 
 \end{document}

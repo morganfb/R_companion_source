@@ -639,6 +639,6 @@ legend('topright',
 % JV: Add material from 102 section 2 to this section, as an exercise? Doesn't seem useful to just reproduce the figures in OI Biostat 1.6 here.
 
 <<tidy = TRUE, fig.height = 4, fig.width = 4>>=
-boxplot(golub.exprs.pheno[,7:9])
+boxplot(Golub[,7:9])
 @
 
