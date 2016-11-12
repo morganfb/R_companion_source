@@ -2345,6 +2345,14 @@ The example shown below gives a comparison of doing the method by hand, as well 
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{## Example 4.13}
+\hlkwd{set.seed}\hlstd{(}\hlnum{5011}\hlstd{)}
+\hlstd{indeces} \hlkwb{=} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(NHANES}\hlopt{$}\hlstd{ID),} \hlkwc{size} \hlstd{=} \hlnum{200}\hlstd{)}
+\hlstd{nhanes.sample} \hlkwb{=} \hlstd{NHANES[indeces,]}
+
+\hlcom{# First remove the children from the sample}
+\hlstd{children} \hlkwb{=} \hlkwd{which}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{Age} \hlopt{<} \hlnum{21}\hlstd{)}  \hlcom{#Find children }
+\hlstd{nhanes.sample} \hlkwb{=} \hlstd{nhanes.sample[}\hlopt{-}\hlstd{children, ]}
+
 \hlcom{# Method 1 }
 \hlstd{xbar} \hlkwb{=} \hlkwd{mean}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{SleepHrsNight,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \hlstd{s} \hlkwb{=} \hlkwd{sd}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{SleepHrsNight,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
@@ -2354,14 +2362,14 @@ The example shown below gives a comparison of doing the method by hand, as well 
 \hlstd{t}
 \end{alltt}
 \begin{verbatim}
-## [1] -0.9279956
+## [1] -0.864111
 \end{verbatim}
 \begin{alltt}
 \hlstd{p} \hlkwb{=} \hlkwd{pnorm}\hlstd{(t,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \hlstd{p}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.1767049
+## [1] 0.1937634
 \end{verbatim}
 \begin{alltt}
 \hlcom{# Method 2 }
@@ -2372,13 +2380,13 @@ The example shown below gives a comparison of doing the method by hand, as well 
 ## 	One Sample t-test
 ## 
 ## data:  nhanes.sample$SleepHrsNight
-## t = -0.928, df = 133, p-value = 0.1775
+## t = -0.8641, df = 134, p-value = 0.1945
 ## alternative hypothesis: true mean is less than 7
 ## 95 percent confidence interval:
-##      -Inf 7.087863
+##      -Inf 7.095073
 ## sample estimates:
 ## mean of x 
-##   6.88806
+##  6.896296
 \end{verbatim}
 \end{kframe}
 \end{knitrout}

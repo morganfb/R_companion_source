@@ -167,6 +167,14 @@ In $R$, all of the steps of hypothesis testing can be done with one single funct
 The example shown below gives a comparison of doing the method by hand, as well as using the function.  
 <<>>=
 ## Example 4.13
+set.seed(5011)
+indeces = sample(1:length(NHANES$ID), size = 200)
+nhanes.sample = NHANES[indeces,]
+
+# First remove the children from the sample
+children = which(nhanes.sample$Age < 21)  #Find children 
+nhanes.sample = nhanes.sample[-children, ] 
+
 # Method 1 
 xbar = mean(nhanes.sample$SleepHrsNight, na.rm = TRUE)
 s = sd(nhanes.sample$SleepHrsNight, na.rm = TRUE)
