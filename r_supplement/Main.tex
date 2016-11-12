@@ -2058,11 +2058,11 @@ The main text talks through the importance of using a sample of data as a reflec
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{set.seed}\hlstd{(}\hlnum{25}\hlstd{)}
+\hlkwd{set.seed}\hlstd{(}\hlnum{5011}\hlstd{)}
 \hlcom{# Step 1: Take a sample of the row indeces }
 \hlstd{indeces} \hlkwb{=} \hlkwd{sample}\hlstd{(}\hlkwc{x} \hlstd{= (}\hlnum{1}\hlopt{:}\hlkwd{nrow}\hlstd{(yrbss)),} \hlkwc{size} \hlstd{=} \hlnum{100}\hlstd{,} \hlkwc{replace} \hlstd{=} \hlnum{FALSE}\hlstd{)}
 \hlcom{# Step 2: Pull those corresponding individuals from the dataset }
-\hlstd{samp} \hlkwb{=} \hlstd{yrbss[indeces,]}
+\hlstd{yrbss.sample} \hlkwb{=} \hlstd{yrbss[indeces,]}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -2071,12 +2071,14 @@ Standard histograms plots of some of the variables on this dataset can be plotte
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Figure 4.4 }
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
-\hlkwd{hist}\hlstd{(samp}\hlopt{$}\hlstd{height,} \hlkwc{main} \hlstd{=} \hlstr{"Height"}\hlstd{)}
-\hlkwd{hist}\hlstd{(samp}\hlopt{$}\hlstd{weight,} \hlkwc{main} \hlstd{=} \hlstr{"Weight"}\hlstd{)}
-\hlkwd{hist}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{main} \hlstd{=} \hlstr{"Physical Activity in Past Week"}\hlstd{)}
-\hlkwd{hist}\hlstd{(samp}\hlopt{$}\hlstd{strength.training.7d,} \hlkwc{main} \hlstd{=} \hlstr{"Lifting Weights in Past Week"}\hlstd{)}
+\hlcom{## Figure 4.4}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,} \hlnum{2}\hlstd{))}
+\hlkwd{hist}\hlstd{(yrbss.sample}\hlopt{$}\hlstd{height,} \hlkwc{xlab} \hlstd{=} \hlstr{"Height (meters)"}\hlstd{,} \hlkwc{main} \hlstd{=} \hlstr{""}\hlstd{,} \hlkwc{breaks} \hlstd{=} \hlnum{15}\hlstd{)}
+\hlkwd{hist}\hlstd{(yrbss.sample}\hlopt{$}\hlstd{weight,} \hlkwc{xlab} \hlstd{=} \hlstr{"Weight (kilograms)"}\hlstd{,} \hlkwc{main} \hlstd{=} \hlstr{""}\hlstd{,} \hlkwc{breaks} \hlstd{=} \hlnum{5}\hlstd{)}
+\hlkwd{hist}\hlstd{(yrbss.sample}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{xlab} \hlstd{=} \hlstr{"Physical Activity in Past Week"}\hlstd{,}
+    \hlkwc{main} \hlstd{=} \hlstr{""}\hlstd{,} \hlkwc{breaks} \hlstd{=} \hlopt{-}\hlnum{1}\hlopt{:}\hlnum{7} \hlopt{+} \hlnum{0.5}\hlstd{)}
+\hlkwd{hist}\hlstd{(yrbss.sample}\hlopt{$}\hlstd{strength.training.7d,} \hlkwc{xlab} \hlstd{=} \hlstr{"Lifting Weights in Past Week"}\hlstd{,}
+    \hlkwc{main} \hlstd{=} \hlstr{""}\hlstd{,} \hlkwc{breaks} \hlstd{=} \hlopt{-}\hlnum{1}\hlopt{:}\hlnum{7} \hlopt{+} \hlnum{0.5}\hlstd{)}
 \end{alltt}
 \end{kframe}
 
@@ -2089,14 +2091,14 @@ Standard histograms plots of some of the variables on this dataset can be plotte
 \end{knitrout}
 
 \section{Variability in Estimates}
-The sample parameters can be calculated as well as the population parameters.  
+The sample parameters can be calculated as well as the population parameters.  These correspond to the data seen in Table 4.5 in the main text.  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{mean}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlkwd{mean}\hlstd{(yrbss.sample}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
-## [1] 3.739583
+## [1] 3.93
 \end{verbatim}
 \begin{alltt}
 \hlkwd{mean}\hlstd{(yrbss}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
@@ -2105,7 +2107,7 @@ The sample parameters can be calculated as well as the population parameters.
 ## [1] 3.903005
 \end{verbatim}
 \begin{alltt}
-\hlkwd{median}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlkwd{median}\hlstd{(yrbss.sample}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 4
@@ -2117,10 +2119,10 @@ The sample parameters can be calculated as well as the population parameters.
 ## [1] 4
 \end{verbatim}
 \begin{alltt}
-\hlkwd{sd}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlkwd{sd}\hlstd{(yrbss.sample}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
-## [1] 2.608669
+## [1] 2.535625
 \end{verbatim}
 \begin{alltt}
 \hlkwd{sd}\hlstd{(yrbss}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
@@ -2146,15 +2148,16 @@ The following steps can be used to create a \textbf{sampling distribution of the
 \hlkwa{for}\hlstd{(ii} \hlkwa{in} \hlnum{1}\hlopt{:}\hlnum{1000}\hlstd{)\{}
   \hlcom{# Step 2a: Get the random sample }
   \hlstd{indeces} \hlkwb{=} \hlkwd{sample}\hlstd{(}\hlkwc{x} \hlstd{= (}\hlnum{1}\hlopt{:}\hlkwd{nrow}\hlstd{(yrbss)),} \hlkwc{size} \hlstd{=} \hlnum{100}\hlstd{,} \hlkwc{replace} \hlstd{=} \hlnum{FALSE}\hlstd{)}
-  \hlstd{samp} \hlkwb{=} \hlstd{yrbss[indeces,]}
+  \hlstd{sample} \hlkwb{=} \hlstd{yrbss[indeces,]}
   \hlcom{# Step 2b: Take the mean of the sample and store it }
-  \hlstd{means[ii]} \hlkwb{=} \hlkwd{mean}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+  \hlstd{means[ii]} \hlkwb{=} \hlkwd{mean}\hlstd{(sample}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \hlstd{\}}
 
 \hlcom{# Step 3: Plot your results }
 \hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{))}
 \hlkwd{hist}\hlstd{(means,} \hlkwc{breaks} \hlstd{=} \hlnum{30}\hlstd{)}
 \hlkwd{qqnorm}\hlstd{(means)}
+\hlkwd{qqline}\hlstd{(means)}
 \end{alltt}
 \end{kframe}
 
@@ -2165,6 +2168,7 @@ The following steps can be used to create a \textbf{sampling distribution of the
 
 
 \end{knitrout}
+As discussed in chapter 3, the above plots are used to determine the normality of the sample.  The left plot is just a histogram, which can be inspected visually to see that it approximates a normal distribution.  The plot on the right is a more powerful tool for determining the normality - the dots represent deviation of data points from a theoretical normal distribution, as represented by the line on the plot.  The above plot shows a fairly normal distribution because of how closely the dots match the line.  
 
 The more samples are taken, the more accurately will the distribution be depicted.  Figure 4.8 demonstrates this below 
 \begin{knitrout}
@@ -2174,13 +2178,14 @@ The more samples are taken, the more accurately will the distribution be depicte
 \hlstd{means} \hlkwb{=} \hlkwd{rep}\hlstd{(}\hlnum{NA}\hlstd{,} \hlnum{100000}\hlstd{)}
 \hlkwa{for}\hlstd{(ii} \hlkwa{in} \hlnum{1}\hlopt{:}\hlnum{100000}\hlstd{)\{}
   \hlstd{indeces} \hlkwb{=} \hlkwd{sample}\hlstd{(}\hlkwc{x} \hlstd{= (}\hlnum{1}\hlopt{:}\hlkwd{nrow}\hlstd{(yrbss)),} \hlkwc{size} \hlstd{=} \hlnum{100}\hlstd{,} \hlkwc{replace} \hlstd{=} \hlnum{FALSE}\hlstd{)}
-  \hlstd{samp} \hlkwb{=} \hlstd{yrbss[indeces,]}
-  \hlstd{means[ii]} \hlkwb{=} \hlkwd{mean}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+  \hlstd{sample} \hlkwb{=} \hlstd{yrbss[indeces,]}
+  \hlstd{means[ii]} \hlkwb{=} \hlkwd{mean}\hlstd{(sample}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \hlstd{\}}
 
 \hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{))}
 \hlkwd{hist}\hlstd{(means,} \hlkwc{breaks} \hlstd{=} \hlnum{30}\hlstd{)}
 \hlkwd{qqnorm}\hlstd{(means)}
+\hlkwd{qqline}\hlstd{(means)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -2192,13 +2197,13 @@ The first formula introduced in the text for calculating confidence intervals is
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{## Example 4.3 }
-\hlstd{xbar} \hlkwb{=} \hlkwd{mean}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
-\hlstd{std.error} \hlkwb{=} \hlkwd{sd}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}\hlopt{/}\hlkwd{sqrt}\hlstd{(}\hlkwd{length}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d))}
+\hlstd{xbar} \hlkwb{=} \hlkwd{mean}\hlstd{(yrbss.sample}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{std.error} \hlkwb{=} \hlkwd{sd}\hlstd{(yrbss.sample}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}\hlopt{/}\hlkwd{sqrt}\hlstd{(}\hlkwd{length}\hlstd{(yrbss.sample}\hlopt{$}\hlstd{physically.active.7d))}
 \hlstd{ci} \hlkwb{=} \hlkwd{c}\hlstd{(xbar} \hlopt{-} \hlnum{1.96}\hlopt{*}\hlstd{std.error, xbar} \hlopt{+} \hlnum{1.96}\hlopt{*}\hlstd{std.error)}
 \hlstd{ci}
 \end{alltt}
 \begin{verbatim}
-## [1] 3.317699 4.324406
+## [1] 3.433018 4.426982
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -2222,7 +2227,7 @@ $R$ can be used to calculate $z^*$ and then using that value, to solve for the c
 \hlstd{ci}
 \end{alltt}
 \begin{verbatim}
-## [1] 3.317699 4.324406
+## [1] 3.433018 4.426982
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -2249,7 +2254,7 @@ $R$ can be used to calculate $z^*$ and then using that value, to solve for the c
 \hlstd{ci}
 \end{alltt}
 \begin{verbatim}
-## [1] 3.159546 4.482559
+## [1] 3.276866 4.583134
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -2261,17 +2266,13 @@ Example 4.10 is an excellent example of how to clean up data.  The main text res
 \begin{alltt}
 \hlcom{## Example 4.10 }
 \hlcom{# Collect the sample of size 200}
-\hlkwd{set.seed}\hlstd{(}\hlnum{6578}\hlstd{)}
+\hlkwd{set.seed}\hlstd{(}\hlnum{5011}\hlstd{)}
 \hlstd{indeces} \hlkwb{=} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(NHANES}\hlopt{$}\hlstd{ID),} \hlkwc{size} \hlstd{=} \hlnum{200}\hlstd{)}
 \hlstd{nhanes.sample} \hlkwb{=} \hlstd{NHANES[indeces,]}
 
 \hlcom{# First remove the children from the sample}
 \hlstd{children} \hlkwb{=} \hlkwd{which}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{Age} \hlopt{<} \hlnum{21}\hlstd{)}  \hlcom{#Find children }
 \hlstd{nhanes.sample} \hlkwb{=} \hlstd{nhanes.sample[}\hlopt{-}\hlstd{children, ]}       \hlcom{#Remove them from the sample}
-
-\hlcom{# Secondly, remove the people with missing BMI}
-\hlcom{# missing = which(is.na(nhanes.sample$BMI))  #Find missing values}
-\hlcom{# nhanes.sample = nhanes.sample[-missing, ]       #Remove them from the sample}
 
 \hlkwd{hist}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI,} \hlkwc{breaks} \hlstd{=} \hlstr{"FD"}\hlstd{)} \hlcom{## This gives Figure 4.10}
 \end{alltt}
@@ -2298,22 +2299,18 @@ Example 4.10 is an excellent example of how to clean up data.  The main text res
 
 
 \begin{kframe}\begin{alltt}
-\hlkwd{mean}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI)}
-\end{alltt}
-\begin{verbatim}
-## [1] 29.44035
-\end{verbatim}
-\begin{alltt}
 \hlcom{# Calculate sample statistics and confidence interval}
 \hlstd{xbar} \hlkwb{=} \hlkwd{mean}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
-\hlstd{se} \hlkwb{=} \hlkwd{sd}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI,} \hlkwc{na.rm}\hlstd{=}\hlnum{TRUE}\hlstd{)}\hlopt{/}\hlkwd{sqrt}\hlstd{(}\hlkwd{length}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI))}
+\hlstd{n} \hlkwb{=} \hlkwd{length}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI)}
+\hlstd{s} \hlkwb{=} \hlkwd{sd}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI,} \hlkwc{na.rm}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+\hlstd{se} \hlkwb{=} \hlstd{s}\hlopt{/}\hlkwd{sqrt}\hlstd{(n)}
 \hlstd{perc} \hlkwb{=} \hlnum{.95}
 \hlstd{z} \hlkwb{=} \hlkwd{qnorm}\hlstd{(}\hlkwc{p} \hlstd{= perc} \hlopt{+} \hlstd{(}\hlnum{1}\hlopt{-}\hlstd{perc)}\hlopt{/}\hlnum{2}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \hlstd{ci} \hlkwb{=} \hlkwd{c}\hlstd{(xbar} \hlopt{-} \hlstd{z}\hlopt{*}\hlstd{se, xbar} \hlopt{+} \hlstd{z}\hlopt{*}\hlstd{se)}
 \hlstd{ci}
 \end{alltt}
 \begin{verbatim}
-## [1] 28.43266 30.44805
+## [1] 27.66076 29.94282
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -2325,16 +2322,18 @@ which implies that the upper tail must be considered.
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlstd{xbar} \hlkwb{=} \hlnum{29.7}
 \hlstd{mu} \hlkwb{=} \hlnum{21.7}
-\hlstd{s} \hlkwb{=} \hlnum{7.7}
-\hlstd{n} \hlkwb{=} \hlnum{150}
-
 \hlstd{t} \hlkwb{=} \hlstd{(xbar} \hlopt{-} \hlstd{mu)}\hlopt{/}\hlstd{(s}\hlopt{/}\hlkwd{sqrt}\hlstd{(n))}
+\hlstd{t}
+\end{alltt}
+\begin{verbatim}
+## [1] 12.19889
+\end{verbatim}
+\begin{alltt}
 \hlkwd{pnorm}\hlstd{(t,} \hlkwc{lower.tail} \hlstd{=} \hlnum{FALSE}\hlstd{)}
 \end{alltt}
 \begin{verbatim}
-## [1] 2.15779e-37
+## [1] 1.575536e-34
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -2355,14 +2354,14 @@ The example shown below gives a comparison of doing the method by hand, as well 
 \hlstd{t}
 \end{alltt}
 \begin{verbatim}
-## [1] -3.196762
+## [1] -0.9279956
 \end{verbatim}
 \begin{alltt}
 \hlstd{p} \hlkwb{=} \hlkwd{pnorm}\hlstd{(t,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
 \hlstd{p}
 \end{alltt}
 \begin{verbatim}
-## [1] 0.0006948986
+## [1] 0.1767049
 \end{verbatim}
 \begin{alltt}
 \hlcom{# Method 2 }
@@ -2373,17 +2372,16 @@ The example shown below gives a comparison of doing the method by hand, as well 
 ## 	One Sample t-test
 ## 
 ## data:  nhanes.sample$SleepHrsNight
-## t = -3.1968, df = 140, p-value = 0.0008591
+## t = -0.928, df = 133, p-value = 0.1775
 ## alternative hypothesis: true mean is less than 7
 ## 95 percent confidence interval:
-##      -Inf 6.815391
+##      -Inf 7.087863
 ## sample estimates:
 ## mean of x 
-##  6.617021
+##   6.88806
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-%% check here if it should be lower.tail false or true 
 
 
 \end{document}

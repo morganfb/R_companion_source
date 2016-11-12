@@ -11,7 +11,7 @@ The main text talks through the importance of using a sample of data as a reflec
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{set.seed}\hlstd{(}\hlnum{111}\hlstd{)}
+\hlkwd{set.seed}\hlstd{(}\hlnum{5011}\hlstd{)}
 \hlcom{# Step 1: Take a sample of the row indeces }
 \hlstd{indeces} \hlkwb{=} \hlkwd{sample}\hlstd{(}\hlkwc{x} \hlstd{= (}\hlnum{1}\hlopt{:}\hlkwd{nrow}\hlstd{(yrbss)),} \hlkwc{size} \hlstd{=} \hlnum{100}\hlstd{,} \hlkwc{replace} \hlstd{=} \hlnum{FALSE}\hlstd{)}
 \end{alltt}
@@ -30,32 +30,34 @@ Standard histograms plots of some of the variables on this dataset can be plotte
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Figure 4.4 }
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow}\hlstd{=}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{2}\hlstd{))}
-\hlkwd{hist}\hlstd{(samp}\hlopt{$}\hlstd{height,} \hlkwc{main} \hlstd{=} \hlstr{"Height"}\hlstd{)}
+\hlcom{## Figure 4.4}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,} \hlnum{2}\hlstd{))}
+\hlkwd{hist}\hlstd{(samp}\hlopt{$}\hlstd{height,} \hlkwc{xlab} \hlstd{=} \hlstr{"Height (meters)"}\hlstd{,} \hlkwc{main} \hlstd{=} \hlstr{""}\hlstd{,} \hlkwc{breaks} \hlstd{=} \hlnum{15}\hlstd{)}
 \end{alltt}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in hist(samp\$height, main = "{}Height"{}): object 'samp' not found}}\begin{alltt}
-\hlkwd{hist}\hlstd{(samp}\hlopt{$}\hlstd{weight,} \hlkwc{main} \hlstd{=} \hlstr{"Weight"}\hlstd{)}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in hist(samp\$height, xlab = "{}Height (meters)"{}, main = "{}"{}, breaks = 15): object 'samp' not found}}\begin{alltt}
+\hlkwd{hist}\hlstd{(samp}\hlopt{$}\hlstd{weight,} \hlkwc{xlab} \hlstd{=} \hlstr{"Weight (kilograms)"}\hlstd{,} \hlkwc{main} \hlstd{=} \hlstr{""}\hlstd{,} \hlkwc{breaks} \hlstd{=} \hlnum{5}\hlstd{)}
 \end{alltt}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in hist(samp\$weight, main = "{}Weight"{}): object 'samp' not found}}\begin{alltt}
-\hlkwd{hist}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{main} \hlstd{=} \hlstr{"Physical Activity in Past Week"}\hlstd{)}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in hist(samp\$weight, xlab = "{}Weight (kilograms)"{}, main = "{}"{}, breaks = 5): object 'samp' not found}}\begin{alltt}
+\hlkwd{hist}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{xlab} \hlstd{=} \hlstr{"Physical Activity in Past Week"}\hlstd{,} \hlkwc{main} \hlstd{=} \hlstr{""}\hlstd{,}
+    \hlkwc{breaks} \hlstd{=} \hlopt{-}\hlnum{1}\hlopt{:}\hlnum{7} \hlopt{+} \hlnum{0.5}\hlstd{)}
 \end{alltt}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in hist(samp\$physically.active.7d, main = "{}Physical Activity in Past Week"{}): object 'samp' not found}}\begin{alltt}
-\hlkwd{hist}\hlstd{(samp}\hlopt{$}\hlstd{strength.training.7d,} \hlkwc{main} \hlstd{=} \hlstr{"Lifting Weights in Past Week"}\hlstd{)}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in hist(samp\$physically.active.7d, xlab = "{}Physical Activity in Past Week"{}, : object 'samp' not found}}\begin{alltt}
+\hlkwd{hist}\hlstd{(samp}\hlopt{$}\hlstd{strength.training.7d,} \hlkwc{xlab} \hlstd{=} \hlstr{"Lifting Weights in Past Week"}\hlstd{,} \hlkwc{main} \hlstd{=} \hlstr{""}\hlstd{,}
+    \hlkwc{breaks} \hlstd{=} \hlopt{-}\hlnum{1}\hlopt{:}\hlnum{7} \hlopt{+} \hlnum{0.5}\hlstd{)}
 \end{alltt}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in hist(samp\$strength.training.7d, main = "{}Lifting Weights in Past Week"{}): object 'samp' not found}}\end{kframe}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in hist(samp\$strength.training.7d, xlab = "{}Lifting Weights in Past Week"{}, : object 'samp' not found}}\end{kframe}
 \end{knitrout}
 
 \section{Variability in Estimates}
-The sample parameters can be calculated as well as the population parameters.  
+The sample parameters can be calculated as well as the population parameters.  These correspond to the data seen in Table 4.5 in the main text.  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -125,13 +127,20 @@ The following steps can be used to create a \textbf{sampling distribution of the
 \end{alltt}
 
 
-{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in qqnorm.default(means): y is empty or has only NAs}}\end{kframe}
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in qqnorm.default(means): y is empty or has only NAs}}\begin{alltt}
+\hlkwd{qqline}\hlstd{(means)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in int\_abline(a = a, b = b, h = h, v = v, untf = untf, ...): plot.new has not been called yet}}\end{kframe}
 \end{knitrout}
+As discussed in chapter 3, the above plots are used to determine the normality of the sample.  The left plot is just a histogram, which can be inspected visually to see that it approximates a normal distribution.  The plot on the right is a more powerful tool for determining the normality - the dots represent deviation of data points from a theoretical normal distribution, as represented by the line on the plot.  The above plot shows a fairly normal distribution because of how closely the dots match the line.  
 
 The more samples are taken, the more accurately will the distribution be depicted.  Figure 4.8 demonstrates this below 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
+\hlcom{## Figure 4.8}
 \hlstd{means} \hlkwb{=} \hlkwd{rep}\hlstd{(}\hlnum{NA}\hlstd{,} \hlnum{100000}\hlstd{)}
 \hlkwa{for}\hlstd{(ii} \hlkwa{in} \hlnum{1}\hlopt{:}\hlnum{100000}\hlstd{)\{}
   \hlstd{indeces} \hlkwb{=} \hlkwd{sample}\hlstd{(}\hlkwc{x} \hlstd{= (}\hlnum{1}\hlopt{:}\hlkwd{nrow}\hlstd{(yrbss)),} \hlkwc{size} \hlstd{=} \hlnum{100}\hlstd{,} \hlkwc{replace} \hlstd{=} \hlnum{FALSE}\hlstd{)}
@@ -142,7 +151,248 @@ The more samples are taken, the more accurately will the distribution be depicte
 \hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{))}
 \hlkwd{hist}\hlstd{(means,} \hlkwc{breaks} \hlstd{=} \hlnum{30}\hlstd{)}
 \hlkwd{qqnorm}\hlstd{(means)}
+\hlkwd{qqline}\hlstd{(means)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
+
+\section{Confidence Intervals}
+The first formula introduced in the text for calculating confidence intervals is as follows, 
+\[ \text{ point estimate } \pm 1.96 \cdot \text{SE } \] 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 4.3 }
+\hlstd{xbar} \hlkwb{=} \hlkwd{mean}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in mean(samp\$physically.active.7d, na.rm = TRUE): object 'samp' not found}}\begin{alltt}
+\hlstd{std.error} \hlkwb{=} \hlkwd{sd}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}\hlopt{/}\hlkwd{sqrt}\hlstd{(}\hlkwd{length}\hlstd{(samp}\hlopt{$}\hlstd{physically.active.7d))}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in is.data.frame(x): object 'samp' not found}}\begin{alltt}
+\hlstd{ci} \hlkwb{=} \hlkwd{c}\hlstd{(xbar} \hlopt{-} \hlnum{1.96}\hlopt{*}\hlstd{std.error, xbar} \hlopt{+} \hlnum{1.96}\hlopt{*}\hlstd{std.error)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'xbar' not found}}\begin{alltt}
+\hlstd{ci}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'ci' not found}}\end{kframe}
+\end{knitrout}
+
+To generalize this formula, a standard normal distribution can be used to obtain $z^*$, giving the following 
+\[ \bar{x} \pm z^* \cdot \text{SE } \]
+$R$ can be used to calculate $z^*$ and then using that value, to solve for the confidence interval.  A key point here is that we want the middle 95\% of the distribution, which divides the remaining 5\% between the two tails.  This is equivalent to 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 4.3 (version 2)}
+\hlstd{perc} \hlkwb{=} \hlnum{.95}
+\hlstd{z} \hlkwb{=} \hlkwd{qnorm}\hlstd{(}\hlkwc{p} \hlstd{= perc} \hlopt{+} \hlstd{(}\hlnum{1}\hlopt{-}\hlstd{perc)}\hlopt{/}\hlnum{2}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{z}
+\end{alltt}
+\begin{verbatim}
+## [1] 1.959964
+\end{verbatim}
+\begin{alltt}
+\hlstd{ci} \hlkwb{=} \hlkwd{c}\hlstd{(xbar} \hlopt{-} \hlnum{1.96}\hlopt{*}\hlstd{std.error, xbar} \hlopt{+} \hlnum{1.96}\hlopt{*}\hlstd{std.error)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'xbar' not found}}\begin{alltt}
+\hlstd{ci}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'ci' not found}}\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 4.6 }
+\hlstd{perc} \hlkwb{=} \hlnum{.99}
+\hlstd{z} \hlkwb{=} \hlkwd{qnorm}\hlstd{(}\hlkwc{p} \hlstd{= perc} \hlopt{+} \hlstd{(}\hlnum{1}\hlopt{-}\hlstd{perc)}\hlopt{/}\hlnum{2}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{z}
+\end{alltt}
+\begin{verbatim}
+## [1] 2.575829
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 4.8 }
+\hlstd{ci} \hlkwb{=} \hlkwd{c}\hlstd{(xbar} \hlopt{-} \hlstd{z}\hlopt{*}\hlstd{std.error, xbar} \hlopt{+} \hlstd{z}\hlopt{*}\hlstd{std.error)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'xbar' not found}}\begin{alltt}
+\hlstd{ci}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'ci' not found}}\end{kframe}
+\end{knitrout}
+
+
+Example 4.10 is an excellent example of how to clean up data.  The main text restricts the sample to adults over 21 with reported BMI values.  The steps below show how to find the individuals who are children or who have missing data and how to remove them from the sample.  Often times, when using a sample of a large population, a process similar to this one must be used.  Missing data can be problematic for analyses of the data, so understanding how to clean up the data appropriately is quite important. 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 4.10 }
+\hlcom{# Collect the sample of size 200}
+\hlkwd{set.seed}\hlstd{(}\hlnum{5011}\hlstd{)}
+\hlstd{indeces} \hlkwb{=} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlkwd{length}\hlstd{(NHANES}\hlopt{$}\hlstd{ID),} \hlkwc{size} \hlstd{=} \hlnum{200}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in sample(1:length(NHANES\$ID), size = 200): object 'NHANES' not found}}\begin{alltt}
+\hlstd{nhanes.sample} \hlkwb{=} \hlstd{NHANES[indeces,]}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'NHANES' not found}}\begin{alltt}
+\hlcom{# First remove the children from the sample}
+\hlstd{children} \hlkwb{=} \hlkwd{which}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{Age} \hlopt{<} \hlnum{21}\hlstd{)}  \hlcom{#Find children }
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in which(nhanes.sample\$Age < 21): object 'nhanes.sample' not found}}\begin{alltt}
+\hlstd{nhanes.sample} \hlkwb{=} \hlstd{nhanes.sample[}\hlopt{-}\hlstd{children, ]}       \hlcom{#Remove them from the sample}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'nhanes.sample' not found}}\begin{alltt}
+\hlcom{# Secondly, remove the people with missing BMI}
+\hlcom{# missing = which(is.na(nhanes.sample$BMI))  #Find missing values}
+\hlcom{# nhanes.sample = nhanes.sample[-missing, ]       #Remove them from the sample}
+
+\hlkwd{hist}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI,} \hlkwc{breaks} \hlstd{=} \hlstr{"FD"}\hlstd{)} \hlcom{## This gives Figure 4.10}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in hist(nhanes.sample\$BMI, breaks = "{}FD"{}): object 'nhanes.sample' not found}}\begin{alltt}
+\hlcom{# Locate where the outlier is occuring }
+\hlstd{x} \hlkwb{=} \hlkwd{which}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI} \hlopt{==} \hlkwd{max}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{))}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in which(nhanes.sample\$BMI == max(nhanes.sample\$BMI, na.rm = TRUE)): object 'nhanes.sample' not found}}\begin{alltt}
+\hlcom{# Remove the outlier }
+\hlstd{nhanes.sample} \hlkwb{=} \hlstd{nhanes.sample[}\hlopt{-}\hlstd{x,]}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'nhanes.sample' not found}}\begin{alltt}
+\hlcom{# Plot again to confirm that it was removed }
+\hlkwd{hist}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in hist(nhanes.sample\$BMI): object 'nhanes.sample' not found}}\begin{alltt}
+\hlkwd{mean}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in mean(nhanes.sample\$BMI): object 'nhanes.sample' not found}}\begin{alltt}
+\hlcom{# Calculate sample statistics and confidence interval}
+\hlstd{xbar} \hlkwb{=} \hlkwd{mean}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in mean(nhanes.sample\$BMI, na.rm = TRUE): object 'nhanes.sample' not found}}\begin{alltt}
+\hlstd{se} \hlkwb{=} \hlkwd{sd}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI,} \hlkwc{na.rm}\hlstd{=}\hlnum{TRUE}\hlstd{)}\hlopt{/}\hlkwd{sqrt}\hlstd{(}\hlkwd{length}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{BMI))}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in is.data.frame(x): object 'nhanes.sample' not found}}\begin{alltt}
+\hlstd{perc} \hlkwb{=} \hlnum{.95}
+\hlstd{z} \hlkwb{=} \hlkwd{qnorm}\hlstd{(}\hlkwc{p} \hlstd{= perc} \hlopt{+} \hlstd{(}\hlnum{1}\hlopt{-}\hlstd{perc)}\hlopt{/}\hlnum{2}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{ci} \hlkwb{=} \hlkwd{c}\hlstd{(xbar} \hlopt{-} \hlstd{z}\hlopt{*}\hlstd{se, xbar} \hlopt{+} \hlstd{z}\hlopt{*}\hlstd{se)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'xbar' not found}}\begin{alltt}
+\hlstd{ci}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'ci' not found}}\end{kframe}
+\end{knitrout}
+
+\section{Hypothesis Testing}
+If you have calculated your test statistic by hand, $R$ can easily be used to get the p-value using the function \textit{pnorm()} as in Chapter 3.  The example that is worked through in the main text can be completed as follows.  Note that \textit{lower.tail = FALSE} because the alternative hypothesis here is 
+\[ H_A: \mu_{bmi} > 21.7 \]
+which implies that the upper tail must be considered.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{xbar} \hlkwb{=} \hlnum{29.7}
+\hlstd{mu} \hlkwb{=} \hlnum{21.7}
+\hlstd{s} \hlkwb{=} \hlnum{7.7}
+\hlstd{n} \hlkwb{=} \hlnum{150}
+
+\hlstd{t} \hlkwb{=} \hlstd{(xbar} \hlopt{-} \hlstd{mu)}\hlopt{/}\hlstd{(s}\hlopt{/}\hlkwd{sqrt}\hlstd{(n))}
+\hlkwd{pnorm}\hlstd{(t,} \hlkwc{lower.tail} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 2.15779e-37
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+In $R$, all of the steps of hypothesis testing can be done with one single function, \textit{t.test()}.  This gives the test statistic, the p-value, and the confidence interval.  The function takes the data as an argument, $x$, the null hypothesis value, as $mu$, and the alternative hypothesis type, as $alternative$, which can be \textit{"less", "greater",} or \textit{"two.sided"}.  
+
+The example shown below gives a comparison of doing the method by hand, as well as using the function.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 4.13}
+\hlcom{# Method 1 }
+\hlstd{xbar} \hlkwb{=} \hlkwd{mean}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{SleepHrsNight,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in mean(nhanes.sample\$SleepHrsNight, na.rm = TRUE): object 'nhanes.sample' not found}}\begin{alltt}
+\hlstd{s} \hlkwb{=} \hlkwd{sd}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{SleepHrsNight,} \hlkwc{na.rm} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in is.data.frame(x): object 'nhanes.sample' not found}}\begin{alltt}
+\hlstd{mu} \hlkwb{=} \hlnum{7}
+\hlstd{n} \hlkwb{=} \hlkwd{length}\hlstd{(nhanes.sample}\hlopt{$}\hlstd{SleepHrsNight)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'nhanes.sample' not found}}\begin{alltt}
+\hlstd{t} \hlkwb{=} \hlstd{(xbar} \hlopt{-} \hlstd{mu)}\hlopt{/}\hlstd{(s}\hlopt{/}\hlkwd{sqrt}\hlstd{(n))}
+\hlstd{t}
+\end{alltt}
+\begin{verbatim}
+## [1] 36.10612
+\end{verbatim}
+\begin{alltt}
+\hlstd{p} \hlkwb{=} \hlkwd{pnorm}\hlstd{(t,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{p}
+\end{alltt}
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Method 2 }
+\hlkwd{t.test}\hlstd{(}\hlkwc{x} \hlstd{= nhanes.sample}\hlopt{$}\hlstd{SleepHrsNight,} \hlkwc{mu} \hlstd{= mu,} \hlkwc{alternative} \hlstd{=} \hlstr{"less"}\hlstd{)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in t.test(x = nhanes.sample\$SleepHrsNight, mu = mu, alternative = "{}less"{}): object 'nhanes.sample' not found}}\end{kframe}
+\end{knitrout}
+%% check here if it should be lower.tail false or true 
 

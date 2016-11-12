@@ -9,33 +9,33 @@ The main text talks through the importance of using a sample of data as a reflec
 
 %% Figure out what this seed should be to recreate the book examples perfectly!
 <<>>=
-set.seed(25)
+set.seed(5011)
 # Step 1: Take a sample of the row indeces 
 indeces = sample(x = (1:nrow(yrbss)), size = 100, replace = FALSE)
 # Step 2: Pull those corresponding individuals from the dataset 
-samp = yrbss[indeces,]
+yrbss.sample = yrbss[indeces,]
 @
 
 Standard histograms plots of some of the variables on this dataset can be plotted.  
-<<fig.height=5, fig.width=6.5, fig.align = "center">>=
+<<fig.height=5, fig.width=4,fig.align = "center", tidy = TRUE>>=
 ## Figure 4.4 
 par(mfrow=c(2,2))
-hist(samp$height, main = "Height")
-hist(samp$weight, main = "Weight")
-hist(samp$physically.active.7d, main = "Physical Activity in Past Week")
-hist(samp$strength.training.7d, main = "Lifting Weights in Past Week")
+hist(yrbss.sample$height, xlab = "Height (meters)", main = "", breaks = 15)
+hist(yrbss.sample$weight, xlab = "Weight (kilograms)", main = "", breaks = 5)
+hist(yrbss.sample$physically.active.7d, xlab = "Physical Activity in Past Week", main = "", breaks = -1:7 + 0.5)
+hist(yrbss.sample$strength.training.7d, xlab = "Lifting Weights in Past Week", main = "", breaks = -1:7 + 0.5)
 @
 
 \section{Variability in Estimates}
-The sample parameters can be calculated as well as the population parameters.  
+The sample parameters can be calculated as well as the population parameters.  These correspond to the data seen in Table 4.5 in the main text.  
 <<>>=
-mean(samp$physically.active.7d, na.rm = TRUE)
+mean(yrbss.sample$physically.active.7d, na.rm = TRUE)
 mean(yrbss$physically.active.7d, na.rm = TRUE) 
 
-median(samp$physically.active.7d, na.rm = TRUE)
+median(yrbss.sample$physically.active.7d, na.rm = TRUE)
 median(yrbss$physically.active.7d, na.rm = TRUE) 
 
-sd(samp$physically.active.7d, na.rm = TRUE)
+sd(yrbss.sample$physically.active.7d, na.rm = TRUE)
 sd(yrbss$physically.active.7d, na.rm = TRUE) 
 @
 
@@ -43,7 +43,7 @@ sd(yrbss$physically.active.7d, na.rm = TRUE)
 The concept of a sampling distribution highlights the fact that sampling is a random process, and every sample is likely to be quite different than any other.  For this reason, sampling distributions are created, which represent the accumulated information of a large number of random samples.  
 
 The following steps can be used to create a \textbf{sampling distribution of the sample mean}.  
-<<fig.height=3, fig.width=6, fig.align = "center">>=
+<<fig.height=4, fig.width=6, fig.align = "center">>=
 ## Figure 4.7
 # Step 1: Create an empty list to put values in 
 means = rep(NA, 1000)
@@ -52,16 +52,18 @@ means = rep(NA, 1000)
 for(ii in 1:1000){
   # Step 2a: Get the random sample 
   indeces = sample(x = (1:nrow(yrbss)), size = 100, replace = FALSE)
-  samp = yrbss[indeces,]
+  sample = yrbss[indeces,]
   # Step 2b: Take the mean of the sample and store it 
-  means[ii] = mean(samp$physically.active.7d, na.rm = TRUE)
+  means[ii] = mean(sample$physically.active.7d, na.rm = TRUE)
 }
 
 # Step 3: Plot your results 
 par(mfrow = c(1,2))
 hist(means, breaks = 30)
 qqnorm(means)
+qqline(means)
 @
+As discussed in chapter 3, the above plots are used to determine the normality of the sample.  The left plot is just a histogram, which can be inspected visually to see that it approximates a normal distribution.  The plot on the right is a more powerful tool for determining the normality - the dots represent deviation of data points from a theoretical normal distribution, as represented by the line on the plot.  The above plot shows a fairly normal distribution because of how closely the dots match the line.  
 
 The more samples are taken, the more accurately will the distribution be depicted.  Figure 4.8 demonstrates this below 
 <<eval =FALSE, fig.height=3, fig.width=6, fig.align = "center">>=
@@ -69,13 +71,14 @@ The more samples are taken, the more accurately will the distribution be depicte
 means = rep(NA, 100000)
 for(ii in 1:100000){
   indeces = sample(x = (1:nrow(yrbss)), size = 100, replace = FALSE)
-  samp = yrbss[indeces,]
-  means[ii] = mean(samp$physically.active.7d, na.rm = TRUE)
+  sample = yrbss[indeces,]
+  means[ii] = mean(sample$physically.active.7d, na.rm = TRUE)
 }
 
 par(mfrow = c(1,2))
 hist(means, breaks = 30)
 qqnorm(means)
+qqline(means)
 @
 
 \section{Confidence Intervals}
@@ -83,8 +86,8 @@ The first formula introduced in the text for calculating confidence intervals is
 \[ \text{ point estimate } \pm 1.96 \cdot \text{SE } \] 
 <<>>= 
 ## Example 4.3 
-xbar = mean(samp$physically.active.7d, na.rm = TRUE)
-std.error = sd(samp$physically.active.7d, na.rm = TRUE)/sqrt(length(samp$physically.active.7d))
+xbar = mean(yrbss.sample$physically.active.7d, na.rm = TRUE)
+std.error = sd(yrbss.sample$physically.active.7d, na.rm = TRUE)/sqrt(length(yrbss.sample$physically.active.7d))
 ci = c(xbar - 1.96*std.error, xbar + 1.96*std.error)
 ci
 @
@@ -119,17 +122,13 @@ Example 4.10 is an excellent example of how to clean up data.  The main text res
 <<fig.height=3, fig.width=4, fig.align = "center">>=
 ## Example 4.10 
 # Collect the sample of size 200
-set.seed(6578)
+set.seed(5011)
 indeces = sample(1:length(NHANES$ID), size = 200)
 nhanes.sample = NHANES[indeces,]
 
 # First remove the children from the sample
 children = which(nhanes.sample$Age < 21)  #Find children 
 nhanes.sample = nhanes.sample[-children, ]       #Remove them from the sample
-
-# Secondly, remove the people with missing BMI
-# missing = which(is.na(nhanes.sample$BMI))  #Find missing values
-# nhanes.sample = nhanes.sample[-missing, ]       #Remove them from the sample
 
 hist(nhanes.sample$BMI, breaks = "FD") ## This gives Figure 4.10
 
@@ -139,11 +138,12 @@ x = which(nhanes.sample$BMI == max(nhanes.sample$BMI, na.rm = TRUE))
 nhanes.sample = nhanes.sample[-x,]
 # Plot again to confirm that it was removed 
 hist(nhanes.sample$BMI)
-mean(nhanes.sample$BMI)
 
 # Calculate sample statistics and confidence interval
 xbar = mean(nhanes.sample$BMI, na.rm = TRUE)
-se = sd(nhanes.sample$BMI, na.rm=TRUE)/sqrt(length(nhanes.sample$BMI))
+n = length(nhanes.sample$BMI)
+s = sd(nhanes.sample$BMI, na.rm=TRUE)
+se = s/sqrt(n)
 perc = .95
 z = qnorm(p = perc + (1-perc)/2, lower.tail = TRUE) 
 ci = c(xbar - z*se, xbar + z*se)
@@ -155,12 +155,10 @@ If you have calculated your test statistic by hand, $R$ can easily be used to ge
 \[ H_A: \mu_{bmi} > 21.7 \]
 which implies that the upper tail must be considered.  
 <<>>=
-xbar = 29.7 
 mu = 21.7 
-s = 7.7 
-n = 150 
-
 t = (xbar - mu)/(s/sqrt(n))
+t
+
 pnorm(t, lower.tail = FALSE)
 @
 
@@ -172,7 +170,7 @@ The example shown below gives a comparison of doing the method by hand, as well 
 # Method 1 
 xbar = mean(nhanes.sample$SleepHrsNight, na.rm = TRUE)
 s = sd(nhanes.sample$SleepHrsNight, na.rm = TRUE)
-mu = 7 
+mu = 7
 n = length(nhanes.sample$SleepHrsNight)
 t = (xbar - mu)/(s/sqrt(n))
 t 
@@ -182,5 +180,4 @@ p
 # Method 2 
 t.test(x = nhanes.sample$SleepHrsNight, mu = mu, alternative = "less")
 @
-%% check here if it should be lower.tail false or true 
 
