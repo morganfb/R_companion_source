@@ -793,7 +793,12 @@ It is much easier to use the \texttt{cor()} function to find correlation.
 \hlkwd{plot}\hlstd{(x,y)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-26-1} 
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-26-1} 
+
+}
+
+
 
 \end{knitrout}
 
@@ -2390,6 +2395,416 @@ The example shown below gives a comparison of doing the method by hand, as well 
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
+
+
+\newpage
+\chapter{Inference For Numerical Data}
+\minitoc
+
+\vspace{0.5cm} 
+
+\section{The t-distribution}
+The main text introduces the \textbf{t-distribution} and explains under what circumstances it should be used.  Using it in in R is very similar to many concepts seen through Chapter 4 thus far.  
+
+The following plot shows how the t-distribution approximates the normal distribution as the degrees of freedom grow.  The use of the function \textit{dt()} parallels the use of \textit{dnorm()} as has been used in previous chapters.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Figure 5.2 getting the x-axis values}
+\hlstd{x} \hlkwb{=} \hlkwd{seq}\hlstd{(}\hlopt{-}\hlnum{5}\hlstd{,} \hlnum{9}\hlstd{,} \hlnum{0.1}\hlstd{)}
+
+\hlcom{# finding the corresponding distribution values for several distributions}
+\hlstd{t1} \hlkwb{=} \hlkwd{dt}\hlstd{(x,} \hlkwc{df} \hlstd{=} \hlnum{1}\hlstd{)}
+\hlstd{t2} \hlkwb{=} \hlkwd{dt}\hlstd{(x,} \hlkwc{df} \hlstd{=} \hlnum{2}\hlstd{)}
+\hlstd{t4} \hlkwb{=} \hlkwd{dt}\hlstd{(x,} \hlkwc{df} \hlstd{=} \hlnum{4}\hlstd{)}
+\hlstd{t8} \hlkwb{=} \hlkwd{dt}\hlstd{(x,} \hlkwc{df} \hlstd{=} \hlnum{8}\hlstd{)}
+\hlstd{norm} \hlkwb{=} \hlkwd{dnorm}\hlstd{(x)}
+
+\hlcom{# plotting the results, with custom colors}
+\hlkwd{plot}\hlstd{(x, t1,} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0.4}\hlstd{),} \hlkwc{xlab} \hlstd{=} \hlstr{""}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{""}\hlstd{,} \hlkwc{col} \hlstd{=} \hlkwd{rgb}\hlstd{(}\hlnum{0}\hlstd{,}
+    \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{,} \hlkwc{alpha} \hlstd{=} \hlnum{0.1}\hlstd{))}
+\hlkwd{lines}\hlstd{(x, t2,} \hlkwc{col} \hlstd{=} \hlkwd{rgb}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{,} \hlkwc{alpha} \hlstd{=} \hlnum{0.2}\hlstd{))}
+\hlkwd{lines}\hlstd{(x, t4,} \hlkwc{col} \hlstd{=} \hlkwd{rgb}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{,} \hlkwc{alpha} \hlstd{=} \hlnum{0.3}\hlstd{))}
+\hlkwd{lines}\hlstd{(x, t8,} \hlkwc{col} \hlstd{=} \hlkwd{rgb}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{,} \hlkwc{alpha} \hlstd{=} \hlnum{0.4}\hlstd{))}
+\hlkwd{lines}\hlstd{(x, norm,} \hlkwc{col} \hlstd{=} \hlkwd{rgb}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{,} \hlkwc{alpha} \hlstd{=} \hlnum{0.5}\hlstd{))}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-79-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\subsection{The Alternative to t-Tables}
+The main text talks through the use of a \textbf{t-table}, but this text will go through examples of using software to do the same calculations.  In $R$, the command of interests here are \textit{pt()} to get the percentage of the distribution above or below a certain value and \textit{qt()} to get distribution values for which a certain percentage of the distribution falls above.  The command \textit{pt()} takes values inside the t-table to return the values on the x-axis of the table, whereas \textit{qt()} returns values within the table when given values along the upper x-axis.  
+
+An example of a one-sided calculation using the t-distribution can be viewed in Example 5.1 below.  Note the use of the stipulation \textit{lower.tail = TRUE} which ensures that the calculation is of values in the lower tail, i.e. those values which are less than -2.1.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 5.1 }
+\hlkwd{pt}\hlstd{(}\hlopt{-}\hlnum{2.1}\hlstd{,} \hlkwc{df} \hlstd{=} \hlnum{18}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.0250452
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Example 5.2 shows a two sided calculation using the t-distribution.  In order to do this in $R$, each tail can be calculated separately and then the two values summed.  Alternatively, the symmetry of the t-distribution can be utilized to calculate one tail and multiply it by two.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 5.2 }
+\hlcom{# Method 1: calculate each tail and sum }
+\hlkwd{pt}\hlstd{(}\hlnum{1.65}\hlstd{,} \hlkwc{df} \hlstd{=} \hlnum{20}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{FALSE}\hlstd{)} \hlopt{+} \hlkwd{pt}\hlstd{(}\hlopt{-}\hlnum{1.65}\hlstd{,} \hlkwc{df} \hlstd{=} \hlnum{20}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1145608
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Method 2: calculate one tail and multiply by 2 }
+\hlnum{2}\hlopt{*}\hlkwd{pt}\hlstd{(}\hlnum{1.65}\hlstd{,} \hlkwc{df} \hlstd{=} \hlnum{20}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1145608
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\subsection{Confidence Intervals}
+As in chapter 4, confidence intervals using the t-distribution can be set up in the same way with a $t^*$ value instead of a $z^*$ value.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 5.3 }
+\hlstd{n} \hlkwb{=} \hlnum{19}
+\hlstd{xbar} \hlkwb{=} \hlnum{4.4}
+\hlstd{s} \hlkwb{=} \hlnum{2.3}
+\hlstd{std.error} \hlkwb{=} \hlstd{s}\hlopt{/}\hlkwd{sqrt}\hlstd{(n)}
+\hlstd{perc} \hlkwb{=} \hlnum{.95}
+\hlstd{t.star} \hlkwb{=} \hlkwd{qt}\hlstd{(}\hlkwc{p} \hlstd{= perc} \hlopt{+} \hlstd{(}\hlnum{1}\hlopt{-}\hlstd{perc)}\hlopt{/}\hlnum{2}\hlstd{,} \hlkwc{df} \hlstd{= n}\hlopt{-}\hlnum{1}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlstd{ci} \hlkwb{=} \hlkwd{c}\hlstd{(xbar} \hlopt{-} \hlstd{t.star}\hlopt{*}\hlstd{std.error, xbar} \hlopt{+} \hlstd{t.star}\hlopt{*}\hlstd{std.error)}
+\hlstd{ci}
+\end{alltt}
+\begin{verbatim}
+## [1] 3.291435 5.508565
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 5.5 }
+\hlstd{mu} \hlkwb{=} \hlnum{0.5}
+\hlstd{n} \hlkwb{=} \hlnum{15}
+\hlstd{xbar} \hlkwb{=} \hlnum{0.287}
+\hlstd{s} \hlkwb{=} \hlnum{0.069}
+\hlstd{std.error} \hlkwb{=} \hlstd{s}\hlopt{/}\hlkwd{sqrt}\hlstd{(n)}
+\hlstd{t} \hlkwb{=} \hlstd{(xbar} \hlopt{-} \hlstd{mu)}\hlopt{/}\hlstd{std.error}
+\hlkwd{pt}\hlstd{(t,} \hlkwc{df} \hlstd{= n}\hlopt{-}\hlnum{1}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 4.903809e-09
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section{Paired Data} 
+When working with paired data, several methods can be used to measure the effect.  The first method is to calculate by hand differences between the pairs and then to perform a standard t-test as follows.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 5.6 }
+\hlstd{diff} \hlkwb{=} \hlstd{swim}\hlopt{$}\hlstd{wet.suit.velocity} \hlopt{-} \hlstd{swim}\hlopt{$}\hlstd{swim.suit.velocity}
+\hlkwd{t.test}\hlstd{(diff,} \hlkwc{mu} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{alternative} \hlstd{=} \hlstr{"two.sided"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	One Sample t-test
+## 
+## data:  diff
+## t = 3.7019, df = 11, p-value = 0.00349
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  0.02534062 0.09965938
+## sample estimates:
+## mean of x 
+##    0.0625
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+The second method involves using a \textbf{paired t-test}, which performs the same operation without the direct calculation of the differences being required first.  It can be seen that the output of this test is the exact same as the test above.  This is a nice example of $R$ taking out a lot of the computational work.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{t.test}\hlstd{(swim}\hlopt{$}\hlstd{wet.suit.velocity, swim}\hlopt{$}\hlstd{swim.suit.velocity,} \hlkwc{paired} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	Paired t-test
+## 
+## data:  swim$wet.suit.velocity and swim$swim.suit.velocity
+## t = 3.7019, df = 11, p-value = 0.00349
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  0.02534062 0.09965938
+## sample estimates:
+## mean of the differences 
+##                  0.0625
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section{Difference of Two Means} 
+%% COME BACK HERE 
+
+
+\subsection{Hypothesis Tests for a Different in Means}
+In order to perform a \textbf{two-sample t-test}, there are again two methods.  The first involves dividing the data into two samples (unless the data has already come separated) and performing a t-test.  The second has $R$ do the entire process.  Note that for this method, the tilde signifies the grouping variable.  So in this case, the \textit{weight} data is grouped by the variable \textit{smoke}.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 5.11 }
+\hlcom{# Method 1: divide the data by hand }
+\hlstd{smoker} \hlkwb{=} \hlstd{baby.smoke}\hlopt{$}\hlstd{weight[baby.smoke}\hlopt{$}\hlstd{smoke} \hlopt{==} \hlstr{"smoker"}\hlstd{]}
+\hlstd{non.smoker} \hlkwb{=} \hlstd{baby.smoke}\hlopt{$}\hlstd{weight[baby.smoke}\hlopt{$}\hlstd{smoke} \hlopt{==} \hlstr{"nonsmoker"}\hlstd{]}
+\hlkwd{t.test}\hlstd{(non.smoker, smoker)}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	Welch Two Sample t-test
+## 
+## data:  non.smoker and smoker
+## t = 1.4967, df = 89.277, p-value = 0.138
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.1311663  0.9321663
+## sample estimates:
+## mean of x mean of y 
+##    7.1795    6.7790
+\end{verbatim}
+\begin{alltt}
+\hlcom{# Method 2: R does it all }
+\hlkwd{t.test}\hlstd{(baby.smoke}\hlopt{$}\hlstd{weight}\hlopt{~}\hlstd{baby.smoke}\hlopt{$}\hlstd{smoke)}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	Welch Two Sample t-test
+## 
+## data:  baby.smoke$weight by baby.smoke$smoke
+## t = 1.4967, df = 89.277, p-value = 0.138
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.1311663  0.9321663
+## sample estimates:
+## mean in group nonsmoker    mean in group smoker 
+##                  7.1795                  6.7790
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsection{Pooled t-test} 
+Performing what is known as a \textbf{pooled t-test} is very simple in $R$.  The procedure is the same as a two-sample t-test, with the addition of the clause \textit{var.equal = TRUE} in the \textit{t.test()} command.  This is because a pooled t-test relies on the assumption of nearly equal variance between the two samples.  For example, performing the same test as above but using a pooled t-test would look like the following, 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{t.test}\hlstd{(baby.smoke}\hlopt{$}\hlstd{weight}\hlopt{~}\hlstd{baby.smoke}\hlopt{$}\hlstd{smoke,} \hlkwc{var.equal} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	Two Sample t-test
+## 
+## data:  baby.smoke$weight by baby.smoke$smoke
+## t = 1.5517, df = 148, p-value = 0.1229
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.1095531  0.9105531
+## sample estimates:
+## mean in group nonsmoker    mean in group smoker 
+##                  7.1795                  6.7790
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+%% WHAT SHOULD I DO ABOUT ALL OF THE POWER STUFF??? NOT REALLY SURE R IS APPROPRIATE FOR A LOT OF THIS 
+
+\section{ANOVA} 
+The main text walks through the arithmetic procedures of the ANOVA test and calculating the F-statistic.  $R$ makes this process much simpler, such that the entire calculation can be performed with just one line of code.  The command \textit{anova()} takes, as its input, a linear regression.  Chapter 6 will go into much more detail about linear regressions, but for now, note that the first one variable before the tilde is the one for which the means are being compared, while the second variable after the tilde specifies the groups.  The command below works out Example 5.22 from the main text, getting the same $F$ statistic as the hand calculated value.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 5.22 }
+\hlkwd{anova}\hlstd{(}\hlkwd{lm}\hlstd{(famuss}\hlopt{$}\hlstd{ndrm.ch} \hlopt{~} \hlstd{famuss}\hlopt{$}\hlstd{actn3.r577x))}
+\end{alltt}
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: famuss$ndrm.ch
+##                     Df Sum Sq Mean Sq F value  Pr(>F)  
+## famuss$actn3.r577x   2   7043  3521.6  3.2308 0.04022 *
+## Residuals          592 645293  1090.0                  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+\newpage
+\chapter{Inference For Numerical Data}
+\minitoc
+
+\vspace{0.5cm} 
+
+\section{Plotting Linear Relationships}
+Before going into a discussion of linear regression itself, an investigation into the appropriateness of its use must first be conducted.  The first step is to plot the data as a scatterplot.  This can be done simply using the \textit{plot()} commands as has been used many times before.  
+
+%% MISSING DATA SET FOR STATINS 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Figure 6.1}
+\hlcom{# plot(y ~ x) }
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+%% COME HERE 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Figure 6.3 }
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+
+\section{Checking Assumptions}
+The main text walks through the four assumptions necessary to use an approximation to linearity, which are as follows 
+\begin{enumerate}
+\item Linearity 
+\item Constant Variability 
+\item Independent Observations
+\item Residuals that are approximately normally distributed 
+\end{enumerate}
+
+There are various methods to check each of these assumptions, which should be investigated before the use of linear regression.  
+
+\subsection{Linearity}
+To check for linearity, a simple examination of a scatterplot of the data will suffice.  The plot of Figure 6.1 above shows that $age$ and $RFFT$ appear to have a linear relationship.  As another example, Figure 6.2 below shows a different linear relatonship.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Figure 6.2}
+\hlkwd{plot}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{~} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{body.size,} \hlkwc{ylab} \hlstd{=} \hlstr{"Clutch Volume (mm3)"}\hlstd{,}
+    \hlkwc{xlab} \hlstd{=} \hlstr{"Female Body Size (cm)"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-91-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\subsection{Constant Variability}
+To check for \textbf{constant variability}, a scatterplot is again a good resource.  Both Figure 6.1 and Figure 6.2 above show strong examples of constant variability.  For comparison, a few examples of non-constant variability are included here.  Notice how in the plot on the left, there is less variability in the clutch volumes with small egg size in comparison to the values with higher egg size.  Similarly, there is more variability in change in arm strength for lower weight individuals than for higher weight individuals.  
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{))}
+\hlkwd{plot}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{~} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{egg.size,} \hlkwc{main} \hlstd{=} \hlstr{"Variance Increasing with Egg Size"}\hlstd{,}
+    \hlkwc{xlab} \hlstd{=} \hlstr{"Egg Size"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"Clutch Volume"}\hlstd{)}
+\hlkwd{plot}\hlstd{(famuss}\hlopt{$}\hlstd{ndrm.ch} \hlopt{~} \hlstd{famuss}\hlopt{$}\hlstd{weight,} \hlkwc{main} \hlstd{=} \hlstr{"Variance Decreasing with Weight"}\hlstd{,}
+    \hlkwc{xlab} \hlstd{=} \hlstr{"Weight"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"Change in Arm Strength"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-92-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\subsection{Independence of Observations}
+The assumption of \textbf{independence of observations} is less easily understood through physical study of the data.  Instead, the nature of the data and its parameters must be understood.  For example, some questions to consider include 
+\begin{itemize}
+\item Do the data points depend on each other? 
+\item Is there a known relationship between some or all data points? 
+\item Are the data points from the same individual, region, or time? 
+\end{itemize}
+
+\subsection{Normally Distributed Residuals}
+In $R$, a plot of the residuals can be made using two different methods.  Firstly, to obtain the residuals, the linear regression must be obtained, using the command \textit{lm()}.  Then, the residuals of this model can be calculated using the command \textit{resid()} on the linear regression.  Finally, these can be plotted either as a histogram, or using \textit{qnorm()} and \textit{qqline()}.  
+
+Two examples of this procedure are included below.  
+%% In the first example, .... 
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{))}
+\hlcom{## CHANGE THIS TO DATA FROM FIGURE 6.3}
+\hlkwd{hist}\hlstd{(}\hlkwd{resid}\hlstd{(}\hlkwd{lm}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{~} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{body.size)),}
+    \hlkwc{main} \hlstd{=} \hlstr{""}\hlstd{)}
+\hlkwd{qqnorm}\hlstd{(}\hlkwd{resid}\hlstd{(}\hlkwd{lm}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{~} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{body.size)))}
+\hlkwd{qqline}\hlstd{(}\hlkwd{resid}\hlstd{(}\hlkwd{lm}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{~} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{body.size)))}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-93-1} 
+
+}
+
+
+
+\end{knitrout}
+
+In the second example, the data appears somewhat normal, but with some outliers.  This does not appear to be too significant of a violation, but is something that should be kept in mind as the results of the linear regression are interpreted.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Guided Practice 6.1}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{))}
+\hlkwd{hist}\hlstd{(}\hlkwd{resid}\hlstd{(}\hlkwd{lm}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{~} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{body.size)),}
+    \hlkwc{main} \hlstd{=} \hlstr{""}\hlstd{)}
+\hlkwd{qqnorm}\hlstd{(}\hlkwd{resid}\hlstd{(}\hlkwd{lm}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{~} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{body.size)))}
+\hlkwd{qqline}\hlstd{(}\hlkwd{resid}\hlstd{(}\hlkwd{lm}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{~} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{body.size)))}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-94-1} 
+
+}
+
+
+
+\end{knitrout}
+
+
 
 
 \end{document}

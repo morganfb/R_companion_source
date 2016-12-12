@@ -374,7 +374,7 @@ where $(x_1,y_1), (x_2,y_2), \ldots, (x_n, y_n)$ are the $n$ paired values of $x
 
 The following illustrates the calculations for finding the correlation coefficient of (1,5), (2, 4), and (3,0), as shown in \textit{OI Biostat} Example 1.13.
 
-<<>>=
+<<fig.align = "center">>=
 # define variables
 x = c(1, 2, 3)
 y = c(5, 4, 0)
@@ -402,7 +402,7 @@ r
 
 It is much easier to use the \texttt{cor()} function to find correlation. 
 
-<<fig.height = 3.5, fig.width=3.5>>=
+<<fig.height = 3.5, fig.width=3.5, fig.align = "center">>=
 ## Figure 1.22
 cor(x,y)
 plot(x,y)

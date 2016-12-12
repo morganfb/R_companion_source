@@ -1,0 +1,84 @@
+\vspace{0.5cm} 
+
+\section{Plotting Linear Relationships}
+Before going into a discussion of linear regression itself, an investigation into the appropriateness of its use must first be conducted.  The first step is to plot the data as a scatterplot.  This can be done simply using the \textit{plot()} commands as has been used many times before.  
+
+%% MISSING DATA SET FOR STATINS 
+
+<<>>=
+## Figure 6.1
+# plot(y ~ x) 
+@
+
+%% COME HERE 
+
+<<>>=
+## Figure 6.3 
+@
+
+
+
+\section{Checking Assumptions}
+The main text walks through the four assumptions necessary to use an approximation to linearity, which are as follows 
+\begin{enumerate}
+\item Linearity 
+\item Constant Variability 
+\item Independent Observations
+\item Residuals that are approximately normally distributed 
+\end{enumerate}
+
+There are various methods to check each of these assumptions, which should be investigated before the use of linear regression.  
+
+\subsection{Linearity}
+To check for linearity, a simple examination of a scatterplot of the data will suffice.  The plot of Figure 6.1 above shows that $age$ and $RFFT$ appear to have a linear relationship.  As another example, Figure 6.2 below shows a different linear relatonship.  
+
+<<fig.height=4, fig.width=4,fig.align = "center", tidy = TRUE>>=
+## Figure 6.2 
+plot(frog.altitude.data$clutch.volume ~ frog.altitude.data$body.size, ylab = "Clutch Volume (mm3)", xlab = "Female Body Size (cm)")
+@
+
+\subsection{Constant Variability}
+To check for \textbf{constant variability}, a scatterplot is again a good resource.  Both Figure 6.1 and Figure 6.2 above show strong examples of constant variability.  For comparison, a few examples of non-constant variability are included here.  Notice how in the plot on the left, there is less variability in the clutch volumes with small egg size in comparison to the values with higher egg size.  Similarly, there is more variability in change in arm strength for lower weight individuals than for higher weight individuals.  
+
+
+<<fig.height=4, fig.width=7.5,fig.align = "center", tidy = TRUE>>=
+par(mfrow=c(1,2))
+plot(frog.altitude.data$clutch.volume ~ frog.altitude.data$egg.size, main = "Variance Increasing with Egg Size", xlab = "Egg Size", ylab = "Clutch Volume")
+plot(famuss$ndrm.ch ~ famuss$weight, main = "Variance Decreasing with Weight", xlab = "Weight", ylab = "Change in Arm Strength")
+@
+
+\subsection{Independence of Observations}
+The assumption of \textbf{independence of observations} is less easily understood through physical study of the data.  Instead, the nature of the data and its parameters must be understood.  For example, some questions to consider include 
+\begin{itemize}
+\item Do the data points depend on each other? 
+\item Is there a known relationship between some or all data points? 
+\item Are the data points from the same individual, region, or time? 
+\end{itemize}
+
+\subsection{Normally Distributed Residuals}
+In $R$, a plot of the residuals can be made using two different methods.  Firstly, to obtain the residuals, the linear regression must be obtained, using the command \textit{lm()}.  Then, the residuals of this model can be calculated using the command \textit{resid()} on the linear regression.  Finally, these can be plotted either as a histogram, or using \textit{qnorm()} and \textit{qqline()}.  
+
+Two examples of this procedure are included below.  
+%% In the first example, .... 
+
+
+<<fig.height=4, fig.width=7.5,fig.align = "center", tidy = TRUE>>=
+par(mfrow=c(1,2))
+##CHANGE THIS TO DATA FROM FIGURE 6.3 
+hist(resid(lm(frog.altitude.data$clutch.volume ~ frog.altitude.data$body.size)), main = "", xlab = "Residuals")
+qqnorm(resid(lm(frog.altitude.data$clutch.volume ~ frog.altitude.data$body.size)))
+qqline(resid(lm(frog.altitude.data$clutch.volume ~ frog.altitude.data$body.size)))
+
+@
+
+In the second example, the data appears somewhat normal, but with some outliers.  This does not appear to be too significant of a violation, but is something that should be kept in mind as the results of the linear regression are interpreted.  
+<<fig.height=4, fig.width=7.5,fig.align = "center", tidy = TRUE>>=
+## Guided Practice 6.1
+par(mfrow=c(1,2))
+hist(resid(lm(frog.altitude.data$clutch.volume ~ frog.altitude.data$body.size)), main = "", xlab = "Residuals")
+qqnorm(resid(lm(frog.altitude.data$clutch.volume ~ frog.altitude.data$body.size)))
+qqline(resid(lm(frog.altitude.data$clutch.volume ~ frog.altitude.data$body.size)))
+@
+
+
+

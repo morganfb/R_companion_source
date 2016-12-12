@@ -1,8 +1,8 @@
-install.packages("devtools")
+# install.packages("devtools")
 library("devtools")
-devtools::install_github("klutometis/roxygen")
+# devtools::install_github("klutometis/roxygen")
 library(roxygen2)
-install.packages("plyr")
+# install.packages("plyr")
 library(plyr)
 
 ## Starting with Chapter 1
@@ -70,16 +70,22 @@ colnames(golub.exprs.pheno) = names
 Golub = golub.exprs.pheno
 devtools::use_data(Golub, overwrite = TRUE)
 
+swimmer.number = 1:12
+wet.suit.velocity = c(1.57, 1.47, 1.24, 1.35, 1.22, 1.75, 1.64, 1.57, 1.56, 1.53, 1.49, 1.51)
+swim.suit.velocity = c(1.49, 1.37, 1.35, 1.27, 1.12, 1.64, 1.59, 1.52, 1.50, 1.45, 1.44, 1.41)
+swim = data.frame(swimmer.number, wet.suit.velocity, swim.suit.velocity)
+devtools::use_data(swim)
 
+data(births)
+baby.smoke = births
+devtools::use_data(baby.smoke)
 
 install.packages(OIBioStat)
 attach(OIBioStat)
 
 setwd("./OIBioStat")
+setwd("~/OIBioStat")
 document()
 devtools::document()
 
 devtools::check()
-
-setwd("..")
-install("OIBioStat")
