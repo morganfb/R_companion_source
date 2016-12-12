@@ -2668,34 +2668,8 @@ The main text walks through the arithmetic procedures of the ANOVA test and calc
 
 \vspace{0.5cm} 
 
-\section{Plotting Linear Relationships}
-Before going into a discussion of linear regression itself, an investigation into the appropriateness of its use must first be conducted.  The first step is to plot the data as a scatterplot.  This can be done simply using the \textit{plot()} commands as has been used many times before.  
-
-%% MISSING DATA SET FOR STATINS 
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{## Figure 6.1}
-\hlcom{# plot(y ~ x) }
-\end{alltt}
-\end{kframe}
-\end{knitrout}
-
-%% COME HERE 
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcom{## Figure 6.3 }
-\end{alltt}
-\end{kframe}
-\end{knitrout}
-
-
-
 \section{Checking Assumptions}
-The main text walks through the four assumptions necessary to use an approximation to linearity, which are as follows 
+Before going into a discussion of linear regression itself, an investigation into the appropriateness of its use must first be conducted.  The main text walks through the four assumptions necessary to use an approximation to linearity, which are as follows 
 \begin{enumerate}
 \item Linearity 
 \item Constant Variability 
@@ -2703,17 +2677,62 @@ The main text walks through the four assumptions necessary to use an approximati
 \item Residuals that are approximately normally distributed 
 \end{enumerate}
 
-There are various methods to check each of these assumptions, which should be investigated before the use of linear regression.  
+There are various methods to check each of these assumptions, which should be investigated before the use of linear regression.  This next section goes through these methods and several examples.  
 
 \subsection{Linearity}
-To check for linearity, a simple examination of a scatterplot of the data will suffice.  The plot of Figure 6.1 above shows that $age$ and $RFFT$ appear to have a linear relationship.  As another example, Figure 6.2 below shows a different linear relatonship.  
+To check for linearity, a simple examination of a scatterplot of the data will suffice.  The goal is to look for data such that a straight line can be drawn which appropriately represents the data.   The plot of Figure 6.1 below shows that $age$ and $RFFT$ appear to have a linear relationship. The inclusion of the command \textit{cex = 0.4} simply changes the size of the dots on the scatterplot, making them 40\% of their original size.  
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
+\hlcom{## Figure 6.1 First collecting the data sample}
+\hlkwd{set.seed}\hlstd{(}\hlnum{5011}\hlstd{)}
+\hlstd{row.num} \hlkwb{=} \hlkwd{sample}\hlstd{(}\hlnum{1}\hlopt{:}\hlkwd{nrow}\hlstd{(statins),} \hlnum{500}\hlstd{,} \hlkwc{replace} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\hlstd{statins.samp} \hlkwb{=} \hlstd{statins[row.num, ]}
+
+\hlcom{# Then plotting it}
+\hlkwd{plot}\hlstd{(statins.samp}\hlopt{$}\hlstd{RFFT} \hlopt{~} \hlstd{statins.samp}\hlopt{$}\hlstd{Age,} \hlkwc{cex} \hlstd{=} \hlnum{0.4}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{"RFFT Score"}\hlstd{,} \hlkwc{xlab} \hlstd{=} \hlstr{"Age (yrs)"}\hlstd{,}
+    \hlkwc{main} \hlstd{=} \hlstr{""}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-89-1} 
+
+}
+
+
+
+\end{knitrout}
+
+As further examples, the figures below show other linear relatonships.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{))}
 \hlcom{## Figure 6.2}
 \hlkwd{plot}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{~} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{body.size,} \hlkwc{ylab} \hlstd{=} \hlstr{"Clutch Volume (mm3)"}\hlstd{,}
     \hlkwc{xlab} \hlstd{=} \hlstr{"Female Body Size (cm)"}\hlstd{)}
+
+\hlkwd{plot}\hlstd{(famuss}\hlopt{$}\hlstd{weight, famuss}\hlopt{$}\hlstd{bmi)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-90-1} 
+
+}
+
+
+
+\end{knitrout}
+
+For comparison, the following plot shows data that a linear relationship is not appropriate for.  The first example shows data that appears to have no relationship, as indicated by the lack of trend in the scatterplot.  The second example shows a pattern that would be difficult to capture with a single straight line.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{))}
+\hlkwd{plot}\hlstd{(famuss}\hlopt{$}\hlstd{height, famuss}\hlopt{$}\hlstd{age)}
+\hlkwd{plot}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{body.size, frog.altitude.data}\hlopt{$}\hlstd{egg.size)}
 \end{alltt}
 \end{kframe}
 
@@ -2757,21 +2776,27 @@ The assumption of \textbf{independence of observations} is less easily understoo
 \end{itemize}
 
 \subsection{Normally Distributed Residuals}
-In $R$, a plot of the residuals can be made using two different methods.  Firstly, to obtain the residuals, the linear regression must be obtained, using the command \textit{lm()}.  Then, the residuals of this model can be calculated using the command \textit{resid()} on the linear regression.  Finally, these can be plotted either as a histogram, or using \textit{qnorm()} and \textit{qqline()}.  
+In $R$, a plot of the residuals can be visualized to determine if this assumption is met.  First, to obtain the residuals, the linear regression must be obtained, using the command \textit{lm()}.  Then, the residuals of this model can be calculated using the command \textit{resid()} on the linear regression.  
 
-Two examples of this procedure are included below.  
-%% In the first example, .... 
 
+These residuals can be visualized in a few ways: as a histogram, as a plot, or using \textit{qnorm()} and \textit{qqline()}.
+
+
+Two examples of this procedure are included below.  In the first example, the residuals appear very close to normal.  This is a strong sign that the assumption is met.  
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{))}
-\hlcom{## CHANGE THIS TO DATA FROM FIGURE 6.3}
-\hlkwd{hist}\hlstd{(}\hlkwd{resid}\hlstd{(}\hlkwd{lm}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{~} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{body.size)),}
-    \hlkwc{main} \hlstd{=} \hlstr{""}\hlstd{)}
-\hlkwd{qqnorm}\hlstd{(}\hlkwd{resid}\hlstd{(}\hlkwd{lm}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{~} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{body.size)))}
-\hlkwd{qqline}\hlstd{(}\hlkwd{resid}\hlstd{(}\hlkwd{lm}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{~} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{body.size)))}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{3}\hlstd{))}
+\hlstd{residuals} \hlkwb{=} \hlkwd{resid}\hlstd{(}\hlkwd{lm}\hlstd{(statins.samp}\hlopt{$}\hlstd{RFFT} \hlopt{~} \hlstd{statins.samp}\hlopt{$}\hlstd{Age))}
+
+\hlkwd{hist}\hlstd{(residuals,} \hlkwc{main} \hlstd{=} \hlstr{""}\hlstd{,} \hlkwc{xlab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+
+\hlkwd{plot}\hlstd{(residuals)}
+\hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"red"}\hlstd{,} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{)}
+
+\hlkwd{qqnorm}\hlstd{(residuals)}
+\hlkwd{qqline}\hlstd{(residuals)}
 \end{alltt}
 \end{kframe}
 
@@ -2783,16 +2808,22 @@ Two examples of this procedure are included below.
 
 \end{knitrout}
 
-In the second example, the data appears somewhat normal, but with some outliers.  This does not appear to be too significant of a violation, but is something that should be kept in mind as the results of the linear regression are interpreted.  
+In the second example, the data appears somewhat normal, but with some outliers.  This does not appear to be an egregious violation, but is something that should be kept in mind as the results of the linear regression are interpreted.  
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
+\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{3}\hlstd{))}
 \hlcom{## Guided Practice 6.1}
-\hlkwd{par}\hlstd{(}\hlkwc{mfrow} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,} \hlnum{2}\hlstd{))}
-\hlkwd{hist}\hlstd{(}\hlkwd{resid}\hlstd{(}\hlkwd{lm}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{~} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{body.size)),}
-    \hlkwc{main} \hlstd{=} \hlstr{""}\hlstd{)}
-\hlkwd{qqnorm}\hlstd{(}\hlkwd{resid}\hlstd{(}\hlkwd{lm}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{~} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{body.size)))}
-\hlkwd{qqline}\hlstd{(}\hlkwd{resid}\hlstd{(}\hlkwd{lm}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{~} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{body.size)))}
+\hlstd{residuals} \hlkwb{=} \hlkwd{resid}\hlstd{(}\hlkwd{lm}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume} \hlopt{~} \hlstd{frog.altitude.data}\hlopt{$}\hlstd{body.size))}
+
+\hlkwd{hist}\hlstd{(residuals,} \hlkwc{main} \hlstd{=} \hlstr{""}\hlstd{,} \hlkwc{xlab} \hlstd{=} \hlstr{"Residuals"}\hlstd{)}
+
+\hlkwd{plot}\hlstd{(residuals)}
+\hlkwd{abline}\hlstd{(}\hlkwc{h} \hlstd{=} \hlnum{0}\hlstd{,} \hlkwc{col} \hlstd{=} \hlstr{"red"}\hlstd{,} \hlkwc{lty} \hlstd{=} \hlnum{2}\hlstd{)}
+
+\hlkwd{qqnorm}\hlstd{(residuals)}
+\hlkwd{qqline}\hlstd{(residuals)}
 \end{alltt}
 \end{kframe}
 
@@ -2805,6 +2836,150 @@ In the second example, the data appears somewhat normal, but with some outliers.
 \end{knitrout}
 
 
+\section{Creating a Linear Regression}
+Using $R$ to create a linear regression is quite simple, and several examples will be shown here to illustrate that.  As background, there is one command needed for linear regressions in $R$, \textit{lm()}.  This function takes two arguments, the \textbf{explanatory variable} and the \textbf{response variable} in the form \textit{lm(response} $\sim$ \textit{explanatory)} where the symbol between those two variables is a tilde.  For example, a regression for the statins data can be calculated as follows 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{lm}\hlstd{(statins.samp}\hlopt{$}\hlstd{RFFT}\hlopt{~}\hlstd{statins.samp}\hlopt{$}\hlstd{Age)}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = statins.samp$RFFT ~ statins.samp$Age)
+## 
+## Coefficients:
+##      (Intercept)  statins.samp$Age  
+##          137.550            -1.261
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+This output implies the following regression formula 
+\[RFFT = 137.55 - 1.261 \cdot Age\]
+
+To get more information about the regression, the \textit{summary} command can be used as follows, 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{summary}\hlstd{(}\hlkwd{lm}\hlstd{(statins.samp}\hlopt{$}\hlstd{RFFT}\hlopt{~}\hlstd{statins.samp}\hlopt{$}\hlstd{Age))}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = statins.samp$RFFT ~ statins.samp$Age)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -63.879 -16.845  -1.095  15.524  58.564 
+## 
+## Coefficients:
+##                   Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)      137.54972    5.01614   27.42   <2e-16 ***
+## statins.samp$Age  -1.26136    0.08953  -14.09   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 23.19 on 498 degrees of freedom
+## Multiple R-squared:  0.285,	Adjusted R-squared:  0.2836 
+## F-statistic: 198.5 on 1 and 498 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+Note that the summary of the linear regression is much more useful, providing not only the regression model, but standard errors, p-values, the $R^2$ value, and a few other useful statistics which will be discussed in greater deal in future chapters.  
+
+With this linear regression in mind, it would be helpful to be able to visualize this on the scatterplot.  This can be done using the command \textit{abline()}, which takes as its arguments the model itself.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{plot}\hlstd{(statins.samp}\hlopt{$}\hlstd{RFFT} \hlopt{~} \hlstd{statins.samp}\hlopt{$}\hlstd{Age,} \hlkwc{cex} \hlstd{=} \hlnum{0.4}\hlstd{)}
+\hlkwd{abline}\hlstd{(}\hlkwd{lm}\hlstd{(statins.samp}\hlopt{$}\hlstd{RFFT} \hlopt{~} \hlstd{statins.samp}\hlopt{$}\hlstd{Age),} \hlkwc{col} \hlstd{=} \hlstr{"red"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-97-1} 
+
+}
+
+
+
+\end{knitrout}
+
+\subsection{FAMuSS Regression}
+Performing a similar regression for the FAMuSS dataset between height and weight gives us the following model
+\[ weight = -187.79 + 5.14 \cdot height \]
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{plot}\hlstd{(famuss}\hlopt{$}\hlstd{weight} \hlopt{~} \hlstd{famuss}\hlopt{$}\hlstd{height)}
+\hlkwd{abline}\hlstd{(}\hlkwd{lm}\hlstd{(famuss}\hlopt{$}\hlstd{weight} \hlopt{~} \hlstd{famuss}\hlopt{$}\hlstd{height))}
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-98-1} 
+
+}
+
+
+\begin{kframe}\begin{alltt}
+\hlkwd{summary}\hlstd{(}\hlkwd{lm}\hlstd{(famuss}\hlopt{$}\hlstd{weight} \hlopt{~} \hlstd{famuss}\hlopt{$}\hlstd{height))}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = famuss$weight ~ famuss$height)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -57.514 -19.452  -6.959  13.882 133.500 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   -187.7908    22.5454  -8.329 5.64e-16 ***
+## famuss$height    5.1389     0.3369  15.255  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 29.34 on 593 degrees of freedom
+## Multiple R-squared:  0.2818,	Adjusted R-squared:  0.2806 
+## F-statistic: 232.7 on 1 and 593 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsection{WDI Regression with Two Levels}
+Although the interpretation of such a model can be different, the method of performing a regression on a variable with two levels is the same.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{summary}\hlstd{(}\hlkwd{lm}\hlstd{(}\hlkwd{log}\hlstd{(wdi.2011}\hlopt{$}\hlstd{inf.mort)}\hlopt{~}\hlstd{wdi.2011}\hlopt{$}\hlstd{sanit.access))}
+\end{alltt}
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = log(wdi.2011$inf.mort) ~ wdi.2011$sanit.access)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.42680 -0.48562  0.02123  0.40440  1.70517 
+## 
+## Coefficients:
+##                        Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)            4.930188   0.119070   41.41   <2e-16 ***
+## wdi.2011$sanit.access -0.029873   0.001568  -19.05   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.6107 on 161 degrees of freedom
+##   (2 observations deleted due to missingness)
+## Multiple R-squared:  0.6926,	Adjusted R-squared:  0.6907 
+## F-statistic: 362.8 on 1 and 161 DF,  p-value: < 2.2e-16
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 
 \end{document}

@@ -70,15 +70,26 @@ colnames(golub.exprs.pheno) = names
 Golub = golub.exprs.pheno
 devtools::use_data(Golub, overwrite = TRUE)
 
+## swim data
 swimmer.number = 1:12
 wet.suit.velocity = c(1.57, 1.47, 1.24, 1.35, 1.22, 1.75, 1.64, 1.57, 1.56, 1.53, 1.49, 1.51)
 swim.suit.velocity = c(1.49, 1.37, 1.35, 1.27, 1.12, 1.64, 1.59, 1.52, 1.50, 1.45, 1.44, 1.41)
 swim = data.frame(swimmer.number, wet.suit.velocity, swim.suit.velocity)
 devtools::use_data(swim)
 
+## baby.smoke data
 data(births)
 baby.smoke = births
 devtools::use_data(baby.smoke)
+
+## statin data
+load("/Users/morganfbreitmeyer/Dropbox/open_intro/oi_biostat/data_working_dir/data/ch7_mult_lin_regression/statins.Rdata")
+statins = rename(statins, c("Albuminuria_1" = "Albuminuria.1", "Albuminuria_2" = "Albuminuria.2"))
+devtools::use_data(statins)
+
+## wdi data
+load("/Users/morganfbreitmeyer/Dropbox/open_intro/oi_biostat/data_working_dir/data/ch6_regression/wdi_2011.Rdata")
+devtools::use_data(wdi.2011)
 
 install.packages(OIBioStat)
 attach(OIBioStat)
