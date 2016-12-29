@@ -133,8 +133,19 @@ summary(lm(famuss$weight~famuss$height))
 @
 
 \subsection{WDI Regression with Two Levels}
-Although the interpretation of such a model can be different, the method of performing a regression on a variable with two levels is the same.  
+Although the interpretation of such a model can be different, the method of performing a regression on a variable with two levels is the same.  The command below illustrates how to obtain Table 6.16.  
 <<>>=
-summary(lm(log(wdi.2011$inf.mort)~wdi.2011$sanit.access))
+summary(lm(log(wdi.2011$inf.mort)~wdi.2011$sanit.access.factor))
 @
+
+Furthermore, the two t-tests shown in the text can be computed as follows.  Note that the first t-test, which assumes an equal variance among groups, gives the same t-statistic and p-value as the regression above.  
+<<>>=
+## Pooled t-test 
+t.test(log(wdi.2011$inf.mort)~wdi.2011$sanit.access.factor, var.equal = TRUE)
+
+## Unpooled t-test 
+t.test(log(wdi.2011$inf.mort)~wdi.2011$sanit.access.factor, var.equal = TRUE)
+
+@
+
 

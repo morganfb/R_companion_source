@@ -1,0 +1,28 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1480526881364.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "8BB6DDAA",
+    "lastKnownWriteTime" : 6,
+    "last_content_update" : 1480526881364,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "b75vsv7k7h",
+        "caption" : "baby_smoke",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=baby_smoke&cache_key=b75vsv7k7h",
+        "displayedObservations" : 150,
+        "environment" : "",
+        "object" : "baby_smoke",
+        "totalObservations" : 150,
+        "variables" : 9
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

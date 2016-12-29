@@ -2639,7 +2639,7 @@ Performing what is known as a \textbf{pooled t-test} is very simple in $R$.  The
 %% WHAT SHOULD I DO ABOUT ALL OF THE POWER STUFF??? NOT REALLY SURE R IS APPROPRIATE FOR A LOT OF THIS 
 
 \section{ANOVA} 
-The main text walks through the arithmetic procedures of the ANOVA test and calculating the F-statistic.  $R$ makes this process much simpler, such that the entire calculation can be performed with just one line of code.  The command \textit{anova()} takes, as its input, a linear regression.  Chapter 6 will go into much more detail about linear regressions, but for now, note that the first one variable before the tilde is the one for which the means are being compared, while the second variable after the tilde specifies the groups.  The command below works out Example 5.22 from the main text, getting the same $F$ statistic as the hand calculated value.  
+The main text walks through the arithmetic procedures of the ANOVA test and calculating the F-statistic.  $R$ makes this process much simpler, such that the entire calculation can be performed with just one line of code.  The command \textit{anova()} takes as its input a linear regression model.  Chapter 6 will go into much more detail about linear regression, but for now, note that within the function \textit{lm()}, the first variable before the tilde is the one for which the means are being compared, while the second variable after the tilde specifies the groups.  The command below works out Example 5.22 from the main text, getting the same $F$ statistic as the hand calculated value.  
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -2660,10 +2660,8 @@ The main text walks through the arithmetic procedures of the ANOVA test and calc
 \end{kframe}
 \end{knitrout}
 
-
-
 \newpage
-\chapter{Inference For Numerical Data}
+\chapter{Simple Linear Regression}
 \minitoc
 
 \vspace{0.5cm} 
@@ -2951,35 +2949,82 @@ Performing a similar regression for the FAMuSS dataset between height and weight
 \end{knitrout}
 
 \subsection{WDI Regression with Two Levels}
-Although the interpretation of such a model can be different, the method of performing a regression on a variable with two levels is the same.  
+Although the interpretation of such a model can be different, the method of performing a regression on a variable with two levels is the same.  The command below illustrates how to obtain Table 6.16.  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{summary}\hlstd{(}\hlkwd{lm}\hlstd{(}\hlkwd{log}\hlstd{(wdi.2011}\hlopt{$}\hlstd{inf.mort)}\hlopt{~}\hlstd{wdi.2011}\hlopt{$}\hlstd{sanit.access))}
+\hlkwd{summary}\hlstd{(}\hlkwd{lm}\hlstd{(}\hlkwd{log}\hlstd{(wdi.2011}\hlopt{$}\hlstd{inf.mort)}\hlopt{~}\hlstd{wdi.2011}\hlopt{$}\hlstd{sanit.access.factor))}
 \end{alltt}
 \begin{verbatim}
 ## 
 ## Call:
-## lm(formula = log(wdi.2011$inf.mort) ~ wdi.2011$sanit.access)
+## lm(formula = log(wdi.2011$inf.mort) ~ wdi.2011$sanit.access.factor)
 ## 
 ## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -1.42680 -0.48562  0.02123  0.40440  1.70517 
+##     Min      1Q  Median      3Q     Max 
+## -1.7501 -0.4829  0.0440  0.4407  2.0008 
 ## 
 ## Coefficients:
-##                        Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)            4.930188   0.119070   41.41   <2e-16 ***
-## wdi.2011$sanit.access -0.029873   0.001568  -19.05   <2e-16 ***
+##                                  Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)                        4.0184     0.1100   36.52   <2e-16 ***
+## wdi.2011$sanit.access.factorhigh  -1.6806     0.1322  -12.72   <2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
-## Residual standard error: 0.6107 on 161 degrees of freedom
+## Residual standard error: 0.7781 on 161 degrees of freedom
 ##   (2 observations deleted due to missingness)
-## Multiple R-squared:  0.6926,	Adjusted R-squared:  0.6907 
-## F-statistic: 362.8 on 1 and 161 DF,  p-value: < 2.2e-16
+## Multiple R-squared:  0.5011,	Adjusted R-squared:  0.498 
+## F-statistic: 161.7 on 1 and 161 DF,  p-value: < 2.2e-16
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
+
+Furthermore, the two t-tests shown in the text can be computed as follows.  Note that the first t-test, which assumes an equal variance among groups, gives the same t-statistic and p-value as the regression above.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Pooled t-test }
+\hlkwd{t.test}\hlstd{(}\hlkwd{log}\hlstd{(wdi.2011}\hlopt{$}\hlstd{inf.mort)}\hlopt{~}\hlstd{wdi.2011}\hlopt{$}\hlstd{sanit.access.factor,} \hlkwc{var.equal} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	Two Sample t-test
+## 
+## data:  log(wdi.2011$inf.mort) by wdi.2011$sanit.access.factor
+## t = 12.7166, df = 161, p-value < 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  1.419601 1.941570
+## sample estimates:
+##  mean in group low mean in group high 
+##           4.018421           2.337835
+\end{verbatim}
+\begin{alltt}
+\hlcom{## Unpooled t-test }
+\hlkwd{t.test}\hlstd{(}\hlkwd{log}\hlstd{(wdi.2011}\hlopt{$}\hlstd{inf.mort)}\hlopt{~}\hlstd{wdi.2011}\hlopt{$}\hlstd{sanit.access.factor,} \hlkwc{var.equal} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	Two Sample t-test
+## 
+## data:  log(wdi.2011$inf.mort) by wdi.2011$sanit.access.factor
+## t = 12.7166, df = 161, p-value < 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  1.419601 1.941570
+## sample estimates:
+##  mean in group low mean in group high 
+##           4.018421           2.337835
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+\newpage
+\chapter{Multiple Linear Regression}
+\minitoc
+
 
 
 \end{document}

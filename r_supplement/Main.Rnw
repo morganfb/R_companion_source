@@ -64,9 +64,16 @@
 @
 
 \newpage
-\chapter{Inference For Numerical Data}
+\chapter{Simple Linear Regression}
 \minitoc
 <<child-demo, child='chapters/chapter_6/Chapter6.Rnw'>>=
 @
+
+\newpage
+\chapter{Multiple Linear Regression}
+\minitoc
+<<child-demo, child='chapters/chapter_7/Chapter7.Rnw'>>=
+@
+
 
 \end{document}

@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "Package: OIBioStat\nType: Package\nTitle: OIBioStat Companion Package\nVersion: 0.1.11\nAuthors@R: person(\"Morgan\", \"Breitmeyer\", , \"morganbreitmeyer@gmail.com\", role = c(\"aut\", \"cre\"))\nDescription: This package contains the datasets that accompany the Open Intro\n    Biostat Companion Book.\nLicense: No licensing yet.\nLazyData: TRUE\nRoxygenNote: 5.0.1.9000\n",
+    "created" : 1481559960365.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3616619461",
+    "id" : "5B66C7C",
+    "lastKnownWriteTime" : 1481559964,
+    "last_content_update" : 1481559964655,
+    "path" : "~/OIBioStat/DESCRIPTION",
+    "project_path" : "DESCRIPTION",
+    "properties" : {
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "dcf"
+}

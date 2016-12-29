@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "require(devtools)\nsetwd(\"~/\")\ninstall(pkg = \"OIBioStat\")\nlibrary(OIBioStat)\nrequire(OIBioStat)\n\nView(frog.altitude.data)\nView(life.expectancy.income)\nView(swim)\n",
+    "created" : 1481560011800.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1635774394",
+    "id" : "F49E5869",
+    "lastKnownWriteTime" : 1480522762,
+    "last_content_update" : 1480522762,
+    "path" : "~/R_companion_source/r_supplement/draft_package_OIBiostat/how to reinstall package.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

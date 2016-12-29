@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "\\name{statins}\n\\alias{statins}\n\\docType{data}\n\\title{\nStatins dataset\n}\n\\description{\n%%  ~~ A concise (1-5 lines) description of the dataset. ~~\n}\n\\usage{data(statins)}\n\\format{\n  A data frame with 4095 observations on the following 31 variables.\n  \\describe{\n    \\item{\\code{Casenr}}{a numeric vector}\n    \\item{\\code{Age}}{a numeric vector}\n    \\item{\\code{Gender}}{a numeric vector}\n    \\item{\\code{Ethnicity}}{a numeric vector}\n    \\item{\\code{Education}}{a numeric vector}\n    \\item{\\code{RFFT}}{a numeric vector}\n    \\item{\\code{VAT}}{a numeric vector}\n    \\item{\\code{CVD}}{a numeric vector}\n    \\item{\\code{DM}}{a numeric vector}\n    \\item{\\code{Smoking}}{a numeric vector}\n    \\item{\\code{Hypertension}}{a numeric vector}\n    \\item{\\code{BMI}}{a numeric vector}\n    \\item{\\code{SBP}}{a numeric vector}\n    \\item{\\code{DBP}}{a numeric vector}\n    \\item{\\code{MAP}}{a numeric vector}\n    \\item{\\code{eGFR}}{a numeric vector}\n    \\item{\\code{Albuminuria.1}}{a numeric vector}\n    \\item{\\code{Albuminuria.2}}{a numeric vector}\n    \\item{\\code{Chol}}{a numeric vector}\n    \\item{\\code{HDL}}{a numeric vector}\n    \\item{\\code{Statin}}{a numeric vector}\n    \\item{\\code{Solubility}}{a numeric vector}\n    \\item{\\code{Days}}{a numeric vector}\n    \\item{\\code{Years}}{a numeric vector}\n    \\item{\\code{DDD}}{a numeric vector}\n    \\item{\\code{FRS}}{a numeric vector}\n    \\item{\\code{PS}}{a numeric vector}\n    \\item{\\code{PSquint}}{a numeric vector}\n    \\item{\\code{GRS}}{a numeric vector}\n    \\item{\\code{Match_1}}{a numeric vector}\n    \\item{\\code{Match_2}}{a numeric vector}\n  }\n}\n\\details{\n%%  ~~ If necessary, more details than the __description__ above ~~\n}\n\\source{\n%%  ~~ reference to a publication or URL from which the data were obtained ~~\n}\n\\references{\n%%  ~~ possibly secondary sources and usages ~~\n}\n\\examples{\ndata(statins)\n## maybe str(statins) ; plot(statins) ...\n}\n\\keyword{datasets}\n",
+    "created" : 1481559924189.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3804043594",
+    "id" : "C389CA44",
+    "lastKnownWriteTime" : 1481559933,
+    "last_content_update" : 1481559933749,
+    "path" : "~/OIBioStat/man/statins.Rd",
+    "project_path" : "man/statins.Rd",
+    "properties" : {
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_doc"
+}
