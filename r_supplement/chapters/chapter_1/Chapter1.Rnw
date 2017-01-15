@@ -81,7 +81,7 @@ famuss[c(1,2,3,595),c( "sex", "age", "race", "height", "weight", "actn3.r577x",
                        "ndrm.ch")]
 @
 
-\stepcounter{subsection}
+\stepcounter{section}
 \section{Numerical Data}
 
 Numerical summaries can be quickly and easily calculated using \textsf{R}. The \texttt{summary()} command is one way to access several numerical summaries at once, including the minimum and maximum values of a variable:
@@ -157,38 +157,6 @@ Alternatively, use the \textsf{R} functions \texttt{var()} and \texttt{sd()}:
 var(frog.altitude.data$clutch.volume)
 sd(frog.altitude.data$clutch.volume)
 @
-
-
-%To calculate the variance, you can follow a few steps:
-%\begin{enumerate}
-%\item Obtain the deviation of each data point from the mean, i.e. $x_i - \bar{x}$
-%\item Square each of these deviations, i.e. $(x_i - \bar{x})^2$
-%\item Sum all of the squares, i.e. $\sum_{i=1}^n (x_i - \bar{x})^2$
-%\item To obtain the final value for variance, divide this sum by the number of observations minus 1, $n-1$, i.e. $(\frac{1}{n-1})\sum_{i=1}^n (x_i - \bar{x})^2$
-%\item To obtain the standard deviation, take the square root of the variance, i.e $\sqrt{(\frac{1}{n-1})\sum_{i=1}^n (x_i - \bar{x})^2}$
-%\end{enumerate}
-%We go through these steps by hand here and compare to the $R$ function's output.
-
-%<<>>=
-%## Looking at a few sample values from text
-%frog.altitude.data$clutch.volume[c(1,2,3,431)]-x.bar
-
-%## Calculating variance by hand
-%# Step 1: calculating all deviations
-%diffs = frog.altitude.data$clutch.volume-x.bar
-
-%# Steps 2-4:
-%variance = sum(diffs^2)/(n-1)
-%variance
-
-%## Comparing to the R function's value
-%var(frog.altitude.data$clutch.volume)
-
-%## Step 5: obtaining standard deviation
-%stand.dev = sqrt(variance)
-%stand.dev
-%sd(frog.altitude.data$clutch.volume)        ## compare to R function value
-%@
 
 Variability can also be measured using the \textbf{interquartile range (IQR)}, which equals the third quartile (the $75^{th}$ percentile) minus the first quartile (the $25^{th}$ percentile). 
 
@@ -280,21 +248,7 @@ Like the \texttt{hist()} function, the \texttt{boxplot()} function also takes se
 \item \texttt{xlim}: range of values for the $x$-axis, in the form \texttt{c(lower bound, upper bound)}
 \item \texttt{ylim}: range of values for the $y$-axis, in the form \texttt{c(lower bound, upper bound)}
 \item \texttt{main}: main title of the plot, enclosed in \texttt{""} 
-
 \end{itemize}
-
-
-%Another way to visualize data is with a boxplot.  The command for doing this in $R$ is \textit{boxplot()}, and it takes the following arguments:
-%\begin{itemize}
-%\item $x$: the variable you want to visualize
-%\item $axes$: a TRUE/FALSE indicator that determines whether or not numbers are shown on the axes
-%\item $col$: the color you want the fill inside your boxplot to be; if unspecified, it will be white; must be in quotation marks
-%\item $xlab$: the label you would like the x-axis to have; must be in quotation marks
-%\item $ylab$: the label you would like the y-axis to have; must be in quotation marks
-%\item $xlim$: the range of values you would like the x-axis to have; of the form $c(lower bound, upper bound)$; fairly meaningless for a boxplot
-%\item $ylim$: the range of values you would like the y-axis to have; of the form $c(lower bound, upper bound)$; be careful not to specify too much here because you can eliminate data of importance to the boxplot
-%\item $main$: the title you would like the whole plot to have; must be in quotation marks
-% \end{itemize}
 
 The following command reproduces a simplified version of \textit{OI Biostat} Figure 1.19. 
 
@@ -327,26 +281,7 @@ The \texttt{plot()} command takes the following arguments:
 \item \texttt{main}: main title of the plot, enclosed in \texttt{""} 
 \end{itemize}
 
-%The command for doing this is \textit{plot()}, and this function takes several arguments:
-%\begin{itemize}
-%\item $x$: the first variable you want to visualize; \textit{necessary to include}
-%\item $y$: the second variable you may want to visualize; included if you want to consider two variables \textit{not necessary to include}
-%\item $col$: the color you want your dots on the plot to be; if unspecified, they will be black; must be in quotation marks
-%\item $type$: specifies how you want R to plot the data; if unspecified, you will end up with dots (in a scatterplot); other options include $"l"$ for lines between data points
-%\item $xlab$: the label you would like the x-axis to have; must be in quotation marks
-%\item $ylab$: the label you would like the y-axis to have; must be in quotation marks
-%\item $xlim$: the range of values you would like the x-axis to have; of the form $c%(lower bound, upper bound)$
-%\item $ylim$: the range of values you would like the y-axis to have; of the form $c(lower bound, upper bound)$
-%\item $main$: the title you would like the whole plot to have; must be in quotation marks
-%\end{itemize}
-
-%The \textit{plot} command has an interesting feature that you can either specify your $x$ and $y$ variables by running $plot(x,y)$ or by running $plot(y~x)$.  Either command will give the same result.  Below provides an example of using the \textit{plot} command for one and two variables (corresponds to Figure 1.18 in the text):
-%\begin{centering}
-%<<fig.height=4, fig.width=4>>=
-%# For one variable
-%plot(frog.altitude.data$clutch.volume)
-%@
-%\end{centering}
+The \textit{plot} command has an interesting feature that you can either specify your $x$ and $y$ variables by running $plot(x,y)$ or by running $plot(y~x)$.  Either command will give the same result.  
 
 The following command reproduces a simplified version of \textit{OI Biostat} Figure 1.20. The additional argument \texttt{pch} changes the appearance of the dots to filled dots, which is specified by \texttt{19}. 
 
@@ -484,8 +419,8 @@ A \textbf{bar plot} is a common way to display a single categorical variable, ei
 <<fig.height=4, tidy=TRUE>>=
 ## Figure 1.32
 par(mfrow=c(1,2))
-barplot(table(famuss$actn3.r577x)) ## count barplot
-barplot(table(famuss$actn3.r577x)/sum(table(famuss$actn3.r577x)))  ## frequency barplot
+barplot(table(famuss$actn3.r577x), main = "Count Barplot")
+barplot(table(famuss$actn3.r577x)/sum(table(famuss$actn3.r577x)), main = "Frequency Barplot")  ## frequency barplot
 @
 
 \newpage
@@ -496,118 +431,78 @@ A \textbf{segmented bar plot} draws from a contingency table to display informat
 
 The argument \texttt{legend} can be used to specify whether the row names or the column names are used for the legend. 
 
-<<tidy = TRUE, fig.height=5.5, tidy.opts=list(width.cutoff=60)>>=
+<<tidy = TRUE, fig.height=5, fig.width = 5.5, tidy.opts=list(width.cutoff=60), fig.align = "center">>=
 ## Figure 1.31a
-counts.table = (table(famuss$race, famuss$actn3.r577x))
-barplot(counts.table, legend = rownames(counts.table))
+# First, create a table of the data that is sorted
+genotype.race = matrix(table(famuss$actn3.r577x, famuss$race), ncol=3, byrow=T)
 
-barplot(counts.table, col=c("gray", "firebrick1", "dodgerblue", "darkgreen", "gold"), 
-        ylim = c(0,300), legend = rownames(counts.table))
+# Second, change the column and row names on the table
+colnames(genotype.race)=c("CC", "CT", "TT")
+rownames(genotype.race)=c("African Am", "Asian", "Caucasian", "Hispanic", "Other")
+
+# Third, plot the barplot where colors are specified
+barplot(genotype.race, col=c("gray", "firebrick1", "dodgerblue", "darkgreen", "gold"), ylim=c(0,300), width=2, legend = rownames(counts.table))
 @
-
-
-%<<tidy = TRUE, fig.height=5, tidy.opts=list(width.cutoff=60)>>=
-%## Figure 1.31a
-%# first, create a table of the data that is sorted
-%genotype.race = matrix(table(famuss$actn3.r577x, famuss$race), ncol=3, byrow=T)
-
-%# second, change the column and row names on the table
-%colnames(genotype.race)=c("CC", "CT", "TT")
-%rownames(genotype.race)=c("African Am", "Asian", "Caucasian", "Hispanic", "Other")
-
-%# third, plot the barplot where colors are specified
-%barplot(genotype.race, col=c("grey", "red", "blue", "green", "yellow"), ylim=
-%          c(0,300), width=2)
-%# lastly, include a legend for intepretation of your plots
-%legend("topright", inset=c(.05, 0), fill=c("grey", "red", "blue", "green", "yellow"),
-%       legend=rownames(genotype.race))
-%@
 
 \newpage
 
 A \textbf{standardized segmented bar plot} uses proportions to scale the data, and draws from a contingency table with proportions. Setting \texttt{ylim} from 0 to 1.7 allows for enough empty space on the plot so that the legend does not overlap the bars.
 
-<<tidy = TRUE, fig.height=5.5, tidy.opts=list(width.cutoff=60)>>=
+<<tidy = TRUE, fig.height=5, fig.width = 4, tidy.opts=list(width.cutoff=60), fig.align = "center">>=
 ## Figure 1.33b
 counts.table = (table(famuss$race, famuss$actn3.r577x))
 row.prop.table = prop.table(counts.table, 2)
-barplot(row.prop.table, ylim = c(0, 1.7), legend = rownames(counts.table))
 
-barplot(row.prop.table, col=c("gray", "firebrick1", "dodgerblue", "darkgreen", "gold"),
-        ylim = c(0, 1.7), legend = rownames(counts.table))
+barplot(row.prop.table, col=c("gray", "firebrick1", "dodgerblue", "darkgreen", "gold"), ylim = c(0, 1.7), legend = rownames(counts.table))
 @
 
-%<<tidy = TRUE, fig.height=5, tidy.opts=list(width.cutoff=60)>>=
-%## Figure 1.31b
-%# first, create table of proportions
-%prop.genotype.race <- prop.table(genotype.race, 2)
-%
-%# second, change the column and row names on the table
-%colnames(prop.genotype.race)=c("CC", "CT", "TT")
-%rownames(prop.genotype.race)=c("African Am", "Asian", "Caucasian", "Hispanic", "Other")
-%
-%#second, plot the output
-%barplot(prop.genotype.race, col=c("grey", "red", "blue", "green", "yellow"),
-%        ylim=c(0, 1.5), width=2)
+<<tidy = TRUE, fig.height=5.5, fig.width = 4, tidy.opts=list(width.cutoff=60), fig.align = "center">>=
+## Figure 1.31b
+# First, create table of proportions
+prop.genotype.race <- prop.table(genotype.race, 2)
 
-%# lastly, include a legend for intepretation of your plots
-%legend("topright", inset=c(0.05, -0.005), fill=c("grey", "red", "blue", "green", "yellow"),
-%       legend=rownames(prop.genotype.race), bty = "n")
-%@
-%\textit{Note:} In the \textit{legend} line, the command  \textit{inset=} controls where on the plot the legend prints out.  Sometimes this specification can be a little bit bizarre so it may require some alteration to find the right spot for the legend.  
+# Second, change the column and row names on the table
+colnames(prop.genotype.race)=c("CC", "CT", "TT")
+rownames(prop.genotype.race)=c("African Am", "Asian", "Caucasian", "Hispanic", "Other")
 
-In \textit{OI Biostat} Figure 1.34, the data from the contingency table are organized differently, with each bar representing a level of \texttt{race}. To make this change, reverse the order of the variables in \texttt{counts.table}
-
-<<tidy = TRUE, fig.height=4, tidy.opts=list(width.cutoff=60)>>=
-## Figure 1.34a
-counts.table = (table(famuss$actn3.r577x, famuss$race)) ## change variable order
-
-barplot(counts.table, col=c("dodgerblue", "darkgreen", "gold"), 
-        ylim = c(0,500), legend = rownames(counts.table))
-
-## Figure 1.34b
-row.prop.table = prop.table(counts.table, 2)
-barplot(row.prop.table, col=c("dodgerblue", "darkgreen", "gold"),
-        ylim = c(0, 1.8), legend = rownames(counts.table))
+# Third, plot the output
+barplot(prop.genotype.race, col=c("gray", "firebrick1", "dodgerblue", "darkgreen", "gold"), ylim=c(0, 1.7), width=2, legend = rownames(counts.table))
 @
 
-%If we wanted to reproduce Figure 1.32, where the bars indicate race instead of %genotype, we can do the same process as above, with one exception.  In the first step, %of creating the table, we must instead put the race variable first as the rows and the %gene variable as the columns, as follows:
-%<<tidy = TRUE, fig.height=4, tidy.opts=list(width.cutoff=60)>>=
-%## Figure 1.32
-%# Plotting two graphs next to each other
-%par(mfrow=(c(1,2)))
-%
-%# Setting up the table and changing column/row names
-%race.genotype = matrix(table(famuss$race, famuss$actn3.r577x), ncol=5, byrow=T)
-%colnames(race.genotype)=c("African Am", "Asian", "Caucasian", "Hispanic", "Other")
-%rownames(race.genotype)=c("CC", "CT", "TT")
-%
-%# Creating segmented bar plot with a legend
-%barplot(race.genotype, col=c("blue", "green", "yellow"), ylim=c(0,500), width=2)
-%legend("topright", inset=c(0, 0), fill=c("blue", "green", "yellow"), 
-%      legend=rownames(race.genotype))
-%
-%# Creating standardized segmented bar plot with a legend
-%prop.race.genotype <- prop.table(race.genotype, 2)
-%barplot(prop.race.genotype, col=c("blue", "green", "yellow"), ylim=c(0, 1.5), width=2)
-%legend("topright", inset=c(0, 0), fill=c("blue", "green", "yellow"), 
-%       legend=rownames(race.genotype))
-%@
+In \textit{OI Biostat} Figure 1.34, the data from the contingency table are organized differently, with each bar representing a level of \texttt{race}. To make this change, reverse the order of the variables in \texttt{table()}
+
+<<tidy = TRUE, fig.height=4, tidy.opts=list(width.cutoff=60), fig.align = "center">>=
+## Figure 1.34
+# Plotting two graphs next to each other
+par(mfrow=(c(1,2)))
+
+# Setting up the table and changing column/row names
+race.genotype = matrix(table(famuss$race, famuss$actn3.r577x), ncol=5, byrow=T)
+colnames(race.genotype)=c("African Am", "Asian", "Caucasian", "Hispanic", "Other")
+rownames(race.genotype)=c("CC", "CT", "TT")
+
+# Creating segmented bar plot (Figure 1.34a)
+barplot(race.genotype, col=c("dodgerblue", "darkgreen", "gold"), ylim=c(0,500), width=2, legend=rownames(race.genotype))
+
+# Creating standardized segmented bar plot (Figure 1.34b)
+prop.race.genotype <- prop.table(race.genotype, 2)
+barplot(prop.race.genotype, col=c("dodgerblue", "darkgreen", "gold"), ylim=c(0, 1.7), width=2, legend=rownames(race.genotype))
+@
 
 \subsection{Comparing numerical data across groups}
 \subsubsection{Side-by-side boxplots}
 
 The \textbf{side-by-side} boxplot is a useful tool for comparing the distribution of numerical data across categories. \textit{OI Biostat} Figure 1.35a shows a side-by-side boxplot for percent change in non-dominant arm strength grouped by genotype. The response variable $y$ comes before the tilde and the explanatory variable $x$; in this case, the response variable is percent change in strength.
 
-<<tidy=TRUE, fig.height=4, tidy.opts=list(width.cutoff=40)>>=
-## Figure 1.335(a)
+<<tidy=TRUE, fig.height=4, tidy.opts=list(width.cutoff=40), fig.align = "center">>=
+## Figure 1.35(a)
 boxplot(famuss$ndrm.ch ~ famuss$actn3.r577x, 
         ylab = "% Change in Non-Dominant Arm Strength", xlab = "Genotype")
 @
 
 \textit{OI Biostat} Figure 1.36 shows a larger side-by-side boxplot which compares the distribution of frog clutch sizes for different altitudes.
 
-<<tidy = TRUE, fig.height=4, tidy.opts=list(width.cutoff=60)>>=
+<<tidy = TRUE, fig.height=4, tidy.opts=list(width.cutoff=60), fig.align = "center">>=
 ## Figure 1.36
 boxplot(frog.altitude.data$clutch.volume ~ frog.altitude.data$altitude, xlab = "Clutch Volume", ylab = "Altitude")
 @
@@ -616,7 +511,7 @@ boxplot(frog.altitude.data$clutch.volume ~ frog.altitude.data$altitude, xlab = "
 
 A \textbf{hollow histogram} plots the outlines of histograms for each group onto the same axes. To plot a hollow histogram, specify any axis limits and labels in the command for the first histogram; the subsequent histograms require the argument \texttt{add = T} in order for them to be overlaid on top of the first plot.
 
-<<tidy = TRUE, fig.height = 4>>=
+<<tidy = TRUE, fig.height = 4, fig.align = "center">>=
 ## Figure 1.35(b)
 hist(famuss$ndrm.ch[famuss$actn3.r577x == "CC"], breaks = 20, border = "dodgerblue",
      xlab = "% Change in Non-Dominant Arm Strength", ylim = c(0,50), xlim = c(0,250),
@@ -638,7 +533,7 @@ legend('topright',
 
 % JV: Add material from 102 section 2 to this section, as an exercise? Doesn't seem useful to just reproduce the figures in OI Biostat 1.6 here.
 
-<<tidy = TRUE, fig.height = 4, fig.width = 4>>=
+<<tidy = TRUE, fig.height = 4, fig.width = 4, fig.align = "center">>=
 boxplot(Golub[,7:9])
 @
 

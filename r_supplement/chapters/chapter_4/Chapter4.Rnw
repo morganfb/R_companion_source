@@ -1,6 +1,6 @@
 \vspace{0.5cm} 
 
-\section{Taking a Sample of a Dataset}
+\section*{Taking a Sample of a Dataset}
 The main text talks through the importance of using a sample of data as a reflection of the population as a whole.  The two steps for doing this are as follows
 \begin{enumerate}
 \item Of the total number of datapoints you have (equal to the length of the dataset), select a random sampling of them, of size $n$.  This is done with the \textit{sample()} command below.  $x$ is a list of the row indeces, and \textit{sample} returns a random list of values in that list of length $n$. 

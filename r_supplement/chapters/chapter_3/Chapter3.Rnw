@@ -173,6 +173,8 @@ qqnorm(obs)
 qqline(obs)
 @
 
+\section{Evaluating the Normal Distribution}
+%%% COME FILL THIS IN -- A LOT OF THIS IS WRITTEN OUT IN CHAPTER 6 WITH CONTEXT (is it better there??)
 
 \section{Binomial Distribution}
 A random variable which follows a \textbf{binomial distribution} can be written as
@@ -257,8 +259,7 @@ pbinom(59, prob = .2, size = 400)
 @
 
 
-\section{Other Distributions}
-\subsection{Poisson Distribution}
+\section{Poisson Distribution}
 Similarly, the functions for the \textbf{poisson distribution} are the following where the necessary argument is \textit{lambda}
 \begin{itemize} 
 \item $dpoisson(x, lambda) = P(X = x)$ 
@@ -266,8 +267,7 @@ Similarly, the functions for the \textbf{poisson distribution} are the following
 \item $ppois(x, lambda, lower.tail = FALSE) = P(X > x)$ 
 \end{itemize}
 
-\subsubsection{Example of the Poisson}
-
+\subsection{Example of the Poisson}
 <<>>=
 ## Example 3.28 
 dpois(x = 2, lambda = 4.4*7)
@@ -275,14 +275,14 @@ dpois(x = 2, lambda = 4.4*7)
 
 
 
-\subsection{Geometric Distribution}
+\section{Geometric Distribution}
 The same pattern can be applied for the \textbf{geometric distribution} to get the following where the necessary argument is \textit{prob}
 \begin{itemize} 
 \item $dgeom(x,prob) = P(X = x)$ 
 \item $pgeom(x,prob) = P(X \leq x)$
 \end{itemize}
 
-\subsubsection{Examples of the Geometric}
+\subsection{Examples of the Geometric}
 Note here that using the dgeom function requires an input of $k-1$, because this function returns the probability of $k$ failures before the first success, ending with a total of $k$ turns.  
 <<>>=
 ## Example 3.31
@@ -296,14 +296,14 @@ dgeom(x = 3-1, prob = 0.35)
 pgeom(q = (4-1), prob = 0.35)
 @
 
-\subsection{Negative Binomial Distribution}
+\section{Negative Binomial Distribution}
 Finally, for the \textbf{negative binomial distribution}, the necessary arguments are \textit{prob} and \textit{size} and can be implemented as follows, 
 \begin{itemize} 
 \item $dnbinom(x,n,p) = P(X = x)$ 
 \item $pnbinom(x,n,p) = P(X \leq x)$ 
 \end{itemize}
 
-\subsubsection{Example of the Negative Binomial}
+\subsection{Example of the Negative Binomial}
 
 %% WHY ISNT THIS ANSWER WORKING OUT CORRECTLY? 
 <<>>=

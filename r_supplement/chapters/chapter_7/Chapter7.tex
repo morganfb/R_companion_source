@@ -1,0 +1,56 @@
+
+
+In Chapter 6, the dataset \textit{statins} was introduced when visually understanding the assumptions of simple linear regression.  
+
+
+
+%%Insert figure here which will be on the 8th page of the chapter in the section "introduction to multiple linear regression" 
+
+\section{Confounders} 
+The text walks through the example of statin use as being a confounder because it is theoretically associated with both another explanatory variable, in this case age, and response variable, here cognitive decline.  Firstly, to test for a confounder, a measure of association can be used such as correlation.  In this example, the correlations between the variables can be calculated as follows.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{cor}\hlstd{(statins}\hlopt{$}\hlstd{Statin, statins}\hlopt{$}\hlstd{Age)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in is.data.frame(y): object 'statins' not found}}\begin{alltt}
+\hlkwd{cor}\hlstd{(statins}\hlopt{$}\hlstd{Statin, statins}\hlopt{$}\hlstd{RFFT)}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in is.data.frame(y): object 'statins' not found}}\end{kframe}
+\end{knitrout}
+
+Note that these correlations are not outwardly concerning as they are quite small, but nonetheless could be impactful on an investigation and should be accounted for if possible.  The conclusion in the main text is thus that a multiple linear regression should be used because it can adjust for confounders.  The explanation of how this works is complicated, but the idea is that because multiple linear regression builds a model that reflects the association between explanatory and response variables, the more information included in building this model, the better.  
+
+\subsubsection{Simple vs. Multiple Regression}
+Firstly, the simple linear regression can be performed as would have been done in Chapter 6.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{summary}\hlstd{(}\hlkwd{lm}\hlstd{(statins}\hlopt{$}\hlstd{RFFT} \hlopt{~} \hlstd{statins}\hlopt{$}\hlstd{Statin))}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'statins' not found}}\end{kframe}
+\end{knitrout}
+This gives the following model, 
+\[ RFFT = 71.508 - 13.0633\cdot Statin \]
+
+Next, the multiple regression will be performed. Note the use of a plus sign after the tilde to include multiple variables.   
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{summary}\hlstd{(}\hlkwd{lm}\hlstd{(statins}\hlopt{$}\hlstd{RFFT} \hlopt{~} \hlstd{statins}\hlopt{$}\hlstd{Statin} \hlopt{+} \hlstd{statins}\hlopt{$}\hlstd{Age))}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in eval(expr, envir, enclos): object 'statins' not found}}\end{kframe}
+\end{knitrout}
+This gives the following model, 
+\[ RFFT = 130.96291 - 4.04354\cdot Statin - 1.12435\]
+
+As compared to a model with statin use as the only explanatory variable, it is evident that the coefficients here change by including both explanatory variables.  This is reflective of the confounding relationship between the two explanatory variables, but will lead us to more accurate results.  In this example, both models show a negative relationship between statin use and RFFT values, even though the coefficients have different scale.  

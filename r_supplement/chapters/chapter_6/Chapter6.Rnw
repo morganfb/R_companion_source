@@ -73,7 +73,10 @@ Two examples of this procedure are included below.  In the first example, the re
 par(mfrow=c(1,3))
 residuals = resid(lm(statins.samp$RFFT~statins.samp$Age))
 
-hist(residuals, main = "", xlab = "Residuals")
+hist(residuals, main = "", xlab = "Residuals", freq = FALSE)
+x <- seq(min(residuals) - 2, max(residuals) + 2, 0.01)
+y <- dnorm(x, mean(residuals), sd(residuals))
+lines(x, y, lwd = 1.5, col = "red")
 
 plot(residuals)
 abline(h = 0, col = "red", lty = 2)
@@ -89,7 +92,10 @@ par(mfrow=c(1,3))
 ## Guided Practice 6.1
 residuals = resid(lm(frog.altitude.data$clutch.volume ~ frog.altitude.data$body.size))
 
-hist(residuals, main = "", xlab = "Residuals")
+hist(residuals, main = "", xlab = "Residuals", freq = FALSE)
+x <- seq(min(residuals) - 2, max(residuals) + 2, 0.01)
+y <- dnorm(x, mean(residuals), sd(residuals))
+lines(x, y, lwd = 1.5, col = "red")
 
 plot(residuals)
 abline(h = 0, col = "red", lty = 2)

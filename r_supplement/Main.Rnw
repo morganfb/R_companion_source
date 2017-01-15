@@ -7,7 +7,7 @@
 \pagestyle{fancy}
 \usepackage{minitoc}
 \fancyhf{}
-
+ 
 %comment these lines out to revert to default font
 \usepackage{kpfonts}
 \usepackage[T1]{fontenc}

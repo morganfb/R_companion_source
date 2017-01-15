@@ -1,7 +1,95 @@
 \vspace{0.5cm} 
 
-This chapter focuses on the material covered in \textit{OI Biostat} Chapter 2, Section 2.5. While simple conditional probability problems are easily solved by hand with a basic calculator, \textsf{R} can be useful for more elaborate scenarios like those that involve Bayes' Theorem.
+This chapter focuses on the material covered in \textit{OI Biostat} Chapter 2, which focuses on the idea of probability and how to solve for various types of probabilities. This chapter will work through several examples, illustrating how \textsf{R} can be used to solve propability problems.  Once again, it will be shown that there are several different computational methods that can be used to answer the same question.  
 
+\section{Simple Probability}
+
+\subsection{Using R as a Calculator}
+For the most basic probability problems, \textsf{R} can be used similarly to a calculator.  Variable values can be stored and then used for calculations.  An example of this is \textit{OI Biostat} Example 2.24, which is walked through below.   
+
+\begin{quotation}
+\textbf{\textit{OI Biostat} Example 2.24.}  Mandatory drug testing in the workplace is common practice for certain professions, such as air traffic controllers and transportation workers.  A false positive in a drug screening test occurs when the test incorrectly indicates that a screened person is an illegal drug user. Suppose a mandatory drug test has a false positive rate of 1.2\% (i.e., has probability  0.012 of indicating that an employee is using illegal drugs when that is not the case).  Given 150 employees who are in reality drug free, what is the probability that at least one will (falsely) test positive? Assume that the outcome of one drug test has no effect on the others.
+\end{quotation}
+
+<<>>=
+## Example 2.24
+false.positive = 0.012
+true.negative = 1-false.positive
+one.positive = 1-true.negative^150
+one.positive
+@
+
+
+\subsection{Through Simulation}
+A powerful method for calculating probabilities in \textsf{R} is called \textbf{simulation} and consists of simulating a large population with some consistent known parameters so that population statistics can be measured.   
+
+The steps for a simulation process are as follows, 
+\begin{enumerate}
+  \item Define the parameters of the simulation: population size.
+  
+  \item In order for the results of the simulation to be reproducible, it is necessary to use \texttt{set.seed()} to associate the particular set of results with a "seed". Any integer can be used as the seed. Different seeds will produce a different set of results. 
+  
+  \item Using the \texttt{vector()} command, create one empty list that will be used to store the results of the simulation.  
+  
+  \item Simulate rolling each of the dice using the  \texttt{sample()} command, which takes a sample of a specified size from a list \texttt{x}. In this context, the goal is to sample the integers between \texttt{1} and \texttt{6} 100,000 times, where the result represents the face of the die that shows up.  This is done in combination with a \texttt{for} loop.  The loop allows for this process to be repeated for each of the 100,000 individuals being simulated.  The first line sets up the loop, with a variable \texttt{ii} that starts at \texttt{1} and finishes at \texttt{population.size}, which was specified earlier as 100,000. This allows for each dice roll to be performed one at a time.
+  
+  \item Look at your final results of the simulated population distribution, and if desired, calculate population statistics. 
+
+\end{enumerate}
+
+\subsubsection{Dice Rolling Example}
+For example, simulation can be used to obtain the probability distribution of the sum of two dice seen in \textit{OI Biostat} Figure 2.7. Note that these probabilities can be calculatd directly as well, as shown in \textit{OI Biostat}.  
+
+<<fig.height=3.5, fig.width=5,fig.align = "center", tidy = TRUE>>=
+## 1. Set parameters 
+population.size = 100000
+
+## 2. Set Seed 
+set.seed(2016)
+
+## 3. Create empty list 
+dice.sums = vector("numeric", population.size)
+
+## 4. Simulate "rolling the dice" 
+for(ii in 1:population.size){
+  dice.1 = sample(1:6, size = 1)
+  dice.2 = sample(1:6, size = 1)
+  dice.sums[ii] = dice.1 + dice.2
+}
+
+## 5. Plot results 
+hist(dice.sums, freq = FALSE, ylab = "Probability", xlab = "Dice Sum", main = "")
+@
+
+\subsubsection{Drug Testing Example}
+Another example of a probability that can be calculated using simulation is \textit{OI Biostat} Example 2.24, which was calculated directly above.  In the \texttt{sample} command here, a result of 0 indicates a negative test result while a result of 1 indicates a positive test, and the inclusion of \texttt{replace = TRUE} ensures that each individual's test is independent of the others.  
+
+<<>>=
+## 1. Set parameters 
+simulation.size = 100000
+n = 150
+false.positive = 0.012
+
+## 2. Set Seed 
+set.seed(2016)
+
+## 3. Create empty list 
+test.results = vector("numeric", population.size)
+
+## 4. Simulate "rolling the dice" 
+for(ii in 1:population.size){
+  ## Simulate the 150 employee's test results
+  employees = sample(c(0,1), size = n, prob = c(1-false.positive, false.positive), replace = TRUE)
+  ## Count how many employees tested positive 
+  test.results[ii] = sum(employees)
+}
+
+## 5. Obtain results 
+mean(test.results>=1)
+@
+
+
+\section{Conditional Probability}
 What are the chances that a woman with a positive mamogram has breast cancer? This question can be rephrased as the conditional probability that a woman has breast cancer, given that her mammogram is abnormal, otherwise known as the \textbf{positive predictive value} of a mammogram. Two methods discussed in this chapter, using Bayes' Theorem and creating a contingency table, are also explained in \textit{OI Biostat}. This chapter will also cover an additional approach: modeling the problem scenario by running a simulation.
 
 \begin{quotation}
@@ -10,19 +98,7 @@ What are the chances that a woman with a positive mamogram has breast cancer? Th
 
 \end{quotation}
 
-%Chapter 2 explains probability, how its used, and what questions it can be used to answer.  In this chapter, we will go through some examples of how \texttt{R} can be used to solve propability problems.  Once again, we will see that there are several different methods that can be used to answer the same question.  
-
-%We will focus on \textbf{conditional probability} here as these are the questions you would most commonly use \texttt{R} to solve.  To review, a conditional probability is the probability of an outcome given prior knowledge about another factor or condition.  For example, we could ask what is the conditional probability of an individual being male \textit{given} they have brown hair.  \textbf{Joint probability} is the probability of two events occuring simultaneously.  Referring back to our example, the joint probability would be the probability of an individual being male \textit{and} having brown hair.  We could also consider the \textbf{marginal probability}, or the probability of a single event occuring, such as an individual being male.  Another marginal probability would be the probability of an individual having brown hair.  
-
-%The mathematical definition for conditional probability is, for events \textit{A} and \textit{B}, the probability of \textit{A} given \textit{B} is computed as 
-%$$ P(A|B) = \frac{P(A \textnormal{ and } B)}{P(B)} $$
-
-%\section{Case Study on Conditional Probability}
-%In order to demonstrate the various techniques which can be used to solve a conditional probability question in R, we are going to consider a case study of cystic fibrosis.  The prevalence of cystic fibrosis is considered to be 1 in 6000 people.  A test used to screen for cystic fibrosis has a \textbf{sensitivity} of 0.950, meaning that it correctly gives a positive test result in a patient with the disease 95\% of the time.  This can also be referred to as the \textbf{true positive rate}.  Additionally, the test has a \textbf{specificity} of 0.99897, meaning that it correctly gives a negative test result in a patient without the disease 99.897\% of the time.  This can be referred to as the \textbf{true negative rate}.  Using this information, we want to determine the \textbf{positive predictive value} of the test, or the probability of a patient having the disease given their test result is positive.  
-
-% JV: I think it will be helpful to show exactly the example done in the text, since a new method (simulation) is being introduced in this chapter.
-
-\section{Bayes' Theorem}
+\subsection{Bayes' Theorem}
 
 Bayes' Theorem states that the conditional probability $P(A_1 | B)$ can be identified as the following fraction:\vspace{-1.5mm}
 \begin{align*}
@@ -39,7 +115,7 @@ P(D|T^{+}) &= \dfrac{P(D \text{ and } T^{+})}{P(D)} \\
 \text{PPV} &= \dfrac{\text{sensitivity } \times \text{ prevalence}}{[\text{sensitivity } \times \text{ prevalence}] + [\text{(1 - specificity) } \times \text{ (1 - prevalence)}]}
 \end{align*}
 
-\textsf{R} can be used to store values for prevalence, sensitivity, and specificity so that calculations are less tedious. Recall that the \textbf{sensitivity} is the probability of a positive test result when disease is present, which is the complement of a false negative. The \textbf{specificity} is the probability of a negative test result when disease is absent, which is the complement of a false positive.
+\textsf{R} can be used to store values for prevalence, sensitivity, and specificity so that calculations are less tedious. Recall that the \textbf{sensitivity} is the probability of a positive test result when disease is present, which is the complement of a false negative. The \textbf{specificity} is the probability of a negative test result when disease is absent, which is the complement of a false positive.  With this in mind, solving for the \textbf{positive predictive value (PPV)} is quite easy in \textsf{R} for the breast cancer example as follows.  
 
 <<>>=
 prevalence = 0.0035
@@ -54,7 +130,7 @@ ppv
 @
 
 
-\section{Contingency Table}
+\subsection{Contingency Table}
 
 The PPV can also be calculated by constructing a two-way contingency table for a hypothetical population and calculating conditional probabilities by conditioning on rows or columns. While this method results in an estimate of PPV, using a large enough population size such as 100,000 produces an empirical estimate that is very close to the exact value found through using Bayes' Theorem. 
 
@@ -127,16 +203,16 @@ ppv
 @
 
 
-\section{Simulation}
+\subsection{Simulation}
 
 % JV: will definitely be good to have some simple simulation exercises for this chapter, like the drug testing example from 102
 
-\textsf{R} can be used to simulate a population of 100,000 individuals that fits the parameters specified by the problem, i.e., a population where 0.35\% of women have breast cancer. Afterwards, using the known specificity and sensitivity of the diagnostic test, individuals can be assigned a test result of either positve or negative. This results in a simulated dataset of 100,000 individuals that each have a disease status and test result. 
+The final method for solving this conditional probability problem in \textsf{R} is through \textbf{simulation} and involves the process of simulating 100,000 individuals who each have the same probability of having the disease.  Afterwards, using the known specificity and sensitivity of the diagnostic test, individuals can be assigned a test result of either positve or negative as if a test had been performed.  This results in a simulated dataset of 100,000 individuals that each have a disease status and test result. This is a more complex version of the simulation performed above, so many steps are parallel to the process outlined above.  
 
 \begin{enumerate}
   \item Define the parameters of the simulation: disease prevalence, test sensitivity, test specificity, and hypothetical population size.
   
-  \item In order for the results of the simulation to be reproducible, it is necessary to use \texttt{set.seed()} to associate the particular set of results with a "seed". Any integer can be used as the seed. Different seeds will produce a different set of results. 
+  \item Set the seed using \texttt{set.seed()}. 
   
   \item Using the \texttt{vector()} command, create two empty lists that will be used to store the results of the simulation: one will store disease status and the other will store test outcome. The results will be in the form of numbers; specifically, either \texttt{0} or \texttt{1}. 
   
@@ -145,7 +221,7 @@ ppv
   \item Assign test result by using the \texttt{sample()} command in combination with a \texttt{for} loop and conditional statements. In this step, a test result is assigned with different probability depending on whether the disease status is a \texttt{0} or a \texttt{1}; this relates to the sensitivity and specificity of the diagnostic test. The loop allows for this process to be repeated for each of the 100,000 individuals being simulated.
   
   \begin{itemize}
-    \item The first line sets up the loop, with a variable \texttt{ii} that starts at \texttt{1} and finishes at \texttt{population.size}, which was specified earlier as 100,000. This allows for each test result to be assigned one at a time.
+    \item The first line sets up the for loop that cycles \texttt{ii} from 1 to the population size of 100,000.
     
     \item Two \texttt{if} statements are in the loop which direct \textsf{R} to take a different action depending on the value of \texttt{disease.status}. The double equals signs \texttt{==} imply a conditional statement, allowing \texttt{if(disease.status[ii] == 1)} to make the statement "For this loop, if disease status is equal to 1, then do the following...".
     
@@ -159,25 +235,25 @@ ppv
 
 
 <<>>=
-## 1. set parameters
+## 1. Set parameters
 prevalence = 0.0035
 sensitivity = 1 - 0.11
 specificity = 1 - 0.07
 population.size = 100000
 
-## 2. set seed
+## 2. Set seed
 set.seed(2016)
 
-## 3. create empty lists
+## 3. Create empty lists
 disease.status = vector("numeric", population.size)  
 test.outcome = vector("numeric", population.size)
 
-## 4. assign disease status
+## 4. Assign disease status
 disease.status = sample(x = c(0,1), size = population.size, 
                         prob = c(1 - prevalence, prevalence),  ## matches order of x
                         replace = TRUE)
 
-## 5. assign test result
+## 5. Assign test result
 for (ii in 1:population.size) {
   if (disease.status[ii] == 1) {  ## note the ==
     test.outcome[ii] = sample(c(0, 1), size = 1, ## test results assigned 1 at a time
@@ -188,14 +264,14 @@ for (ii in 1:population.size) {
   
 }
 
-## 6. calculate ppv
+## 6. Calculate ppv
 num.disease = sum(disease.status)  ## total number of individuals with disease
 num.pos.test = sum(test.outcome)   ## total number of positive tests
 
-# identify the number of individuals with disease who tested positive
+# Identify the number of individuals with disease who tested positive
 num.true.pos = sum(test.outcome[disease.status == 1]) 
 
-# calculate ppv
+# Calculate ppv
 ppv = num.true.pos / num.pos.test
 ppv
 
@@ -203,7 +279,7 @@ ppv
 
 
 
-%The final method for solving this conditional probability problem is called \textbf{simulation} and involves the process of simulating 100,000 individuals who each have the same probability of having the disease.  We then simulate a test performed on each of them, keeping the known specificity and sensitivity in mind.  This will give us an imaginary dataset of 100,000 individuals from which we can solve for the conditional probability.  
+%
 
 %The first step in this process is to set some defined parameters as follows.  Note that the last line "sets a seed" for our simulation.  To perform the simulation, we will be using random number generation, and this line guarantees that we are getting the same set of "random" numbers everytime we perform the simulation.  It does not affect the results at all, but rather is just to compare work between colleagues or compare against a previous simulation. Any integer can be put into the seed command.   
 %<<>>=

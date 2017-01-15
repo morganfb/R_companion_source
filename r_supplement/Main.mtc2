@@ -1,20 +1,20 @@
 {\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {1.1}Case study: preventing peanut allergies}{\reset@font\mtcSfont 3}{section.1.1}}
 {\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {1.2}Data Basics}{\reset@font\mtcSfont 5}{section.1.2}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {1.3}Numerical Data}{\reset@font\mtcSfont 6}{section.1.3}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.3.1}Measures of center: mean and median}{\reset@font\mtcSSfont 6}{subsection.1.3.1}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.3.2}Measures of spread: standard deviation and variance}{\reset@font\mtcSSfont 7}{subsection.1.3.2}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.3.3}Robust statistics}{\reset@font\mtcSSfont 8}{subsection.1.3.3}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.3.4}Visualizing distributions of data}{\reset@font\mtcSSfont 8}{subsection.1.3.4}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {1.4}Numerical Data}{\reset@font\mtcSfont 6}{section.1.4}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.4.1}Measures of center: mean and median}{\reset@font\mtcSSfont 6}{subsection.1.4.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.4.2}Measures of spread: standard deviation and variance}{\reset@font\mtcSSfont 7}{subsection.1.4.2}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.4.3}Robust statistics}{\reset@font\mtcSSfont 8}{subsection.1.4.3}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.4.4}Visualizing distributions of data}{\reset@font\mtcSSfont 8}{subsection.1.4.4}}
 {\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Histograms}{\reset@font\mtcSSSfont 8}{section*.2}}
 {\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Boxplots}{\reset@font\mtcSSSfont 10}{section*.3}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.3.5}Scatterplots and correlation}{\reset@font\mtcSSfont 12}{subsection.1.3.5}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.3.6}Correlation}{\reset@font\mtcSSfont 14}{subsection.1.3.6}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.3.7}Transforming Data}{\reset@font\mtcSSfont 16}{subsection.1.3.7}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {1.4}Categorical Data}{\reset@font\mtcSfont 17}{section.1.4}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.4.1}Contingency Tables}{\reset@font\mtcSSfont 17}{subsection.1.4.1}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.4.2}Bar Plots}{\reset@font\mtcSSfont 18}{subsection.1.4.2}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.4.3}Segmented Bar Plot}{\reset@font\mtcSSfont 20}{subsection.1.4.3}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.4.4}Comparing numerical data across groups}{\reset@font\mtcSSfont 25}{subsection.1.4.4}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Side-by-side boxplots}{\reset@font\mtcSSSfont 25}{section*.4}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.4.5}Scatterplots and correlation}{\reset@font\mtcSSfont 12}{subsection.1.4.5}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.4.6}Correlation}{\reset@font\mtcSSfont 14}{subsection.1.4.6}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.4.7}Transforming Data}{\reset@font\mtcSSfont 16}{subsection.1.4.7}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {1.5}Categorical Data}{\reset@font\mtcSfont 17}{section.1.5}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.5.1}Contingency Tables}{\reset@font\mtcSSfont 17}{subsection.1.5.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.5.2}Bar Plots}{\reset@font\mtcSSfont 18}{subsection.1.5.2}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.5.3}Segmented Bar Plot}{\reset@font\mtcSSfont 20}{subsection.1.5.3}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {1.5.4}Comparing numerical data across groups}{\reset@font\mtcSSfont 24}{subsection.1.5.4}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Side-by-side boxplots}{\reset@font\mtcSSSfont 24}{section*.4}}
 {\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Hollow Histograms}{\reset@font\mtcSSSfont 26}{section*.5}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {1.5}Genomic Data}{\reset@font\mtcSfont 27}{section.1.5}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {1.6}Genomic Data}{\reset@font\mtcSfont 26}{section.1.6}}
