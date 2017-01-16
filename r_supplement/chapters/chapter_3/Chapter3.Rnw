@@ -8,7 +8,7 @@ We have learned that the \textbf{normal distribution} can be written as
 where $\mu$ is the mean of the distribution and $\sigma$ is the standard deviation.  Using this idea, a standard normal distribution can be created in one of two ways: 
 
 \subsection{Direct Plot}
-There is a function in R called the \textit{dnorm} function, which, for a given posible value of the distribution, returns the probability of the distribution holding that value.  
+There is a function in R called the \texttt{dnorm()} function, which, for a given posible value of the distribution, returns the probability of the distribution holding that value.  
 <<fig.height=3, fig.width=4, fig.align = "center">>=
 ## getting a list of values to evaluate distribution
 X = seq(-4, 4, 0.01)
@@ -19,7 +19,7 @@ plot(X,Y, type = "l")
 @
 
 \subsection{Through Simulation}
-The second method involves sampling randomly from the known normal distribution to simulate the probabilities that we drew directly in the above method.  In this case, the function \textit{rnorm} takes $n$ number of random samples from the normal distribution with the given mean and standard deviation.  In the \textit{hist} command, the specification that \textit{freq = FALSE} should be included to make the plot reflect percentages rather than frequency counts.  
+The second method involves sampling randomly from the known normal distribution to simulate the probabilities that we drew directly in the above method.  In this case, the function \texttt{rnorm()} takes $n$ number of random samples from the normal distribution with the given mean and standard deviation.  In the \texttt{hist()} command, the specification that \texttt{freq = FALSE} should be included to make the plot reflect percentages rather than frequency counts.  
 <<fig.height=3, fig.width=4, fig.align = "center">>=
 set.seed(1) 
 x <- rnorm(n = 100000, mean = 0, sd = 1)
@@ -33,13 +33,13 @@ hist(x, freq = FALSE, breaks = 100)
 lines(X,Y, col = "red")
 @
 
-Note that the two show very similar results.  For practical purposes, \textit{dnorm} is typically used as it only requires one command and is the asymptotic result of simulations, rather than an approximation.  
+Note that the two show very similar results.  For practical purposes, \texttt{dnorm()} is typically used as it only requires one command and is the asymptotic result of simulations, rather than an approximation.  
 
 \subsection{Probability Functions}
-For the normal distribution, there are two more functions that are very useful, \textit{pnorm} and \textit{qnorm}. 
+For the normal distribution, there are two more functions that are very useful, \texttt{pnorm()} and \texttt{qnorm()}. 
 
 \subsubsection{pnorm} 
-The function \textit{pnorm} tells the percentage of the normal distribution that is less than or equal to the value that is put in.  This corresponds to the gray area in the below plot and can be written as $pnorm(x, mean = \mu, sd = \sigma)$ which is equivalent to $P(X < x)$ where $X \sim N(\mu, \sigma)$ and $x$ is the point of interest.    
+The function \texttt{pnorm()} tells the percentage of the normal distribution that is less than or equal to the value that is put in.  This corresponds to the gray area in the below plot and can be written as $pnorm(x, mean = \mu, sd = \sigma)$ which is equivalent to $P(X < x)$ where $X \sim N(\mu, \sigma)$ and $x$ is the point of interest.    
  
 <<echo = FALSE, fig.height=4, fig.width=4, fig.align = "center">>=
 plot(X,Y, type = "l")
@@ -49,7 +49,7 @@ polygon(c(X[these[1]], X[these], X[rev(these)[1]]),
         col = '#CCCCCC')
 @
 
-For some example scenarios, where the goal is to find a proportion of the normal distribution given $x$ or $z$, the following configurations of \textit{pnorm()} can be used: 
+For some example scenarios, where the goal is to find a proportion of the normal distribution given $x$ or $z$, the following configurations of \texttt{pnorm()} can be used: 
 \begin{itemize}
 \item $pnorm(z) = P(Z \leq z)$ 
 \item $pnorm(z, lower.tail = FALSE) = P(Z > z)$ 
@@ -86,9 +86,9 @@ pnorm(q = 74, mean = 70, sd = 3.3, lower.tail = TRUE) - pnorm(q = 69, mean = 70,
 
 
 \subsubsection{qnorm} 
-On the other hand, the \textit{qnorm} function is the inverse function, instead giving the $X$ value such that the given percentage of the distribution is less than or equal to that value. This function takes a known probability and returns a value on the normal distribution that is corresponding.  
+On the other hand, the \texttt{qnorm()} function is the inverse function, instead giving the $X$ value such that the given percentage of the distribution is less than or equal to that value. This function takes a known probability and returns a value on the normal distribution that is corresponding.  
 
-Some sample configurations of using \textit{qnorm()} can be as follows,  
+Some sample configurations of using \texttt{qnorm()} can be as follows,  
 \begin{itemize}
 \item $qnorm(p) = P(Z \leq z)$ 
 \item $qnorm(p, lower.tail = FALSE) = P(Z > z)$ 
@@ -97,7 +97,7 @@ Some sample configurations of using \textit{qnorm()} can be as follows,
 \end{itemize}
 
 \vspace{.5cm}
-Working through an example in the main text, 
+Working through a Example 3.12 from \textit{OI Biostat}, 
 <<>>=
 ## Example 3.12 
 # using standard normal 
@@ -107,11 +107,11 @@ qnorm(p = .4, mean = 70, sd = 3.3)
 @
 
 \subsection{Evaluating the Normal Approximation} 
-It is of interest to test the normality of a distriubtion in order to determine if approximation with a normal distribution is appropriate. There are two methods in $R$ that can be used to test this.  The first involves plotting the data with a histogram and then superimposing a line on top with the corresponding mean and standard deviation of the data.  The more closely that the histogram matches the line, the more appropriate a normal approximation would be.  
+It is of interest to test the normality of a distriubtion in order to determine if approximation with a normal distribution is appropriate. There are two methods in \textsf{R} that can be used to test this.  The first involves plotting the data with a histogram and then superimposing a line on top with the corresponding mean and standard deviation of the data.  The more closely that the histogram matches the line, the more appropriate a normal approximation would be.  
 
-The second method utilizes the function \textit{qqnorm()}, which plots the residual differences between the observed data and the theoretical normal distribution that would match.  A line can be plotted on top of this plot, using \textit{qqline()}, which demonstrates how a perfect match would appear.  Deviation of the dots on the plot from the line shows lack of fit for the normal approimation.  
+The second method utilizes the function \texttt{qqnorm()}, which plots the residual differences between the observed data and the theoretical normal distribution that would match.  A line can be plotted on top of this plot, using \texttt{qqline()}, which demonstrates how a perfect match would appear.  Deviation of the dots on the plot from the line shows lack of fit for the normal approimation.  
 
-Both of these methods can be seen below in this recreation of \textit{Figure 3.10} from the main text.  The rows show the first and second methods respectively, while the columns show a progressively better fit to the normal from left to right.  
+Both of these methods can be seen below in this recreation of \textit{OI Biostat} Figure 3.10 from the main text.  The rows show the first and second methods respectively, while the columns show a progressively better fit to the normal from left to right.  
 %%PUT THIS DATA INTO OIBIOSTAT PACKAGE 
 <<tidy = TRUE,fig.align = "center">>=
 obs1 <- c(-0.01, 1.39, 1.598, 0.383, -0.084, -0.475, -0.105, -1.062, 0.607, 0.539, 0.871, 0.45, -0.039, 1.256, 0.55, -0.333, -0.252, 1.187, -0.916, 0.677, -1.324, -1.773, 1.813, 0.023, -2.291, -1.361, 0.642, 0.249, -0.132, 1.345, 0.629, -1.274, 0.435, 0.043, 0.55, -0.465, 0.756, -0.396, -0.767, 1.348)
@@ -181,18 +181,18 @@ A random variable which follows a \textbf{binomial distribution} can be written 
 \[ X \sim Binom(n,p) \]
 where $n$ represents the sample size and $p$ represents the probability of success.  
 
-The functions seen above for the normal distribution can be similarly used for the binomial as follows where the necessary arguments are \textit{size} and \textit{prob}, corresponding respectively to $n$ and $p$ in our above representation of the binomial.
+The functions seen above for the normal distribution can be similarly used for the binomial as follows where the necessary arguments are \texttt{size} and \texttt{prob}, corresponding respectively to $n$ and $p$ in our above representation of the binomial.
 \begin{itemize} 
-\item \textit{dbinom}
-\item \textit{rbinom}
-\item \textit{pbinom}
-\item \textit{qbinom}
+\item \texttt{dbinom()}
+\item \texttt{rbinom()}
+\item \texttt{pbinom()}
+\item \texttt{qbinom()}
 \end{itemize}
 
 Similar to the above example with the normal distribution, these functions can be used in multiple ways to work with the binomial distribution.  
 
 \subsection{Accessing the Binomial Distribution}
-As above, the binomial distribution can be accessed directly with \textit{dbinom} as follows: 
+As above, the binomial distribution can be accessed directly with \texttt{dbinom()} as follows: 
 <<fig.height=3, fig.width=6, fig.align = "center">>=
 ## Splitting the graphics window into two panes 
 par(mfrow=c(1,2))
@@ -223,11 +223,11 @@ Using the binomial distribution highlights an important feature of distributions
 
 On the other hand, a continuous distribution can take on any real number within a specified range.  For example, looking at the standard normal distribution, a list of some possible values could be \{0, 0.1, 0.01, 0.001, 0.0001, ...\}.  This is a limited list of the infinite list of possible values that a continuous distribution could take on.  
 
-The reason we care about the classification of a random variable as discrete or continous is that it affects the implementation of probability functions in $R$.  Let's walk through an example to see the difference.  Consider a normally distributed random variable, $X$, and a binomially distributed random variable, $Y$. 
+The reason the classification of a random variable as discrete or continous is important is that it affects the implementation of probability functions in \textsf{R}.  Let's walk through an example to see the difference.  Consider a normally distributed random variable, $X$, and a binomially distributed random variable, $Y$. 
 \[ X \sim N(0,1) \; \; \; \; \; \; \; \; \; \; \; \;  Y \sim Binom(15,0.5) \]
 If the goal is to determine the probability of being less than 2 for each of these two distributions, this would be equivalent to $P(X < 2)$ and $P(Y < 2)$.  However, for the binomial distribution $P(Y<2) = P(Y \leq 1) = P(Y=0) + P(Y=1)$ because there is a discrete set of possible values that $Y$ can take on.  $Y$ can only take on the integer values, and less than 2, that just leaves 0 and 1, whereas the normal distribution can take on any non-integer value in that interval, which is an infinite number of values.  For the normal distribution, solving for $P(Y<2)$ is mathematically equivalent to $P(Y \leq 2)$ because it is continuous.  
 
-To solve for these probabilities, use \textit{pnorm} and \textit{pbinom}, noting that for the discrete binomial case, these functions automatically give the less than or equal to probability, not just the less than probability.  The correct commands can be seen through the following examples from the text. 
+To solve for these probabilities, use \texttt{pnorm()} and \texttt{pbinom()}, noting that for the discrete binomial case, these functions automatically give the less than or equal to probability, not just the less than probability.  The correct commands can be seen through the following examples from the text. 
 \subsection{Examples of the Binomial}
 \vspace{0.5cm}
 To summarize, the binomial probaility functions can be used as follows, 
@@ -260,7 +260,7 @@ pbinom(59, prob = .2, size = 400)
 
 
 \section{Poisson Distribution}
-Similarly, the functions for the \textbf{poisson distribution} are the following where the necessary argument is \textit{lambda}
+Similarly, the functions for the \textbf{poisson distribution} are the following where the necessary argument is \texttt{lambda}
 \begin{itemize} 
 \item $dpoisson(x, lambda) = P(X = x)$ 
 \item $ppois(x, lambda) = P(X \leq x)$ 
@@ -276,7 +276,7 @@ dpois(x = 2, lambda = 4.4*7)
 
 
 \section{Geometric Distribution}
-The same pattern can be applied for the \textbf{geometric distribution} to get the following where the necessary argument is \textit{prob}
+The same pattern can be applied for the \textbf{geometric distribution} to get the following where the necessary argument is \texttt{prob}
 \begin{itemize} 
 \item $dgeom(x,prob) = P(X = x)$ 
 \item $pgeom(x,prob) = P(X \leq x)$
@@ -297,7 +297,7 @@ pgeom(q = (4-1), prob = 0.35)
 @
 
 \section{Negative Binomial Distribution}
-Finally, for the \textbf{negative binomial distribution}, the necessary arguments are \textit{prob} and \textit{size} and can be implemented as follows, 
+Finally, for the \textbf{negative binomial distribution}, the necessary arguments are \texttt{prob} and \texttt{size} and can be implemented as follows, 
 \begin{itemize} 
 \item $dnbinom(x,n,p) = P(X = x)$ 
 \item $pnbinom(x,n,p) = P(X \leq x)$ 

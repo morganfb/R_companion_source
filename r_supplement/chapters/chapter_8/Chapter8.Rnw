@@ -1,0 +1,14 @@
+
+\section{Inference for a Single Proportion}
+
+
+\section{Inference for the Difference of Two Proportions}
+
+
+\section{Inference for Two or More Groups}
+
+
+\section{Chi-Square} 
+
+
+\section{Randomization Test}

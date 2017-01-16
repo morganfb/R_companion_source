@@ -3,8 +3,8 @@
 \section*{Taking a Sample of a Dataset}
 The main text talks through the importance of using a sample of data as a reflection of the population as a whole.  The two steps for doing this are as follows
 \begin{enumerate}
-\item Of the total number of datapoints you have (equal to the length of the dataset), select a random sampling of them, of size $n$.  This is done with the \textit{sample()} command below.  $x$ is a list of the row indeces, and \textit{sample} returns a random list of values in that list of length $n$. 
-\item Taking the output of the \textit{sample} command, pair these indeces with the dataset to get the corresponding rows (or columns).  
+\item Of the total number of datapoints you have (equal to the length of the dataset), select a random sampling of them, of size $n$.  This is done with the \texttt{sample()} command below.  $x$ is a list of the row indeces, and \texttt{sample()} returns a random list of values in that list of length $n$. 
+\item Taking the output of the \texttt{sample()} command, pair these indeces with the dataset to get the corresponding rows (or columns).  
 \end{enumerate}
 
 %% Figure out what this seed should be to recreate the book examples perfectly!
@@ -65,7 +65,7 @@ qqline(means)
 @
 As discussed in chapter 3, the above plots are used to determine the normality of the sample.  The left plot is just a histogram, which can be inspected visually to see that it approximates a normal distribution.  The plot on the right is a more powerful tool for determining the normality - the dots represent deviation of data points from a theoretical normal distribution, as represented by the line on the plot.  The above plot shows a fairly normal distribution because of how closely the dots match the line.  
 
-The more samples are taken, the more accurately will the distribution be depicted.  Figure 4.8 demonstrates this below 
+The more samples are taken, the more accurately will the distribution be depicted.  Figure 4.8 from \textit{OI Biostat} demonstrates this below 
 <<eval =FALSE, fig.height=3, fig.width=6, fig.align = "center">>=
 ## Figure 4.8
 means = rep(NA, 100000)
@@ -94,7 +94,7 @@ ci
 
 To generalize this formula, a standard normal distribution can be used to obtain $z^*$, giving the following 
 \[ \bar{x} \pm z^* \cdot \text{SE } \]
-$R$ can be used to calculate $z^*$ and then using that value, to solve for the confidence interval.  A key point here is that we want the middle 95\% of the distribution, which divides the remaining 5\% between the two tails.  This is equivalent to 
+\textsf{R} can be used to calculate $z^*$ and then using that value, to solve for the confidence interval.  A key point here is that we want the middle 95\% of the distribution, which divides the remaining 5\% between the two tails, equivalent to 2.5\% being in each tail.  
 <<>>=
 ## Example 4.3 (version 2)
 perc = .95 
@@ -118,7 +118,7 @@ ci
 @
 
 
-Example 4.10 is an excellent example of how to clean up data.  The main text restricts the sample to adults over 21 with reported BMI values.  The steps below show how to find the individuals who are children or who have missing data and how to remove them from the sample.  Often times, when using a sample of a large population, a process similar to this one must be used.  Missing data can be problematic for analyses of the data, so understanding how to clean up the data appropriately is quite important. 
+Example 4.10 from \textit{OI Biostat} is an excellent example of how to clean up data.  \textit{OI Biostat} restricts the sample to adults over 21 with reported BMI values.  The steps below show how to find the individuals who are children or who have missing data and how to remove them from the sample.  Often times, when using a sample of a large population, a process similar to this one must be used.  Missing data can be problematic for analyses of the data, so understanding how to clean up the data appropriately is quite important. 
 <<fig.height=3, fig.width=4, fig.align = "center">>=
 ## Example 4.10 
 # Collect the sample of size 200
@@ -151,7 +151,7 @@ ci
 @
 
 \section{Hypothesis Testing}
-If you have calculated your test statistic by hand, $R$ can easily be used to get the p-value using the function \textit{pnorm()} as in Chapter 3.  The example that is worked through in the main text can be completed as follows.  Note that \textit{lower.tail = FALSE} because the alternative hypothesis here is 
+If you have calculated your test statistic by hand, \textsf{R} can easily be used to get the p-value using the function \texttt{pnorm()} as in Chapter 3.  The example that is worked through in \textit{OI Biostat} can be completed as follows.  Note that \texttt{lower.tail = FALSE} because the alternative hypothesis here is 
 \[ H_A: \mu_{bmi} > 21.7 \]
 which implies that the upper tail must be considered.  
 <<>>=
@@ -162,9 +162,9 @@ t
 pnorm(t, lower.tail = FALSE)
 @
 
-In $R$, all of the steps of hypothesis testing can be done with one single function, \textit{t.test()}.  This gives the test statistic, the p-value, and the confidence interval.  The function takes the data as an argument, $x$, the null hypothesis value, as $mu$, and the alternative hypothesis type, as $alternative$, which can be \textit{"less", "greater",} or \textit{"two.sided"}.  
+In \textsf{R}, all of the steps of hypothesis testing can be done with one single function, \texttt{t.test()}.  This gives the test statistic, the p-value, and the confidence interval.  The function takes the data as an argument, $x$, the null hypothesis value, as $mu$, and the alternative hypothesis type, as $alternative$, which can be \texttt{"less", "greater",} or \texttt{"two.sided"}.  
 
-The example shown below gives a comparison of doing the method by hand, as well as using the function.  
+Example 4.13 from \textit{OI Biostat}, shown below, gives a comparison of doing the method by hand, as well as using the function.  
 <<>>=
 ## Example 4.13
 set.seed(5011)

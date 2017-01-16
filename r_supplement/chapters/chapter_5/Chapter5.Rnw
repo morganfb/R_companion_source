@@ -1,23 +1,23 @@
 \vspace{0.5cm} 
 
 \section{The t-distribution}
-The main text introduces the \textbf{t-distribution} and explains under what circumstances it should be used.  Using it in in R is very similar to many concepts seen through Chapter 4 thus far.  
+The main text introduces the \textbf{t-distribution} and explains under what circumstances it should be used.  Using it in in \textsf{R} is very similar to many concepts seen through Chapter 4 thus far.  
 
-The following plot shows how the t-distribution approximates the normal distribution as the degrees of freedom grow.  The use of the function \textit{dt()} parallels the use of \textit{dnorm()} as has been used in previous chapters.  
+The following plot shows how the t-distribution approximates the normal distribution as the degrees of freedom grow.  The use of the function \texttt{dt()} parallels the use of \texttt{dnorm()} as has been used in previous chapters.  
 
 <<fig.height=4, fig.width=6,fig.align = "center", tidy = TRUE>>=
 ## Figure 5.2 
-# getting the x-axis values 
+# Getting the x-axis values 
 x = seq(-5, 9, 0.1)
 
-# finding the corresponding distribution values for several distributions 
+# Finding the corresponding distribution values for several distributions 
 t1 = dt(x, df = 1)
 t2 = dt(x, df = 2)
 t4 = dt(x, df = 4)
 t8 = dt(x, df = 8)
 norm = dnorm(x)
 
-# plotting the results, with custom colors 
+# Plotting the results, with custom colors 
 plot(x,t1, type = "l", ylim = c(0, 0.4), xlab = "", ylab = "", col = rgb(0,0,1,alpha=0.1))
 lines(x, t2, col = rgb(0,0,1,alpha=0.2))
 lines(x, t4, col = rgb(0,0,1,alpha=0.3))
@@ -26,15 +26,15 @@ lines(x, norm, col = rgb(0,0,1,alpha=0.5))
 @
 
 \subsection{The Alternative to t-Tables}
-The main text talks through the use of a \textbf{t-table}, but this text will go through examples of using software to do the same calculations.  In $R$, the command of interests here are \textit{pt()} to get the percentage of the distribution above or below a certain value and \textit{qt()} to get distribution values for which a certain percentage of the distribution falls above.  The command \textit{pt()} takes values inside the t-table to return the values on the x-axis of the table, whereas \textit{qt()} returns values within the table when given values along the upper x-axis.  
+The main text talks through the use of a \textbf{t-table}, but this text will go through examples of using software to do the same calculations.  In \textsf{R}, the command of interests here are \texttt{pt()} to get the percentage of the distribution above or below a certain value and \texttt{qt()} to get distribution values for which a certain percentage of the distribution falls above.  The command \texttt{pt()} takes values inside the t-table to return the values on the x-axis of the table, whereas \texttt{qt()} returns values within the table when given values along the upper x-axis.  
 
-An example of a one-sided calculation using the t-distribution can be viewed in Example 5.1 below.  Note the use of the stipulation \textit{lower.tail = TRUE} which ensures that the calculation is of values in the lower tail, i.e. those values which are less than -2.1.  
+An example of a one-sided calculation using the t-distribution can be viewed in Example 5.1 from \textit{OI Biostat} shown below.  Note the use of the stipulation \texttt{lower.tail = TRUE} which ensures that the calculation is of values in the lower tail, i.e. those values which are less than -2.1.  
 <<>>=
 ## Example 5.1 
 pt(-2.1, df = 18, lower.tail = TRUE)
 @
 
-Example 5.2 shows a two sided calculation using the t-distribution.  In order to do this in $R$, each tail can be calculated separately and then the two values summed.  Alternatively, the symmetry of the t-distribution can be utilized to calculate one tail and multiply it by two.  
+Example 5.2 from \textit{OI Biostat} shows a two sided calculation using the t-distribution.  In order to do this in \textsf{R}, each tail can be calculated separately and then the two values summed.  Alternatively, the symmetry of the t-distribution can be utilized to calculate one tail and multiply it by two.  
 <<>>=
 ## Example 5.2 
 # Method 1: calculate each tail and sum 
@@ -46,7 +46,7 @@ pt(1.65, df = 20, lower.tail = FALSE) + pt(-1.65, df = 20, lower.tail = TRUE)
 
 
 \subsection{Confidence Intervals}
-As in chapter 4, confidence intervals using the t-distribution can be set up in the same way with a $t^*$ value instead of a $z^*$ value.  
+As in Chapter 4, confidence intervals using the t-distribution can be set up in the same way with a $t^*$ value instead of a $z^*$ value.  
 
 <<>>=
 ## Example 5.3 
@@ -79,7 +79,7 @@ diff = swim$wet.suit.velocity - swim$swim.suit.velocity
 t.test(diff, mu = 0, alternative = "two.sided")
 @
 
-The second method involves using a \textbf{paired t-test}, which performs the same operation without the direct calculation of the differences being required first.  It can be seen that the output of this test is the exact same as the test above.  This is a nice example of $R$ taking out a lot of the computational work.  
+The second method involves using a \textbf{paired t-test}, which performs the same operation without the direct calculation of the differences being required first.  It can be seen that the output of this test is the exact same as the test above.  This is a nice example of \textsf{R} taking out a lot of the computational work.  
 <<>>=
 t.test(swim$wet.suit.velocity, swim$swim.suit.velocity, paired = TRUE)
 @
@@ -89,7 +89,7 @@ t.test(swim$wet.suit.velocity, swim$swim.suit.velocity, paired = TRUE)
 
 
 \subsection{Hypothesis Tests for a Different in Means}
-In order to perform a \textbf{two-sample t-test}, there are again two methods.  The first involves dividing the data into two samples (unless the data has already come separated) and performing a t-test.  The second has $R$ do the entire process.  Note that for this method, the tilde signifies the grouping variable.  So in this case, the \textit{weight} data is grouped by the variable \textit{smoke}.  
+In order to perform a \textbf{two-sample t-test}, there are again two methods.  The first involves dividing the data into two samples (unless the data has already come separated) and performing a t-test.  The second has \textsf{R} do the entire process.  Note that for this method, the tilde signifies the grouping variable.  So in this case, the \texttt{weight} data is grouped by the variable \texttt{smoke}.  
 <<>>=
 ## Example 5.11 
 # Method 1: divide the data by hand 
@@ -102,7 +102,7 @@ t.test(baby.smoke$weight~baby.smoke$smoke)
 @
 
 \subsection{Pooled t-test} 
-Performing what is known as a \textbf{pooled t-test} is very simple in $R$.  The procedure is the same as a two-sample t-test, with the addition of the clause \textit{var.equal = TRUE} in the \textit{t.test()} command.  This is because a pooled t-test relies on the assumption of nearly equal variance between the two samples.  For example, performing the same test as above but using a pooled t-test would look like the following, 
+Performing what is known as a \textbf{pooled t-test} is very simple in \textsf{R}.  The procedure is the same as a two-sample t-test, with the addition of the clause \texttt{var.equal = TRUE} in the \texttt{t.test()} command.  This is because a pooled t-test relies on the assumption of nearly equal variance between the two samples.  For example, performing the same test as above but using a pooled t-test would look like the following, 
 <<>>=
 t.test(baby.smoke$weight~baby.smoke$smoke, var.equal = TRUE)
 @
@@ -112,7 +112,7 @@ t.test(baby.smoke$weight~baby.smoke$smoke, var.equal = TRUE)
 
 \stepcounter{section}
 \section{ANOVA} 
-The main text walks through the arithmetic procedures of the ANOVA test and calculating the F-statistic.  $R$ makes this process much simpler, such that the entire calculation can be performed with just one line of code.  The command \textit{anova()} takes as its input a linear regression model.  Chapter 6 will go into much more detail about linear regression, but for now, note that within the function \textit{lm()}, the first variable before the tilde is the one for which the means are being compared, while the second variable after the tilde specifies the groups.  The command below works out Example 5.22 from the main text, getting the same $F$ statistic as the hand calculated value.  
+The main text walks through the arithmetic procedures of the ANOVA test and calculating the F-statistic.  \textsf{R} makes this process much simpler, such that the entire calculation can be performed with just one line of code.  The command \texttt{anova()} takes as its input a linear regression model.  Chapter 6 will go into much more detail about linear regression, but for now, note that within the function \texttt{lm()}, the first variable before the tilde is the one for which the means are being compared, while the second variable after the tilde specifies the groups.  The command below works out Example 5.22 from \textit{OI Biostat}, getting the same $F$ statistic as the hand calculated value.  
 
 <<>>=
 ## Example 5.22 

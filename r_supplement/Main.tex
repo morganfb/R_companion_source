@@ -1533,7 +1533,7 @@ We have learned that the \textbf{normal distribution} can be written as
 where $\mu$ is the mean of the distribution and $\sigma$ is the standard deviation.  Using this idea, a standard normal distribution can be created in one of two ways: 
 
 \subsection{Direct Plot}
-There is a function in R called the \textit{dnorm} function, which, for a given posible value of the distribution, returns the probability of the distribution holding that value.  
+There is a function in R called the \texttt{dnorm()} function, which, for a given posible value of the distribution, returns the probability of the distribution holding that value.  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -1555,7 +1555,7 @@ There is a function in R called the \textit{dnorm} function, which, for a given 
 \end{knitrout}
 
 \subsection{Through Simulation}
-The second method involves sampling randomly from the known normal distribution to simulate the probabilities that we drew directly in the above method.  In this case, the function \textit{rnorm} takes $n$ number of random samples from the normal distribution with the given mean and standard deviation.  In the \textit{hist} command, the specification that \textit{freq = FALSE} should be included to make the plot reflect percentages rather than frequency counts.  
+The second method involves sampling randomly from the known normal distribution to simulate the probabilities that we drew directly in the above method.  In this case, the function \texttt{rnorm()} takes $n$ number of random samples from the normal distribution with the given mean and standard deviation.  In the \texttt{hist()} command, the specification that \texttt{freq = FALSE} should be included to make the plot reflect percentages rather than frequency counts.  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -1591,13 +1591,13 @@ Plotting both methods on the same graphs is useful for comparison as follows.
 
 \end{knitrout}
 
-Note that the two show very similar results.  For practical purposes, \textit{dnorm} is typically used as it only requires one command and is the asymptotic result of simulations, rather than an approximation.  
+Note that the two show very similar results.  For practical purposes, \texttt{dnorm()} is typically used as it only requires one command and is the asymptotic result of simulations, rather than an approximation.  
 
 \subsection{Probability Functions}
-For the normal distribution, there are two more functions that are very useful, \textit{pnorm} and \textit{qnorm}. 
+For the normal distribution, there are two more functions that are very useful, \texttt{pnorm()} and \texttt{qnorm()}. 
 
 \subsubsection{pnorm} 
-The function \textit{pnorm} tells the percentage of the normal distribution that is less than or equal to the value that is put in.  This corresponds to the gray area in the below plot and can be written as $pnorm(x, mean = \mu, sd = \sigma)$ which is equivalent to $P(X < x)$ where $X \sim N(\mu, \sigma)$ and $x$ is the point of interest.    
+The function \texttt{pnorm()} tells the percentage of the normal distribution that is less than or equal to the value that is put in.  This corresponds to the gray area in the below plot and can be written as $pnorm(x, mean = \mu, sd = \sigma)$ which is equivalent to $P(X < x)$ where $X \sim N(\mu, \sigma)$ and $x$ is the point of interest.    
  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
@@ -1610,7 +1610,7 @@ The function \textit{pnorm} tells the percentage of the normal distribution that
 
 \end{knitrout}
 
-For some example scenarios, where the goal is to find a proportion of the normal distribution given $x$ or $z$, the following configurations of \textit{pnorm()} can be used: 
+For some example scenarios, where the goal is to find a proportion of the normal distribution given $x$ or $z$, the following configurations of \texttt{pnorm()} can be used: 
 \begin{itemize}
 \item $pnorm(z) = P(Z \leq z)$ 
 \item $pnorm(z, lower.tail = FALSE) = P(Z > z)$ 
@@ -1687,9 +1687,9 @@ Several examples that are shown in the text can be evaluated as follows.  Keep n
 
 
 \subsubsection{qnorm} 
-On the other hand, the \textit{qnorm} function is the inverse function, instead giving the $X$ value such that the given percentage of the distribution is less than or equal to that value. This function takes a known probability and returns a value on the normal distribution that is corresponding.  
+On the other hand, the \texttt{qnorm()} function is the inverse function, instead giving the $X$ value such that the given percentage of the distribution is less than or equal to that value. This function takes a known probability and returns a value on the normal distribution that is corresponding.  
 
-Some sample configurations of using \textit{qnorm()} can be as follows,  
+Some sample configurations of using \texttt{qnorm()} can be as follows,  
 \begin{itemize}
 \item $qnorm(p) = P(Z \leq z)$ 
 \item $qnorm(p, lower.tail = FALSE) = P(Z > z)$ 
@@ -1698,7 +1698,7 @@ Some sample configurations of using \textit{qnorm()} can be as follows,
 \end{itemize}
 
 \vspace{.5cm}
-Working through an example in the main text, 
+Working through a Example 3.12 from \textit{OI Biostat}, 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -1720,11 +1720,11 @@ Working through an example in the main text,
 \end{knitrout}
 
 \subsection{Evaluating the Normal Approximation} 
-It is of interest to test the normality of a distriubtion in order to determine if approximation with a normal distribution is appropriate. There are two methods in $R$ that can be used to test this.  The first involves plotting the data with a histogram and then superimposing a line on top with the corresponding mean and standard deviation of the data.  The more closely that the histogram matches the line, the more appropriate a normal approximation would be.  
+It is of interest to test the normality of a distriubtion in order to determine if approximation with a normal distribution is appropriate. There are two methods in \textsf{R} that can be used to test this.  The first involves plotting the data with a histogram and then superimposing a line on top with the corresponding mean and standard deviation of the data.  The more closely that the histogram matches the line, the more appropriate a normal approximation would be.  
 
-The second method utilizes the function \textit{qqnorm()}, which plots the residual differences between the observed data and the theoretical normal distribution that would match.  A line can be plotted on top of this plot, using \textit{qqline()}, which demonstrates how a perfect match would appear.  Deviation of the dots on the plot from the line shows lack of fit for the normal approimation.  
+The second method utilizes the function \texttt{qqnorm()}, which plots the residual differences between the observed data and the theoretical normal distribution that would match.  A line can be plotted on top of this plot, using \texttt{qqline()}, which demonstrates how a perfect match would appear.  Deviation of the dots on the plot from the line shows lack of fit for the normal approimation.  
 
-Both of these methods can be seen below in this recreation of \textit{Figure 3.10} from the main text.  The rows show the first and second methods respectively, while the columns show a progressively better fit to the normal from left to right.  
+Both of these methods can be seen below in this recreation of \textit{OI Biostat} Figure 3.10 from the main text.  The rows show the first and second methods respectively, while the columns show a progressively better fit to the normal from left to right.  
 %%PUT THIS DATA INTO OIBIOSTAT PACKAGE 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -1863,18 +1863,18 @@ A random variable which follows a \textbf{binomial distribution} can be written 
 \[ X \sim Binom(n,p) \]
 where $n$ represents the sample size and $p$ represents the probability of success.  
 
-The functions seen above for the normal distribution can be similarly used for the binomial as follows where the necessary arguments are \textit{size} and \textit{prob}, corresponding respectively to $n$ and $p$ in our above representation of the binomial.
+The functions seen above for the normal distribution can be similarly used for the binomial as follows where the necessary arguments are \texttt{size} and \texttt{prob}, corresponding respectively to $n$ and $p$ in our above representation of the binomial.
 \begin{itemize} 
-\item \textit{dbinom}
-\item \textit{rbinom}
-\item \textit{pbinom}
-\item \textit{qbinom}
+\item \texttt{dbinom()}
+\item \texttt{rbinom()}
+\item \texttt{pbinom()}
+\item \texttt{qbinom()}
 \end{itemize}
 
 Similar to the above example with the normal distribution, these functions can be used in multiple ways to work with the binomial distribution.  
 
 \subsection{Accessing the Binomial Distribution}
-As above, the binomial distribution can be accessed directly with \textit{dbinom} as follows: 
+As above, the binomial distribution can be accessed directly with \texttt{dbinom()} as follows: 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -1927,11 +1927,11 @@ Using the binomial distribution highlights an important feature of distributions
 
 On the other hand, a continuous distribution can take on any real number within a specified range.  For example, looking at the standard normal distribution, a list of some possible values could be \{0, 0.1, 0.01, 0.001, 0.0001, ...\}.  This is a limited list of the infinite list of possible values that a continuous distribution could take on.  
 
-The reason we care about the classification of a random variable as discrete or continous is that it affects the implementation of probability functions in $R$.  Let's walk through an example to see the difference.  Consider a normally distributed random variable, $X$, and a binomially distributed random variable, $Y$. 
+The reason the classification of a random variable as discrete or continous is important is that it affects the implementation of probability functions in \textsf{R}.  Let's walk through an example to see the difference.  Consider a normally distributed random variable, $X$, and a binomially distributed random variable, $Y$. 
 \[ X \sim N(0,1) \; \; \; \; \; \; \; \; \; \; \; \;  Y \sim Binom(15,0.5) \]
 If the goal is to determine the probability of being less than 2 for each of these two distributions, this would be equivalent to $P(X < 2)$ and $P(Y < 2)$.  However, for the binomial distribution $P(Y<2) = P(Y \leq 1) = P(Y=0) + P(Y=1)$ because there is a discrete set of possible values that $Y$ can take on.  $Y$ can only take on the integer values, and less than 2, that just leaves 0 and 1, whereas the normal distribution can take on any non-integer value in that interval, which is an infinite number of values.  For the normal distribution, solving for $P(Y<2)$ is mathematically equivalent to $P(Y \leq 2)$ because it is continuous.  
 
-To solve for these probabilities, use \textit{pnorm} and \textit{pbinom}, noting that for the discrete binomial case, these functions automatically give the less than or equal to probability, not just the less than probability.  The correct commands can be seen through the following examples from the text. 
+To solve for these probabilities, use \texttt{pnorm()} and \texttt{pbinom()}, noting that for the discrete binomial case, these functions automatically give the less than or equal to probability, not just the less than probability.  The correct commands can be seen through the following examples from the text. 
 \subsection{Examples of the Binomial}
 \vspace{0.5cm}
 To summarize, the binomial probaility functions can be used as follows, 
@@ -1997,7 +1997,7 @@ To summarize, the binomial probaility functions can be used as follows,
 
 
 \section{Poisson Distribution}
-Similarly, the functions for the \textbf{poisson distribution} are the following where the necessary argument is \textit{lambda}
+Similarly, the functions for the \textbf{poisson distribution} are the following where the necessary argument is \texttt{lambda}
 \begin{itemize} 
 \item $dpoisson(x, lambda) = P(X = x)$ 
 \item $ppois(x, lambda) = P(X \leq x)$ 
@@ -2020,7 +2020,7 @@ Similarly, the functions for the \textbf{poisson distribution} are the following
 
 
 \section{Geometric Distribution}
-The same pattern can be applied for the \textbf{geometric distribution} to get the following where the necessary argument is \textit{prob}
+The same pattern can be applied for the \textbf{geometric distribution} to get the following where the necessary argument is \texttt{prob}
 \begin{itemize} 
 \item $dgeom(x,prob) = P(X = x)$ 
 \item $pgeom(x,prob) = P(X \leq x)$
@@ -2065,7 +2065,7 @@ Note here that using the dgeom function requires an input of $k-1$, because this
 \end{knitrout}
 
 \section{Negative Binomial Distribution}
-Finally, for the \textbf{negative binomial distribution}, the necessary arguments are \textit{prob} and \textit{size} and can be implemented as follows, 
+Finally, for the \textbf{negative binomial distribution}, the necessary arguments are \texttt{prob} and \texttt{size} and can be implemented as follows, 
 \begin{itemize} 
 \item $dnbinom(x,n,p) = P(X = x)$ 
 \item $pnbinom(x,n,p) = P(X \leq x)$ 
@@ -2096,8 +2096,8 @@ Finally, for the \textbf{negative binomial distribution}, the necessary argument
 \section*{Taking a Sample of a Dataset}
 The main text talks through the importance of using a sample of data as a reflection of the population as a whole.  The two steps for doing this are as follows
 \begin{enumerate}
-\item Of the total number of datapoints you have (equal to the length of the dataset), select a random sampling of them, of size $n$.  This is done with the \textit{sample()} command below.  $x$ is a list of the row indeces, and \textit{sample} returns a random list of values in that list of length $n$. 
-\item Taking the output of the \textit{sample} command, pair these indeces with the dataset to get the corresponding rows (or columns).  
+\item Of the total number of datapoints you have (equal to the length of the dataset), select a random sampling of them, of size $n$.  This is done with the \texttt{sample()} command below.  $x$ is a list of the row indeces, and \texttt{sample()} returns a random list of values in that list of length $n$. 
+\item Taking the output of the \texttt{sample()} command, pair these indeces with the dataset to get the corresponding rows (or columns).  
 \end{enumerate}
 
 %% Figure out what this seed should be to recreate the book examples perfectly!
@@ -2216,7 +2216,7 @@ The following steps can be used to create a \textbf{sampling distribution of the
 \end{knitrout}
 As discussed in chapter 3, the above plots are used to determine the normality of the sample.  The left plot is just a histogram, which can be inspected visually to see that it approximates a normal distribution.  The plot on the right is a more powerful tool for determining the normality - the dots represent deviation of data points from a theoretical normal distribution, as represented by the line on the plot.  The above plot shows a fairly normal distribution because of how closely the dots match the line.  
 
-The more samples are taken, the more accurately will the distribution be depicted.  Figure 4.8 demonstrates this below 
+The more samples are taken, the more accurately will the distribution be depicted.  Figure 4.8 from \textit{OI Biostat} demonstrates this below 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -2256,7 +2256,7 @@ The first formula introduced in the text for calculating confidence intervals is
 
 To generalize this formula, a standard normal distribution can be used to obtain $z^*$, giving the following 
 \[ \bar{x} \pm z^* \cdot \text{SE } \]
-$R$ can be used to calculate $z^*$ and then using that value, to solve for the confidence interval.  A key point here is that we want the middle 95\% of the distribution, which divides the remaining 5\% between the two tails.  This is equivalent to 
+\textsf{R} can be used to calculate $z^*$ and then using that value, to solve for the confidence interval.  A key point here is that we want the middle 95\% of the distribution, which divides the remaining 5\% between the two tails, equivalent to 2.5\% being in each tail.  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -2306,7 +2306,7 @@ $R$ can be used to calculate $z^*$ and then using that value, to solve for the c
 \end{knitrout}
 
 
-Example 4.10 is an excellent example of how to clean up data.  The main text restricts the sample to adults over 21 with reported BMI values.  The steps below show how to find the individuals who are children or who have missing data and how to remove them from the sample.  Often times, when using a sample of a large population, a process similar to this one must be used.  Missing data can be problematic for analyses of the data, so understanding how to clean up the data appropriately is quite important. 
+Example 4.10 from \textit{OI Biostat} is an excellent example of how to clean up data.  \textit{OI Biostat} restricts the sample to adults over 21 with reported BMI values.  The steps below show how to find the individuals who are children or who have missing data and how to remove them from the sample.  Often times, when using a sample of a large population, a process similar to this one must be used.  Missing data can be problematic for analyses of the data, so understanding how to clean up the data appropriately is quite important. 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -2362,7 +2362,7 @@ Example 4.10 is an excellent example of how to clean up data.  The main text res
 \end{knitrout}
 
 \section{Hypothesis Testing}
-If you have calculated your test statistic by hand, $R$ can easily be used to get the p-value using the function \textit{pnorm()} as in Chapter 3.  The example that is worked through in the main text can be completed as follows.  Note that \textit{lower.tail = FALSE} because the alternative hypothesis here is 
+If you have calculated your test statistic by hand, \textsf{R} can easily be used to get the p-value using the function \texttt{pnorm()} as in Chapter 3.  The example that is worked through in \textit{OI Biostat} can be completed as follows.  Note that \texttt{lower.tail = FALSE} because the alternative hypothesis here is 
 \[ H_A: \mu_{bmi} > 21.7 \]
 which implies that the upper tail must be considered.  
 \begin{knitrout}
@@ -2384,9 +2384,9 @@ which implies that the upper tail must be considered.
 \end{kframe}
 \end{knitrout}
 
-In $R$, all of the steps of hypothesis testing can be done with one single function, \textit{t.test()}.  This gives the test statistic, the p-value, and the confidence interval.  The function takes the data as an argument, $x$, the null hypothesis value, as $mu$, and the alternative hypothesis type, as $alternative$, which can be \textit{"less", "greater",} or \textit{"two.sided"}.  
+In \textsf{R}, all of the steps of hypothesis testing can be done with one single function, \texttt{t.test()}.  This gives the test statistic, the p-value, and the confidence interval.  The function takes the data as an argument, $x$, the null hypothesis value, as $mu$, and the alternative hypothesis type, as $alternative$, which can be \texttt{"less", "greater",} or \texttt{"two.sided"}.  
 
-The example shown below gives a comparison of doing the method by hand, as well as using the function.  
+Example 4.13 from \textit{OI Biostat}, shown below, gives a comparison of doing the method by hand, as well as using the function.  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -2445,24 +2445,24 @@ The example shown below gives a comparison of doing the method by hand, as well 
 \vspace{0.5cm} 
 
 \section{The t-distribution}
-The main text introduces the \textbf{t-distribution} and explains under what circumstances it should be used.  Using it in in R is very similar to many concepts seen through Chapter 4 thus far.  
+The main text introduces the \textbf{t-distribution} and explains under what circumstances it should be used.  Using it in in \textsf{R} is very similar to many concepts seen through Chapter 4 thus far.  
 
-The following plot shows how the t-distribution approximates the normal distribution as the degrees of freedom grow.  The use of the function \textit{dt()} parallels the use of \textit{dnorm()} as has been used in previous chapters.  
+The following plot shows how the t-distribution approximates the normal distribution as the degrees of freedom grow.  The use of the function \texttt{dt()} parallels the use of \texttt{dnorm()} as has been used in previous chapters.  
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{## Figure 5.2 getting the x-axis values}
+\hlcom{## Figure 5.2 Getting the x-axis values}
 \hlstd{x} \hlkwb{=} \hlkwd{seq}\hlstd{(}\hlopt{-}\hlnum{5}\hlstd{,} \hlnum{9}\hlstd{,} \hlnum{0.1}\hlstd{)}
 
-\hlcom{# finding the corresponding distribution values for several distributions}
+\hlcom{# Finding the corresponding distribution values for several distributions}
 \hlstd{t1} \hlkwb{=} \hlkwd{dt}\hlstd{(x,} \hlkwc{df} \hlstd{=} \hlnum{1}\hlstd{)}
 \hlstd{t2} \hlkwb{=} \hlkwd{dt}\hlstd{(x,} \hlkwc{df} \hlstd{=} \hlnum{2}\hlstd{)}
 \hlstd{t4} \hlkwb{=} \hlkwd{dt}\hlstd{(x,} \hlkwc{df} \hlstd{=} \hlnum{4}\hlstd{)}
 \hlstd{t8} \hlkwb{=} \hlkwd{dt}\hlstd{(x,} \hlkwc{df} \hlstd{=} \hlnum{8}\hlstd{)}
 \hlstd{norm} \hlkwb{=} \hlkwd{dnorm}\hlstd{(x)}
 
-\hlcom{# plotting the results, with custom colors}
+\hlcom{# Plotting the results, with custom colors}
 \hlkwd{plot}\hlstd{(x, t1,} \hlkwc{type} \hlstd{=} \hlstr{"l"}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0.4}\hlstd{),} \hlkwc{xlab} \hlstd{=} \hlstr{""}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlstr{""}\hlstd{,} \hlkwc{col} \hlstd{=} \hlkwd{rgb}\hlstd{(}\hlnum{0}\hlstd{,}
     \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{,} \hlkwc{alpha} \hlstd{=} \hlnum{0.1}\hlstd{))}
 \hlkwd{lines}\hlstd{(x, t2,} \hlkwc{col} \hlstd{=} \hlkwd{rgb}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{0}\hlstd{,} \hlnum{1}\hlstd{,} \hlkwc{alpha} \hlstd{=} \hlnum{0.2}\hlstd{))}
@@ -2481,9 +2481,9 @@ The following plot shows how the t-distribution approximates the normal distribu
 \end{knitrout}
 
 \subsection{The Alternative to t-Tables}
-The main text talks through the use of a \textbf{t-table}, but this text will go through examples of using software to do the same calculations.  In $R$, the command of interests here are \textit{pt()} to get the percentage of the distribution above or below a certain value and \textit{qt()} to get distribution values for which a certain percentage of the distribution falls above.  The command \textit{pt()} takes values inside the t-table to return the values on the x-axis of the table, whereas \textit{qt()} returns values within the table when given values along the upper x-axis.  
+The main text talks through the use of a \textbf{t-table}, but this text will go through examples of using software to do the same calculations.  In \textsf{R}, the command of interests here are \texttt{pt()} to get the percentage of the distribution above or below a certain value and \texttt{qt()} to get distribution values for which a certain percentage of the distribution falls above.  The command \texttt{pt()} takes values inside the t-table to return the values on the x-axis of the table, whereas \texttt{qt()} returns values within the table when given values along the upper x-axis.  
 
-An example of a one-sided calculation using the t-distribution can be viewed in Example 5.1 below.  Note the use of the stipulation \textit{lower.tail = TRUE} which ensures that the calculation is of values in the lower tail, i.e. those values which are less than -2.1.  
+An example of a one-sided calculation using the t-distribution can be viewed in Example 5.1 from \textit{OI Biostat} shown below.  Note the use of the stipulation \texttt{lower.tail = TRUE} which ensures that the calculation is of values in the lower tail, i.e. those values which are less than -2.1.  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -2496,7 +2496,7 @@ An example of a one-sided calculation using the t-distribution can be viewed in 
 \end{kframe}
 \end{knitrout}
 
-Example 5.2 shows a two sided calculation using the t-distribution.  In order to do this in $R$, each tail can be calculated separately and then the two values summed.  Alternatively, the symmetry of the t-distribution can be utilized to calculate one tail and multiply it by two.  
+Example 5.2 from \textit{OI Biostat} shows a two sided calculation using the t-distribution.  In order to do this in \textsf{R}, each tail can be calculated separately and then the two values summed.  Alternatively, the symmetry of the t-distribution can be utilized to calculate one tail and multiply it by two.  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -2519,7 +2519,7 @@ Example 5.2 shows a two sided calculation using the t-distribution.  In order to
 
 
 \subsection{Confidence Intervals}
-As in chapter 4, confidence intervals using the t-distribution can be set up in the same way with a $t^*$ value instead of a $z^*$ value.  
+As in Chapter 4, confidence intervals using the t-distribution can be set up in the same way with a $t^*$ value instead of a $z^*$ value.  
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -2583,7 +2583,7 @@ When working with paired data, several methods can be used to measure the effect
 \end{kframe}
 \end{knitrout}
 
-The second method involves using a \textbf{paired t-test}, which performs the same operation without the direct calculation of the differences being required first.  It can be seen that the output of this test is the exact same as the test above.  This is a nice example of $R$ taking out a lot of the computational work.  
+The second method involves using a \textbf{paired t-test}, which performs the same operation without the direct calculation of the differences being required first.  It can be seen that the output of this test is the exact same as the test above.  This is a nice example of \textsf{R} taking out a lot of the computational work.  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -2610,7 +2610,7 @@ The second method involves using a \textbf{paired t-test}, which performs the sa
 
 
 \subsection{Hypothesis Tests for a Different in Means}
-In order to perform a \textbf{two-sample t-test}, there are again two methods.  The first involves dividing the data into two samples (unless the data has already come separated) and performing a t-test.  The second has $R$ do the entire process.  Note that for this method, the tilde signifies the grouping variable.  So in this case, the \textit{weight} data is grouped by the variable \textit{smoke}.  
+In order to perform a \textbf{two-sample t-test}, there are again two methods.  The first involves dividing the data into two samples (unless the data has already come separated) and performing a t-test.  The second has \textsf{R} do the entire process.  Note that for this method, the tilde signifies the grouping variable.  So in this case, the \texttt{weight} data is grouped by the variable \texttt{smoke}.  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -2654,7 +2654,7 @@ In order to perform a \textbf{two-sample t-test}, there are again two methods.  
 \end{knitrout}
 
 \subsection{Pooled t-test} 
-Performing what is known as a \textbf{pooled t-test} is very simple in $R$.  The procedure is the same as a two-sample t-test, with the addition of the clause \textit{var.equal = TRUE} in the \textit{t.test()} command.  This is because a pooled t-test relies on the assumption of nearly equal variance between the two samples.  For example, performing the same test as above but using a pooled t-test would look like the following, 
+Performing what is known as a \textbf{pooled t-test} is very simple in \textsf{R}.  The procedure is the same as a two-sample t-test, with the addition of the clause \texttt{var.equal = TRUE} in the \texttt{t.test()} command.  This is because a pooled t-test relies on the assumption of nearly equal variance between the two samples.  For example, performing the same test as above but using a pooled t-test would look like the following, 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -2681,7 +2681,7 @@ Performing what is known as a \textbf{pooled t-test} is very simple in $R$.  The
 
 \stepcounter{section}
 \section{ANOVA} 
-The main text walks through the arithmetic procedures of the ANOVA test and calculating the F-statistic.  $R$ makes this process much simpler, such that the entire calculation can be performed with just one line of code.  The command \textit{anova()} takes as its input a linear regression model.  Chapter 6 will go into much more detail about linear regression, but for now, note that within the function \textit{lm()}, the first variable before the tilde is the one for which the means are being compared, while the second variable after the tilde specifies the groups.  The command below works out Example 5.22 from the main text, getting the same $F$ statistic as the hand calculated value.  
+The main text walks through the arithmetic procedures of the ANOVA test and calculating the F-statistic.  \textsf{R} makes this process much simpler, such that the entire calculation can be performed with just one line of code.  The command \texttt{anova()} takes as its input a linear regression model.  Chapter 6 will go into much more detail about linear regression, but for now, note that within the function \texttt{lm()}, the first variable before the tilde is the one for which the means are being compared, while the second variable after the tilde specifies the groups.  The command below works out Example 5.22 from \textit{OI Biostat}, getting the same $F$ statistic as the hand calculated value.  
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -2720,7 +2720,7 @@ Before going into a discussion of linear regression itself, an investigation int
 There are various methods to check each of these assumptions, which should be investigated before the use of linear regression.  This next section goes through these methods and several examples.  
 
 \subsection{Linearity}
-To check for linearity, a simple examination of a scatterplot of the data will suffice.  The goal is to look for data such that a straight line can be drawn which appropriately represents the data.   The plot of Figure 6.1 below shows that $age$ and $RFFT$ appear to have a linear relationship. The inclusion of the command \textit{cex = 0.4} simply changes the size of the dots on the scatterplot, making them 40\% of their original size.  
+To check for linearity, a simple examination of a scatterplot of the data will suffice.  The goal is to look for data such that a straight line can be drawn which appropriately represents the data.   The plot of Figure 6.1 from \textit{OI Biostat} below shows that $age$ and $RFFT$ appear to have a linear relationship. The inclusion of the command \texttt{cex = 0.4} simply changes the size of the dots on the scatterplot, making them 40\% of their original size.  
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -2816,10 +2816,10 @@ The assumption of \textbf{independence of observations} is less easily understoo
 \end{itemize}
 
 \subsection{Normally Distributed Residuals}
-In $R$, a plot of the residuals can be visualized to determine if this assumption is met.  First, to obtain the residuals, the linear regression must be obtained, using the command \textit{lm()}.  Then, the residuals of this model can be calculated using the command \textit{resid()} on the linear regression.  
+In \textsf{R}, a plot of the residuals can be visualized to determine if this assumption is met.  First, to obtain the residuals, the linear regression must be obtained, using the command \texttt{lm()}.  Then, the residuals of this model can be calculated using the command \texttt{resid()} on the linear regression.  
 
 
-These residuals can be visualized in a few ways: as a histogram, as a plot, or using \textit{qnorm()} and \textit{qqline()}.
+These residuals can be visualized in a few ways: as a histogram, as a plot, or using \texttt{qnorm()} and \texttt{qqline()}.
 
 
 Two examples of this procedure are included below.  In the first example, the residuals appear very close to normal.  This is a strong sign that the assumption is met.  
@@ -2883,7 +2883,7 @@ In the second example, the data appears somewhat normal, but with some outliers.
 
 
 \section{Creating a Linear Regression}
-Using $R$ to create a linear regression is quite simple, and several examples will be shown here to illustrate that.  As background, there is one command needed for linear regressions in $R$, \textit{lm()}.  This function takes two arguments, the \textbf{explanatory variable} and the \textbf{response variable} in the form \textit{lm(response} $\sim$ \textit{explanatory)} where the symbol between those two variables is a tilde.  For example, a regression for the statins data can be calculated as follows 
+Using \textsf{R} to create a linear regression is quite simple, and several examples will be shown here to illustrate that.  As background, there is one command needed for linear regressions in \textsf{R}, \texttt{lm()}.  This function takes two arguments, the \textbf{explanatory variable} and the \textbf{response variable} in the form \texttt{lm(response} $\sim$ \texttt{explanatory)} where the symbol between those two variables is a tilde.  For example, a regression for the statins data can be calculated as follows 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -2904,7 +2904,7 @@ Using $R$ to create a linear regression is quite simple, and several examples wi
 This output implies the following regression formula 
 \[RFFT = 137.55 - 1.261 \cdot Age\]
 
-To get more information about the regression, the \textit{summary} command can be used as follows, 
+To get more information about the regression, the \texttt{summary()} command can be used as follows, 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -2935,7 +2935,7 @@ To get more information about the regression, the \textit{summary} command can b
 \end{knitrout}
 Note that the summary of the linear regression is much more useful, providing not only the regression model, but standard errors, p-values, the $R^2$ value, and a few other useful statistics which will be discussed in greater deal in future chapters.  
 
-With this linear regression in mind, it would be helpful to be able to visualize this on the scatterplot.  This can be done using the command \textit{abline()}, which takes as its arguments the model itself.  
+With this linear regression in mind, it would be helpful to be able to visualize this on the scatterplot.  This can be done using the command \texttt{abline()}, which takes as its arguments the model itself.  
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -3076,7 +3076,7 @@ Furthermore, the two t-tests shown in the text can be computed as follows.  Note
 
 %% FIGURE NUMBERs WILL LIKELY CHANGE WHEN CH 7 IS FINALIZED, SO CHECK THEM ALL AT SOME POINT 
 
-In Chapter 6, the dataset \textit{statins} was introduced when visually understanding the assumptions of simple linear regression.  It will again be used in this chapter to understand the idea of multiple linear regression.
+In Chapter 6, the dataset \texttt{statins} was introduced when visually understanding the assumptions of simple linear regression.  It will again be used in this chapter to understand the idea of multiple linear regression.
 
 %% Should I include Figure 7.2 in here, seems uneccessary.  
 
@@ -3104,7 +3104,7 @@ In Chapter 6, the dataset \textit{statins} was introduced when visually understa
 
 \end{knitrout}
 
-The text walks through the example of statin use as being a confounder because it is theoretically associated with both another explanatory variable, in this case age, and response variable, here cognitive decline.  To test for a confounder, a measure of association can be used such as correlation or a side-by-side boxplot.  In this example, the correlations between the variables can be calculated as follows.  
+\textit{OI Biostat} walks through the example of statin use as a confounder because it is theoretically associated with both another explanatory variable, in this case age, and with a response variable, here cognitive decline.  To test for a confounder, a measure of association can be used such as correlation or a side-by-side boxplot.  In this example, the correlations between the variables can be calculated as follows.  
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -3204,7 +3204,7 @@ This gives the following model,
 
 As compared to a model with statin use as the only explanatory variable, it is evident that the coefficients here change quite drastically by including both explanatory variables.  This is reflective of the confounding relationship between the two explanatory variables, but will hopefully lead us to more accurate results.  
 
-Notice how in this example, the first model shows a negative relationship between statin use and RFFT values, while the multiple regression shows a positive relationship.  This is reflective that the \textit{Statin} variable is representative of different things in the two models.  In the simple model, the coefficient for statin use represents the difference between the mean of RFFT value for the two groups, statin users and non-users.  This calculation can be seen directly from the sample below.  However, the coefficient in the multiple regression model is significantly more complicated.  It represents the average difference in means for statin users and non-users of the same age.  
+Notice how in this example, the first model shows a negative relationship between statin use and RFFT values, while the multiple regression shows a positive relationship.  This is reflective that the \texttt{Statin} variable is representative of different things in the two models.  In the simple model, the coefficient for statin use represents the difference between the mean of RFFT value for the two groups, statin users and non-users.  This calculation can be seen directly from the sample below.  However, the coefficient in the multiple regression model is significantly more complicated.  It represents the average difference in means for statin users and non-users of the same age.  
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -3245,7 +3245,7 @@ The same procedures as outlined in Chapter 6 can be used to test the model assum
 
 \end{knitrout}
 
-\item \textbf{Constant Variability:} Note that the assumption is approximately constant variance in the \textit{residuals}, which can be investigated with the following, showing that the residuals do appear to have constant variance.  
+\item \textbf{Constant Variability:} Note that the assumption is approximately constant variance in the \texttt{residuals}, which can be investigated with the following, showing that the residuals do appear to have constant variance.  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -3290,7 +3290,7 @@ The same procedures as outlined in Chapter 6 can be used to test the model assum
 \end{enumerate}
 
 \subsection{Hypothesis Tests and Confidence Intervals}
-$R$ makes the process of performing hypothesis tests on coefficients of the multiple linear regression model very simple, as it performs all the tests and automatically returns these in the summary of the linear regression.  As with simple linear regression, the $R$ output of a multiple regression provides a t-statistic and a corresponding p-value for the hypothesis test of 
+\textsf{R} makes the process of performing hypothesis tests on coefficients of the multiple linear regression model very simple, as it performs all the tests and automatically returns these in the summary of the linear regression.  As with simple linear regression, the \textsf{R} output of a multiple regression provides a t-statistic and a corresponding p-value for the hypothesis test of 
 \[ H_0: \beta_k = 0 \text{vs. } H_A: \beta_k \neq 0 \]
 
 Furthermore, the summary output also includes the F-statistic for the hypothesis 
@@ -3299,9 +3299,9 @@ In words, this tests if any of the coefficients in combination are useful at pre
 
 \stepcounter{section}
 \section{Categorical Predictors With More Than Two Values}
-The function \textit{as.factor()} has previously been used to tell $R$ to treat the numerical values of a variable as frivolous, rather representing different categories.  In other words, a value of 1 for statin does not imply one unit of statins were used by the individual, rather that any amount of statins were used.  Data is often stored with numerical values for ease of manipulation, even if the numerical values do not have significant meaning.  In these cases, it is important to utilize the function \textit{as.factor()} to clarify to $R$ whether the numbers have meaning as numbers or as categories, with \textit{as.factor()} implying that they are categories, or factors.  
+The function \texttt{as.factor()} has previously been used to tell \textsf{R} to treat the numerical values of a variable as frivolous, rather representing different categories.  In other words, a value of 1 for statin does not imply one unit of statins were used by the individual, rather that any amount of statins were used.  Data is often stored with numerical values for ease of manipulation, even if the numerical values do not have significant meaning.  In these cases, it is important to utilize the function \texttt{as.factor()} to clarify to \textsf{R} whether the numbers have meaning as numbers or as categories, with \texttt{as.factor()} implying that they are categories, or factors.  
 
-Using this idea on the statin sample data, the following simple regression is obtained, with the reference category being a value of 0 for \textit{Statin} since it is the one that is not printed in the output.  
+Using this idea on the statin sample data, the following simple regression is obtained, with the reference category being a value of 0 for \texttt{Statin} since it is the one that is not printed in the output.  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -3329,7 +3329,7 @@ Using this idea on the statin sample data, the following simple regression is ob
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-In this example, the regression using \textit{Statin} as either a numerical value or as a categorical variable is the same because of the method by which it was encoded.  Using binary values, i.e. 0 and 1, signals to $R$ that a variable is a categorical variable, and this is mathematically equivalent.  Where this becomes significantly more complicated is when there are more than two categories because $R$ can no longer make the assumption of categorical variable and will assume non-categorical values with numerical significance.  
+In this example, the regression using \texttt{Statin} as either a numerical value or as a categorical variable is the same because of the method by which it was encoded.  Using binary values, i.e. 0 and 1, signals to \textsf{R} that a variable is a categorical variable, and this is mathematically equivalent.  Where this becomes significantly more complicated is when there are more than two categories because \textsf{R} can no longer make the assumption of categorical variable and will assume non-categorical values with numerical significance.  
 
 An example of where this is a problem is as follows, 
 \begin{knitrout}
@@ -3393,7 +3393,7 @@ An example of where this is a problem is as follows,
 \end{kframe}
 \end{knitrout}
 
-Notice that for an individual with an education level of 2, the first \textit{incorrect} model predicts an RFFT score of 71.464 while the second \textit{correct} model predicts a score of 73.1074.  In this example, the difference is not massive but certainly of concern, so use serious caution when working with categorical variables in $R$.  
+Notice that for an individual with an education level of 2, the first \textit{incorrect} model predicts an RFFT score of 71.464 while the second \textit{correct} model predicts a score of 73.1074.  In this example, the difference is not massive but certainly of concern, so use serious caution when working with categorical variables in \textsf{R}.  
 
 \subsection{Using ANOVA For Categorical Variables}
 When using the ANOVA for categorical variables, it is important to keep in mind that they must again be treated correctly as factors and not as numerical values.  An example of the above model treated using an ANOVA is given below.  
@@ -3416,7 +3416,7 @@ When using the ANOVA for categorical variables, it is important to keep in mind 
 \end{knitrout}
 
 \subsection{Using Dummy Variables} 
-Another method for considering categorical variables is the use of a dummy variable, which is a binary indicator if a value is equal to another.  In other words, a model can use several dummy variables, each of which represents a category and is equal to 1 if that individual is in the specified category and 0 otherwise.  This can be performed as follow, where the categorical value which is not seprataly specified is the reference variable.  Note that this method gives the same results as the linear regression above using \textit{as.factor()} 
+Another method for considering categorical variables is the use of a dummy variable, which is a binary indicator if a value is equal to another.  In other words, a model can use several dummy variables, each of which represents a category and is equal to 1 if that individual is in the specified category and 0 otherwise.  This can be performed as follow, where the categorical value which is not seprataly specified is the reference variable.  Note that this method gives the same results as the linear regression above using \texttt{as.factor()} 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -3652,7 +3652,7 @@ Going back to the FAMuSS dataset, a more comprehensive study can now be performe
 \end{kframe}
 \end{knitrout}
 
-One question that may come up from the following line of code is why the gene actn3.577x, the sex, or the race are not coded as a factor in this regression line, and the simple answer is that the dataset already has these variables coded as a factor.  To test if this is the case or not, the function \textit{class()} can be used, which will tell the variable type.  
+One question that may come up from the following line of code is why the gene actn3.577x, the sex, or the race are not coded as a factor in this regression line, and the simple answer is that the dataset already has these variables coded as a factor.  To test if this is the case or not, the function \texttt{class()} can be used, which will tell the variable type.  
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}

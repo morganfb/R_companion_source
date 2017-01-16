@@ -75,5 +75,11 @@
 <<child-demo, child='chapters/chapter_7/Chapter7.Rnw'>>=
 @
 
+\newpage
+\chapter{Categorical Data}
+\minitoc
+<<child-demo, child='chapters/chapter_8/Chapter8.Rnw'>>=
+@
+
 
 \end{document}

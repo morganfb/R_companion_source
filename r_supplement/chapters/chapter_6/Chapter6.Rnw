@@ -12,7 +12,7 @@ Before going into a discussion of linear regression itself, an investigation int
 There are various methods to check each of these assumptions, which should be investigated before the use of linear regression.  This next section goes through these methods and several examples.  
 
 \subsection{Linearity}
-To check for linearity, a simple examination of a scatterplot of the data will suffice.  The goal is to look for data such that a straight line can be drawn which appropriately represents the data.   The plot of Figure 6.1 below shows that $age$ and $RFFT$ appear to have a linear relationship. The inclusion of the command \textit{cex = 0.4} simply changes the size of the dots on the scatterplot, making them 40\% of their original size.  
+To check for linearity, a simple examination of a scatterplot of the data will suffice.  The goal is to look for data such that a straight line can be drawn which appropriately represents the data.   The plot of Figure 6.1 from \textit{OI Biostat} below shows that $age$ and $RFFT$ appear to have a linear relationship. The inclusion of the command \texttt{cex = 0.4} simply changes the size of the dots on the scatterplot, making them 40\% of their original size.  
 
 <<fig.height=4, fig.width=4,fig.align = "center", tidy = TRUE>>=
 ## Figure 6.1
@@ -61,10 +61,10 @@ The assumption of \textbf{independence of observations} is less easily understoo
 \end{itemize}
 
 \subsection{Normally Distributed Residuals}
-In $R$, a plot of the residuals can be visualized to determine if this assumption is met.  First, to obtain the residuals, the linear regression must be obtained, using the command \textit{lm()}.  Then, the residuals of this model can be calculated using the command \textit{resid()} on the linear regression.  
+In \textsf{R}, a plot of the residuals can be visualized to determine if this assumption is met.  First, to obtain the residuals, the linear regression must be obtained, using the command \texttt{lm()}.  Then, the residuals of this model can be calculated using the command \texttt{resid()} on the linear regression.  
 
 
-These residuals can be visualized in a few ways: as a histogram, as a plot, or using \textit{qnorm()} and \textit{qqline()}.
+These residuals can be visualized in a few ways: as a histogram, as a plot, or using \texttt{qnorm()} and \texttt{qqline()}.
 
 
 Two examples of this procedure are included below.  In the first example, the residuals appear very close to normal.  This is a strong sign that the assumption is met.  
@@ -106,7 +106,7 @@ qqline(residuals)
 
 
 \section{Creating a Linear Regression}
-Using $R$ to create a linear regression is quite simple, and several examples will be shown here to illustrate that.  As background, there is one command needed for linear regressions in $R$, \textit{lm()}.  This function takes two arguments, the \textbf{explanatory variable} and the \textbf{response variable} in the form \textit{lm(response} $\sim$ \textit{explanatory)} where the symbol between those two variables is a tilde.  For example, a regression for the statins data can be calculated as follows 
+Using \textsf{R} to create a linear regression is quite simple, and several examples will be shown here to illustrate that.  As background, there is one command needed for linear regressions in \textsf{R}, \texttt{lm()}.  This function takes two arguments, the \textbf{explanatory variable} and the \textbf{response variable} in the form \texttt{lm(response} $\sim$ \texttt{explanatory)} where the symbol between those two variables is a tilde.  For example, a regression for the statins data can be calculated as follows 
 <<>>=
 lm(statins.samp$RFFT~statins.samp$Age)
 @
@@ -114,14 +114,14 @@ lm(statins.samp$RFFT~statins.samp$Age)
 This output implies the following regression formula 
 \[RFFT = 137.55 - 1.261 \cdot Age\]
 
-To get more information about the regression, the \textit{summary} command can be used as follows, 
+To get more information about the regression, the \texttt{summary()} command can be used as follows, 
 
 <<>>=
 summary(lm(statins.samp$RFFT~statins.samp$Age))
 @
 Note that the summary of the linear regression is much more useful, providing not only the regression model, but standard errors, p-values, the $R^2$ value, and a few other useful statistics which will be discussed in greater deal in future chapters.  
 
-With this linear regression in mind, it would be helpful to be able to visualize this on the scatterplot.  This can be done using the command \textit{abline()}, which takes as its arguments the model itself.  
+With this linear regression in mind, it would be helpful to be able to visualize this on the scatterplot.  This can be done using the command \texttt{abline()}, which takes as its arguments the model itself.  
 
 <<fig.height=4, fig.width=5,fig.align = "center", tidy = TRUE>>=
 plot(statins.samp$RFFT ~ statins.samp$Age, cex = 0.4)

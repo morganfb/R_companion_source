@@ -1,7 +1,7 @@
 
 %% FIGURE NUMBERs WILL LIKELY CHANGE WHEN CH 7 IS FINALIZED, SO CHECK THEM ALL AT SOME POINT 
 
-In Chapter 6, the dataset \textit{statins} was introduced when visually understanding the assumptions of simple linear regression.  It will again be used in this chapter to understand the idea of multiple linear regression.
+In Chapter 6, the dataset \texttt{statins} was introduced when visually understanding the assumptions of simple linear regression.  It will again be used in this chapter to understand the idea of multiple linear regression.
 
 %% Should I include Figure 7.2 in here, seems uneccessary.  
 
@@ -18,7 +18,7 @@ statins.samp = statins[row.num, ]
 plot(statins.samp$Age, statins.samp$RFFT, pch = 19, cex = 1.3, col= as.factor(statins.samp$Statin), xlab = "Age (yrs)", ylab = "RFFT Score")
 @
 
-The text walks through the example of statin use as being a confounder because it is theoretically associated with both another explanatory variable, in this case age, and response variable, here cognitive decline.  To test for a confounder, a measure of association can be used such as correlation or a side-by-side boxplot.  In this example, the correlations between the variables can be calculated as follows.  
+\textit{OI Biostat} walks through the example of statin use as a confounder because it is theoretically associated with both another explanatory variable, in this case age, and with a response variable, here cognitive decline.  To test for a confounder, a measure of association can be used such as correlation or a side-by-side boxplot.  In this example, the correlations between the variables can be calculated as follows.  
 
 <<fig.height=4, fig.width=3,fig.align = "center", tidy = TRUE>>=
 ## Figure 7.4 
@@ -50,7 +50,7 @@ This gives the following model,
 
 As compared to a model with statin use as the only explanatory variable, it is evident that the coefficients here change quite drastically by including both explanatory variables.  This is reflective of the confounding relationship between the two explanatory variables, but will hopefully lead us to more accurate results.  
 
-Notice how in this example, the first model shows a negative relationship between statin use and RFFT values, while the multiple regression shows a positive relationship.  This is reflective that the \textit{Statin} variable is representative of different things in the two models.  In the simple model, the coefficient for statin use represents the difference between the mean of RFFT value for the two groups, statin users and non-users.  This calculation can be seen directly from the sample below.  However, the coefficient in the multiple regression model is significantly more complicated.  It represents the average difference in means for statin users and non-users of the same age.  
+Notice how in this example, the first model shows a negative relationship between statin use and RFFT values, while the multiple regression shows a positive relationship.  This is reflective that the \texttt{Statin} variable is representative of different things in the two models.  In the simple model, the coefficient for statin use represents the difference between the mean of RFFT value for the two groups, statin users and non-users.  This calculation can be seen directly from the sample below.  However, the coefficient in the multiple regression model is significantly more complicated.  It represents the average difference in means for statin users and non-users of the same age.  
 
 <<>>=
 # Calculation of the simple linear regression coefficient
@@ -71,7 +71,7 @@ plot(statins.samp$RFFT ~ statins.samp$Statin, cex = 0.6, ylab = "RFFT Score", xl
 abline(lm(statins.samp$RFFT ~ statins.samp$Statin), col = "red")
 @
 
-\item \textbf{Constant Variability:} Note that the assumption is approximately constant variance in the \textit{residuals}, which can be investigated with the following, showing that the residuals do appear to have constant variance.  
+\item \textbf{Constant Variability:} Note that the assumption is approximately constant variance in the \texttt{residuals}, which can be investigated with the following, showing that the residuals do appear to have constant variance.  
 <<fig.height=4, fig.width=4,fig.align = "center", tidy = TRUE>>=
 residuals = resid(lm(statins.samp$RFFT~statins.samp$Age + statins.samp$Statin))
 plot(residuals, ylab = "Residuals")
@@ -94,7 +94,7 @@ qqline(residuals)
 \end{enumerate}
 
 \subsection{Hypothesis Tests and Confidence Intervals}
-$R$ makes the process of performing hypothesis tests on coefficients of the multiple linear regression model very simple, as it performs all the tests and automatically returns these in the summary of the linear regression.  As with simple linear regression, the $R$ output of a multiple regression provides a t-statistic and a corresponding p-value for the hypothesis test of 
+\textsf{R} makes the process of performing hypothesis tests on coefficients of the multiple linear regression model very simple, as it performs all the tests and automatically returns these in the summary of the linear regression.  As with simple linear regression, the \textsf{R} output of a multiple regression provides a t-statistic and a corresponding p-value for the hypothesis test of 
 \[ H_0: \beta_k = 0 \text{vs. } H_A: \beta_k \neq 0 \]
 
 Furthermore, the summary output also includes the F-statistic for the hypothesis 
@@ -103,13 +103,13 @@ In words, this tests if any of the coefficients in combination are useful at pre
 
 \stepcounter{section}
 \section{Categorical Predictors With More Than Two Values}
-The function \textit{as.factor()} has previously been used to tell $R$ to treat the numerical values of a variable as frivolous, rather representing different categories.  In other words, a value of 1 for statin does not imply one unit of statins were used by the individual, rather that any amount of statins were used.  Data is often stored with numerical values for ease of manipulation, even if the numerical values do not have significant meaning.  In these cases, it is important to utilize the function \textit{as.factor()} to clarify to $R$ whether the numbers have meaning as numbers or as categories, with \textit{as.factor()} implying that they are categories, or factors.  
+The function \texttt{as.factor()} has previously been used to tell \textsf{R} to treat the numerical values of a variable as frivolous, rather representing different categories.  In other words, a value of 1 for statin does not imply one unit of statins were used by the individual, rather that any amount of statins were used.  Data is often stored with numerical values for ease of manipulation, even if the numerical values do not have significant meaning.  In these cases, it is important to utilize the function \texttt{as.factor()} to clarify to \textsf{R} whether the numbers have meaning as numbers or as categories, with \texttt{as.factor()} implying that they are categories, or factors.  
 
-Using this idea on the statin sample data, the following simple regression is obtained, with the reference category being a value of 0 for \textit{Statin} since it is the one that is not printed in the output.  
+Using this idea on the statin sample data, the following simple regression is obtained, with the reference category being a value of 0 for \texttt{Statin} since it is the one that is not printed in the output.  
 <<>>=
 summary(lm(statins.samp$RFFT ~ as.factor(statins.samp$Statin)))
 @
-In this example, the regression using \textit{Statin} as either a numerical value or as a categorical variable is the same because of the method by which it was encoded.  Using binary values, i.e. 0 and 1, signals to $R$ that a variable is a categorical variable, and this is mathematically equivalent.  Where this becomes significantly more complicated is when there are more than two categories because $R$ can no longer make the assumption of categorical variable and will assume non-categorical values with numerical significance.  
+In this example, the regression using \texttt{Statin} as either a numerical value or as a categorical variable is the same because of the method by which it was encoded.  Using binary values, i.e. 0 and 1, signals to \textsf{R} that a variable is a categorical variable, and this is mathematically equivalent.  Where this becomes significantly more complicated is when there are more than two categories because \textsf{R} can no longer make the assumption of categorical variable and will assume non-categorical values with numerical significance.  
 
 An example of where this is a problem is as follows, 
 <<>>=
@@ -121,7 +121,7 @@ summary(lm(statins.samp$RFFT ~ statins.samp$Education))
 summary(lm(statins.samp$RFFT ~ as.factor(statins.samp$Education)))
 @
 
-Notice that for an individual with an education level of 2, the first \textit{incorrect} model predicts an RFFT score of 71.464 while the second \textit{correct} model predicts a score of 73.1074.  In this example, the difference is not massive but certainly of concern, so use serious caution when working with categorical variables in $R$.  
+Notice that for an individual with an education level of 2, the first \textit{incorrect} model predicts an RFFT score of 71.464 while the second \textit{correct} model predicts a score of 73.1074.  In this example, the difference is not massive but certainly of concern, so use serious caution when working with categorical variables in \textsf{R}.  
 
 \subsection{Using ANOVA For Categorical Variables}
 When using the ANOVA for categorical variables, it is important to keep in mind that they must again be treated correctly as factors and not as numerical values.  An example of the above model treated using an ANOVA is given below.  
@@ -130,7 +130,7 @@ anova(lm(statins.samp$RFFT ~ as.factor(statins.samp$Education)))
 @
 
 \subsection{Using Dummy Variables} 
-Another method for considering categorical variables is the use of a dummy variable, which is a binary indicator if a value is equal to another.  In other words, a model can use several dummy variables, each of which represents a category and is equal to 1 if that individual is in the specified category and 0 otherwise.  This can be performed as follow, where the categorical value which is not seprataly specified is the reference variable.  Note that this method gives the same results as the linear regression above using \textit{as.factor()} 
+Another method for considering categorical variables is the use of a dummy variable, which is a binary indicator if a value is equal to another.  In other words, a model can use several dummy variables, each of which represents a category and is equal to 1 if that individual is in the specified category and 0 otherwise.  This can be performed as follow, where the categorical value which is not seprataly specified is the reference variable.  Note that this method gives the same results as the linear regression above using \texttt{as.factor()} 
 
 <<>>=
 ed.dummy.1 = statins.samp$Education == 1
@@ -178,7 +178,7 @@ summary(lm(log(famuss$ndrm.ch+5) ~ famuss$sex))
 summary(lm(log(famuss$ndrm.ch+5) ~ famuss$race))
 @
 
-One question that may come up from the following line of code is why the gene actn3.577x, the sex, or the race are not coded as a factor in this regression line, and the simple answer is that the dataset already has these variables coded as a factor.  To test if this is the case or not, the function \textit{class()} can be used, which will tell the variable type.  
+One question that may come up from the following line of code is why the gene actn3.577x, the sex, or the race are not coded as a factor in this regression line, and the simple answer is that the dataset already has these variables coded as a factor.  To test if this is the case or not, the function \texttt{class()} can be used, which will tell the variable type.  
 
 <<>>=
 class(famuss$actn3.r577x)
