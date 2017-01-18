@@ -68,7 +68,8 @@ for(i in 1:length(names))
 }
 colnames(golub.exprs.pheno) = names
 Golub = golub.exprs.pheno
-devtools::use_data(Golub, overwrite = TRUE)
+View(Golub)
+devtools::use_data(Golub)
 
 ## swim data
 swimmer.number = 1:12
