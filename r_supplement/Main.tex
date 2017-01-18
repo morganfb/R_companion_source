@@ -3735,21 +3735,28 @@ Looking at the example presented in 8.1 of \textit{OI Biostat}, a dataset contai
 \hlstd{x.bar} \hlkwb{=} \hlkwd{mean}\hlstd{(x)}
 \hlstd{std.dev} \hlkwb{=} \hlkwd{sd}\hlstd{(x)}
 \hlstd{p.hat} \hlkwb{=} \hlkwd{sum}\hlstd{(x)}\hlopt{/}\hlkwd{length}\hlstd{(x)}
+\hlstd{p.hat}
 \end{alltt}
+\begin{verbatim}
+## [1] 0.6666667
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 
 \subsection{Inference Using the Normal Approximation}
+Following the criteria laid out in \textit{OI Biostat}, the DFCI data can be approximated with a normal distribution.  The method for making inferences about the data based on this assumption is laid out as follows.  
+
 \subsubsection{Confidence Intervals}
 The same method as discussed in previous chapters can be used to build a confidence interval, following the form 
-\[ \hat{p} \pm z^* SE_{\hat{p}}\]
+\[ \hat{p} \pm z^* \cdot SE_{\hat{p}}\]
 
+An example of this worked out is from \textit{OI Biostat} Example 8.3.  
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcom{## Example 8.3}
-\hlstd{SE} \hlkwb{=} \hlkwd{sqrt}\hlstd{(p.hat}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p.hat)}\hlopt{/}\hlkwd{length}\hlstd{(x))}
-\hlkwd{c}\hlstd{(p.hat} \hlopt{-} \hlnum{1.96}\hlopt{*}\hlstd{SE, p.hat} \hlopt{+}  \hlnum{1.96}\hlopt{*}\hlstd{SE)}
+\hlstd{SE.p.hat} \hlkwb{=} \hlkwd{sqrt}\hlstd{(p.hat}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p.hat)}\hlopt{/}\hlkwd{length}\hlstd{(x))}
+\hlkwd{c}\hlstd{(p.hat} \hlopt{-} \hlnum{1.96}\hlopt{*}\hlstd{SE.p.hat, p.hat} \hlopt{+}  \hlnum{1.96}\hlopt{*}\hlstd{SE.p.hat)}
 \end{alltt}
 \begin{verbatim}
 ## [1] 0.5823217 0.7510116
@@ -3757,8 +3764,35 @@ The same method as discussed in previous chapters can be used to build a confide
 \end{kframe}
 \end{knitrout}
 
+\subsubsection{Hypothesis Testing}
+Again, the procedures that have been performed before can be used to do a hypothesis test on a proportion.  The $z$-statistic would be 
+\[ z = \frac{\hat{p}-p_0}{SE_{p_0}}\]
 
+Example 8.5 from \textit{OI Biostat} is worked out below.  Note that there is a slight difference in the $z$ statistic value because this version does not use an approximation of $\hat{p}$ to 0.67.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 8.5}
+\hlstd{p.0} \hlkwb{=} \hlnum{0.6}
+\hlstd{SE.p.0} \hlkwb{=} \hlkwd{sqrt}\hlstd{(p.0}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p.0)}\hlopt{/}\hlkwd{length}\hlstd{(x))}
+\hlstd{z} \hlkwb{=} \hlstd{(p.hat} \hlopt{-} \hlstd{p.0)}\hlopt{/}\hlstd{SE.p.0}
+\hlstd{z}
+\end{alltt}
+\begin{verbatim}
+## [1] 1.490712
+\end{verbatim}
+\begin{alltt}
+\hlcom{## get the p-value (note that it is a two-sided test)}
+\hlnum{2}\hlopt{*}\hlkwd{pnorm}\hlstd{(z,} \hlkwc{lower.tail} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1360371
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
+\subsection{Inference Using Exact Methods}
+The DFCI data actually follows a binomial distribution with $n=120$ and $p=\frac{80}{120} = 0.6667$.  
 
 
 \section{Inference for the Difference of Two Proportions}
