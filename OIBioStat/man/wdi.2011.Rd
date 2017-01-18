@@ -42,14 +42,8 @@ wdi.2011(x)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (x)
-{
-  }
+data(wdi.2011)
+%% maybe str(baby.smoke) ; plot(baby.smoke) ...
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -1,5 +1,46 @@
 
 \section{Inference for a Single Proportion}
+Looking at the example presented in 8.1 of \textit{OI Biostat}, a dataset contains 80 cancer patients at the Dana Farber Cancer Institute (DFCI) who survived at least 5 years and 40 patients who did not.  \textsf{R} can be used to "create" this dataset and to infer information about the population.  The initial statistics calculated are the mean, the standard deviation, and the sample proportion, $\hat{p}$, which can be seen in the code below.  
+
+<<>>=
+x = c(rep(1,80),rep(0,40))
+x.bar = mean(x) 
+std.dev = sd(x)
+p.hat = sum(x)/length(x)
+p.hat
+@
+
+\subsection{Inference Using the Normal Approximation}
+Following the criteria laid out in \textit{OI Biostat}, the DFCI data can be approximated with a normal distribution.  The method for making inferences about the data based on this assumption is laid out as follows.  
+
+\subsubsection{Confidence Intervals}
+The same method as discussed in previous chapters can be used to build a confidence interval, following the form 
+\[ \hat{p} \pm z^* \cdot SE_{\hat{p}}\]
+
+An example of this worked out is from \textit{OI Biostat} Example 8.3.  
+<<>>=
+## Example 8.3
+SE.p.hat = sqrt(p.hat*(1-p.hat)/length(x))
+c(p.hat - 1.96*SE.p.hat, p.hat +  1.96*SE.p.hat)
+@
+
+\subsubsection{Hypothesis Testing}
+Again, the procedures that have been performed before can be used to do a hypothesis test on a proportion.  The $z$-statistic would be 
+\[ z = \frac{\hat{p}-p_0}{SE_{p_0}}\]
+
+Example 8.5 from \textit{OI Biostat} is worked out below.  Note that there is a slight difference in the $z$ statistic value because this version does not use an approximation of $\hat{p}$ to 0.67.  
+<<>>=
+## Example 8.5
+p.0 = 0.6
+SE.p.0 = sqrt(p.0*(1-p.0)/length(x)) 
+z = (p.hat - p.0)/SE.p.0
+z
+## get the p-value (note that it is a two-sided test)
+2*pnorm(z, lower.tail = FALSE)
+@
+
+\subsection{Inference Using Exact Methods}
+The DFCI data actually follows a binomial distribution with $n=120$ and $p=\frac{80}{120} = 0.6667$.  
 
 
 \section{Inference for the Difference of Two Proportions}

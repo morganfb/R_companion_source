@@ -3720,5 +3720,57 @@ Now, using the information based on the single regressions, a multiple regressio
 \end{knitrout}
 
 
+\newpage
+\chapter{Categorical Data}
+\minitoc
+
+
+\section{Inference for a Single Proportion}
+Looking at the example presented in 8.1 of \textit{OI Biostat}, a dataset contains 80 cancer patients at the Dana Farber Cancer Institute (DFCI) who survived at least 5 years and 40 patients who did not.  \textsf{R} can be used to "create" this dataset and to infer information about the population.  The initial statistics calculated are the mean, the standard deviation, and the sample proportion, $\hat{p}$, which can be seen in the code below.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{x} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{80}\hlstd{),}\hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{40}\hlstd{))}
+\hlstd{x.bar} \hlkwb{=} \hlkwd{mean}\hlstd{(x)}
+\hlstd{std.dev} \hlkwb{=} \hlkwd{sd}\hlstd{(x)}
+\hlstd{p.hat} \hlkwb{=} \hlkwd{sum}\hlstd{(x)}\hlopt{/}\hlkwd{length}\hlstd{(x)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\subsection{Inference Using the Normal Approximation}
+\subsubsection{Confidence Intervals}
+The same method as discussed in previous chapters can be used to build a confidence interval, following the form 
+\[ \hat{p} \pm z^* SE_{\hat{p}}\]
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 8.3}
+\hlstd{SE} \hlkwb{=} \hlkwd{sqrt}\hlstd{(p.hat}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p.hat)}\hlopt{/}\hlkwd{length}\hlstd{(x))}
+\hlkwd{c}\hlstd{(p.hat} \hlopt{-} \hlnum{1.96}\hlopt{*}\hlstd{SE, p.hat} \hlopt{+}  \hlnum{1.96}\hlopt{*}\hlstd{SE)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.5823217 0.7510116
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+
+
+\section{Inference for the Difference of Two Proportions}
+
+
+\section{Inference for Two or More Groups}
+
+
+\section{Chi-Square} 
+
+
+\section{Randomization Test}
+
 
 \end{document}

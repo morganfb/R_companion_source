@@ -20,6 +20,12 @@ Dataset that corresponds to chapter 5, example of paired data.
 \source{
 De Lucas et al, The effects of wetsuits on physiological and biomechanical indeces during swimming.  Journal of Science and Medicine in Sport, 2000; 3(1): 1-8.
 }
+
+\examples{
+data(swim)
+%% maybe str(baby.smoke) ; plot(baby.smoke) ...
+}
+
 \references{
 
 }

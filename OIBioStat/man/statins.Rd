@@ -55,6 +55,6 @@ Statins dataset
 }
 \examples{
 data(statins)
-## maybe str(statins) ; plot(statins) ...
+%% maybe str(statins) ; plot(statins) ...
 }
 \keyword{datasets}

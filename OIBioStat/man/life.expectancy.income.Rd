@@ -26,7 +26,7 @@ A dataset that contains life expectancy and annual per capita income for 247 cou
 %%  ~~ possibly secondary sources and usages ~~
 }
 \examples{
-%% data(life.expectancy.income)
+data(life.expectancy.income)
 %% ## maybe str(life.expectancy.income) ; plot(life.expectancy.income) ...
 }
 \keyword{datasets}

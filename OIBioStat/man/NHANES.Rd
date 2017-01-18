@@ -98,7 +98,7 @@ NHANES is a set of surveys and measurements conducted by the US CDC to assess th
 %%  ~~ possibly secondary sources and usages ~~
 }
 \examples{
-% data(NHANES)
+data(NHANES)
 % ## maybe str(NHANES) ; plot(NHANES) ...
 }
 \keyword{datasets}

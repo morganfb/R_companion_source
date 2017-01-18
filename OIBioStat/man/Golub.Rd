@@ -7159,6 +7159,6 @@ Dataset from a 1999 microarray study by Todd Golub and his team.
 }
 \examples{
 data(Golub)
-## maybe str(Golub) ; plot(Golub) ...
+% ## maybe str(Golub) ; plot(Golub) ...
 }
 \keyword{datasets}

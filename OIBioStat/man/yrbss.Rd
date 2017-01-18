@@ -36,7 +36,7 @@ The data is provided by the CDC at http://www.cdc.gov/healthyyouth/data/yrbs/ind
 %%  ~~ possibly secondary sources and usages ~~
 }
 \examples{
-% data(yrbss)
+data(yrbss)
 % ## maybe str(yrbss) ; plot(yrbss) ...
 }
 \keyword{datasets}

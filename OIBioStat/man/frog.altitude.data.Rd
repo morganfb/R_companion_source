@@ -34,6 +34,6 @@ Chen, W., et al. Maternal investment increases with altitude in a frog on the Ti
 }
 \examples{
 data(frog_altitude_data)
-## maybe str(frog_altitude_data) ; plot(frog_altitude_data) ...
+%% ## maybe str(frog_altitude_data) ; plot(frog_altitude_data) ...
 }
 \keyword{datasets}

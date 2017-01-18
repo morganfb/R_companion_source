@@ -37,7 +37,7 @@ Du Toit, George, et al. Randomized trial of peanut consumption in infants at ris
 
 }
 \examples{
-%% data(LEAP)
+data(LEAP)
 %% ## maybe str(LEAP) ; plot(LEAP) ...
 }
 \keyword{datasets}

@@ -33,6 +33,6 @@ Contains data from a random sample of 150 cases of mothers and their newborns in
 }
 \examples{
 data(baby.smoke)
-## maybe str(baby.smoke) ; plot(baby.smoke) ...
+%% maybe str(baby.smoke) ; plot(baby.smoke) ...
 }
 \keyword{datasets}

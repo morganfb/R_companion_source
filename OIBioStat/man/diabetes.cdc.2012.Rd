@@ -37,7 +37,7 @@ Not exactly perfect numbers because the CDC did not document the population size
 %%  ~~ possibly secondary sources and usages ~~
 }
 \examples{
-% data(diabetes.cdc.2012)
+data(diabetes.cdc.2012)
 % ## maybe str(diabetes.cdc.2012) ; plot(diabetes.cdc.2012) ...
 }
 \keyword{datasets}

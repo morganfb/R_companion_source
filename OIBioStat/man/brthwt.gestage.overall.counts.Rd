@@ -18,7 +18,7 @@ The dataset contains information from the US CDC National Vital Statistics Syste
 %%  ~~ possibly secondary sources and usages ~~
 }
 \examples{
-% data(brthwt.gestage.overall.counts)
+data(brthwt.gestage.overall.counts)
 % ## maybe str(brthwt.gestage.overall.counts) ; plot(brthwt.gestage.overall.counts) ...
 }
 \keyword{datasets}

@@ -38,7 +38,7 @@ Thompson PD, Moyna M, Seip, R, et al., 2004. Functional Polymorphisms Associated
 Pescatello L, et al. Highlights from the functional single nucleotide polymorphisms associated with human muscle size and strength or FAMuSS study, BioMed Research International 2013.
 }
 \examples{
-%% data(famuss)
+data(famuss)
 %% ## maybe str(famuss) ; plot(famuss) ...
 }
 \keyword{datasets}
