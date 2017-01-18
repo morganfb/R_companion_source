@@ -1,9 +1,10 @@
 require(devtools)
-setwd("~/")
+setwd("~/R_companion_source")
 install(pkg = "OIBioStat")
 library(OIBioStat)
 require(OIBioStat)
 
+data(Golub)
 # View(frog.altitude.data)
 # View(life.expectancy.income)
 # View(swim)

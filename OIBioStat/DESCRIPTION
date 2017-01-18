@@ -1,7 +1,7 @@
 Package: OIBioStat
 Type: Package
 Title: OIBioStat Companion Package
-Version: 0.1.11
+Version: 0.2.0
 Authors@R: person("Morgan", "Breitmeyer", , "morganbreitmeyer@gmail.com", role = c("aut", "cre"))
 Description: This package contains the datasets that accompany the Open Intro
     Biostat Companion Book.
