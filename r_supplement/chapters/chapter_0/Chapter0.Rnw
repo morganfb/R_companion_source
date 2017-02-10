@@ -1,15 +1,22 @@
 This text is a companion to \textit{Introductory Statistics for the Life and Biomedical Sciences}; while the main text focuses on statistical concepts and ideas, this supplement provides details about how to use the statistical computing language \textsf{R}.
 
-This is a preview text so this package is not available just yet, but when it is available, all of the necessary data will be accessible using the following commands.  
-%' % All the datasets used in the text can be accessed by downloading the OIBiostat package from \textsf{R}. Run the following command to download the package:
+All the datasets used in the text can be accessed by downloading the OIBiostat package from \textsf{R}. Run the following command to download the package:
 %' 
 %' %% These commands aren't going to work until we have uploaded the package to CRAN. Just skip it for now and require below.
-<<eval = FALSE>>=
-install.packages("OIBioStat")  ## make sure to include the quotations
-@
+% <<eval = FALSE>>=
+% install.packages("OIBioStat")  ## make sure to include the quotations
+% @
 %' 
-%' The above command only needs to be run once. Each time a dataset in the package is needed, run the following command: 
+
+
+Each time the package is needed, run the following command: 
 %' 
 <<warning = FALSE, message = FALSE>>=
-require(OIBioStat) ## note the lack of quotations here
+require(OIBioStat)
 @
+
+To access a dataset in the package, simply run the \texttt{data()} command, which will load it into the \textsf{R} environment.  To see this has been done, it will pop up in the top right of \textsf{RStudio} in the pane labeled \textit{Environment} under \textit{Data}.  For example, a dataset called \texttt{swim} is in the package and can be loaded as follows, 
+<<>>=
+data(swim) 
+@
+

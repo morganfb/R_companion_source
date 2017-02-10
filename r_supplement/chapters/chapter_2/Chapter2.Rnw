@@ -110,7 +110,7 @@ where $A_2$, $A_3$, ..., and $A_k$ represent all other possible outcomes of the 
 The expression can also be written in terms of diagnostic testing language, where $D = \text{\{has disease\}}$, $D^c = \text{\{does not have disease\}}$, $T^{+} = \text{\{positive test result\}}$, and $T^{-} = \text{\{negative test result\}}$.
 
 \begin{align*}
-P(D|T^{+}) &= \dfrac{P(D \text{ and } T^{+})}{P(D)} \\
+P(D|T^{+}) &= \dfrac{P(D \text{ and } T^{+})}{P(T^+)} \\
 &= \dfrac{P(T^{+}|D) \times P(D)}{[P(T^{+}|D) \times P(D)] + [P(T^{+}|D^c) \times P(D^c)]} \\
 \text{PPV} &= \dfrac{\text{sensitivity } \times \text{ prevalence}}{[\text{sensitivity } \times \text{ prevalence}] + [\text{(1 - specificity) } \times \text{ (1 - prevalence)}]}
 \end{align*}

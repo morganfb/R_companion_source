@@ -57,29 +57,29 @@
 <<child-demo, child='chapters/chapter_4/Chapter4.Rnw'>>=
 @
 
-\newpage
-\chapter{Inference For Numerical Data}
-\minitoc
-<<child-demo, child='chapters/chapter_5/Chapter5.Rnw'>>=
-@
-
-\newpage
-\chapter{Simple Linear Regression}
-\minitoc
-<<child-demo, child='chapters/chapter_6/Chapter6.Rnw'>>=
-@
-
-\newpage
-\chapter{Multiple Linear Regression}
-\minitoc
-<<child-demo, child='chapters/chapter_7/Chapter7.Rnw'>>=
-@
-
-\newpage
-\chapter{Categorical Data}
-\minitoc
-<<child-demo, child='chapters/chapter_8/Chapter8.Rnw'>>=
-@
+% \newpage
+% \chapter{Inference For Numerical Data}
+% \minitoc
+% <<child-demo, child='chapters/chapter_5/Chapter5.Rnw'>>=
+% @
+% 
+% \newpage
+% \chapter{Simple Linear Regression}
+% \minitoc
+% <<child-demo, child='chapters/chapter_6/Chapter6.Rnw'>>=
+% @
+% 
+% \newpage
+% \chapter{Multiple Linear Regression}
+% \minitoc
+% <<child-demo, child='chapters/chapter_7/Chapter7.Rnw'>>=
+% @
+% 
+% \newpage
+% \chapter{Categorical Data}
+% \minitoc
+% <<child-demo, child='chapters/chapter_8/Chapter8.Rnw'>>=
+% @
 
 
 \end{document}

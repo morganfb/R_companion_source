@@ -106,13 +106,13 @@ Working through a Example 3.12 from \textit{OI Biostat},
 qnorm(p = .4, mean = 70, sd = 3.3)
 @
 
-\subsection{Evaluating the Normal Approximation} 
+\section{Evaluating the Normal Approximation} 
 It is of interest to test the normality of a distriubtion in order to determine if approximation with a normal distribution is appropriate. There are two methods in \textsf{R} that can be used to test this.  The first involves plotting the data with a histogram and then superimposing a line on top with the corresponding mean and standard deviation of the data.  The more closely that the histogram matches the line, the more appropriate a normal approximation would be.  
 
 The second method utilizes the function \texttt{qqnorm()}, which plots the residual differences between the observed data and the theoretical normal distribution that would match.  A line can be plotted on top of this plot, using \texttt{qqline()}, which demonstrates how a perfect match would appear.  Deviation of the dots on the plot from the line shows lack of fit for the normal approimation.  
 
 Both of these methods can be seen below in this recreation of \textit{OI Biostat} Figure 3.10 from the main text.  The rows show the first and second methods respectively, while the columns show a progressively better fit to the normal from left to right.  
-%%PUT THIS DATA INTO OIBIOSTAT PACKAGE 
+
 <<tidy = TRUE,fig.align = "center">>=
 obs1 <- c(-0.01, 1.39, 1.598, 0.383, -0.084, -0.475, -0.105, -1.062, 0.607, 0.539, 0.871, 0.45, -0.039, 1.256, 0.55, -0.333, -0.252, 1.187, -0.916, 0.677, -1.324, -1.773, 1.813, 0.023, -2.291, -1.361, 0.642, 0.249, -0.132, 1.345, 0.629, -1.274, 0.435, 0.043, 0.55, -0.465, 0.756, -0.396, -0.767, 1.348)
 
@@ -172,9 +172,6 @@ lines(x, y)
 qqnorm(obs)
 qqline(obs)
 @
-
-\section{Evaluating the Normal Distribution}
-%%% COME FILL THIS IN -- A LOT OF THIS IS WRITTEN OUT IN CHAPTER 6 WITH CONTEXT (is it better there??)
 
 \section{Binomial Distribution}
 A random variable which follows a \textbf{binomial distribution} can be written as

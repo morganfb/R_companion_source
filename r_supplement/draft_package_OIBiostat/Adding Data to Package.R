@@ -32,10 +32,10 @@ LEAP = LEAP[keeps2]
 devtools::use_data(LEAP, overwrite = TRUE)
 
 ## loading Golub Data
-load("/Users/morganfbreitmeyer/Desktop/School/2016\ Spring/Statistics\ 102/psets/pset_01/datasets/golub_exprs_pheno.rdata")
-devtools::use_data(golub.exprs.pheno, overwrite = TRUE) # adding full dataset to package
-Golub = golub.exprs.pheno["Samples", "BM.PB", "Gender", "Source", "tissue.mf", "cancer"]
-devtools::use_data(golub.exprs.pheno, overwrite = TRUE) # adding partial dataset to package
+# load("/Users/morganfbreitmeyer/Desktop/School/2016\ Spring/Statistics\ 102/psets/pset_01/datasets/golub_exprs_pheno.rdata")
+# devtools::use_data(golub.exprs.pheno, overwrite = TRUE) # adding full dataset to package
+# Golub = golub.exprs.pheno["Samples", "BM.PB", "Gender", "Source", "tissue.mf", "cancer"]
+# devtools::use_data(golub.exprs.pheno, overwrite = TRUE) # adding partial dataset to package
 
 
 ## Chapter 2
