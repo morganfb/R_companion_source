@@ -1,4 +1,6 @@
-\vspace{0.5cm} 
+\pagestyle{fancy}
+
+\vspace{0.5cm}
 
 This chapter focuses on the material covered in \textit{OI Biostat} Chapter 2, which focuses on the idea of probability and how to solve for various types of probabilities. This chapter will work through several examples, illustrating how \textsf{R} can be used to solve propability problems.  Once again, it will be shown that there are several different computational methods that can be used to answer the same question.  
 

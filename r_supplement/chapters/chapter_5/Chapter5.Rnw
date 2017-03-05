@@ -112,9 +112,9 @@ t.test(baby.smoke$weight~baby.smoke$smoke, var.equal = TRUE)
 
 \stepcounter{section}
 \section{ANOVA} 
-The main text walks through the arithmetic procedures of the ANOVA test and calculating the F-statistic.  \textsf{R} makes this process much simpler, such that the entire calculation can be performed with just one line of code.  The command \texttt{anova()} takes as its input a linear regression model.  Chapter 6 will go into much more detail about linear regression, but for now, note that within the function \texttt{lm()}, the first variable before the tilde is the one for which the means are being compared, while the second variable after the tilde specifies the groups.  The command below works out Example 5.22 from \textit{OI Biostat}, getting the same $F$ statistic as the hand calculated value.  
+The main text walks through the arithmetic procedures of the ANOVA test and calculating the F-statistic.  \textsf{R} makes this process much simpler, such that the entire calculation can be performed with just one line of code.  The command for this is \texttt{aov()}, which takes two variables.  The first variable before the tilde is the one for which the means are being compared, while the second variable after the tilde specifies the groups.  The command below works out Example 5.22 from \textit{OI Biostat}, getting the same $F$ statistic as the hand calculated value.  
 
 <<>>=
 ## Example 5.22 
-anova(lm(famuss$ndrm.ch ~ famuss$actn3.r577x))
+summary(aov(famuss$ndrm.ch ~ famuss$actn3.r577x))
 @

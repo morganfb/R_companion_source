@@ -13,6 +13,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{inconsolata}
 
+
 \begin{document}
 
 \minitoc
@@ -33,19 +34,19 @@
 <<child-demo, child='chapters/chapter_0/Chapter0.Rnw'>>=
 @
 
-\newpage 
+\newpage
 \chapter{Introduction to Basic Techniques}
 \minitoc
 <<child-demo, child='chapters/chapter_1/Chapter1.Rnw'>>=
 @
 
-\newpage 
+\newpage
 \chapter{Using R for Probabilities}
 \minitoc
 <<child-demo, child='chapters/chapter_2/Chapter2.Rnw'>>=
 @
 
-\newpage 
+\newpage
 \chapter{Distributions}
 \minitoc
 <<child-demo, child='chapters/chapter_3/Chapter3.Rnw'>>=
@@ -57,24 +58,24 @@
 <<child-demo, child='chapters/chapter_4/Chapter4.Rnw'>>=
 @
 
-% \newpage
-% \chapter{Inference For Numerical Data}
-% \minitoc
-% <<child-demo, child='chapters/chapter_5/Chapter5.Rnw'>>=
-% @
-% 
-% \newpage
-% \chapter{Simple Linear Regression}
-% \minitoc
-% <<child-demo, child='chapters/chapter_6/Chapter6.Rnw'>>=
-% @
-% 
-% \newpage
-% \chapter{Multiple Linear Regression}
-% \minitoc
-% <<child-demo, child='chapters/chapter_7/Chapter7.Rnw'>>=
-% @
-% 
+\newpage
+\chapter{Inference For Numerical Data}
+\minitoc
+<<child-demo, child='chapters/chapter_5/Chapter5.Rnw'>>=
+@
+
+\newpage
+\chapter{Simple Linear Regression}
+\minitoc
+<<child-demo, child='chapters/chapter_6/Chapter6.Rnw'>>=
+@
+
+\newpage
+\chapter{Multiple Linear Regression}
+\minitoc
+<<child-demo, child='chapters/chapter_7/Chapter7.Rnw'>>=
+@
+
 % \newpage
 % \chapter{Categorical Data}
 % \minitoc
