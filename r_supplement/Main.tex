@@ -103,13 +103,451 @@
 
 \newpage 
 \setcounter{chapter}{-1}
-\chapter{Preface}
+\chapter{Introduction to \textsf{R}}
 \minitoc
 
 \pagestyle{fancy}
 
-This text is a companion to \textit{Introductory Statistics for the Life and Biomedical Sciences}; while the main text focuses on statistical concepts and ideas, this supplement provides details about how to use the statistical computing language \textsf{R}.
+This text is a companion to \textit{Introductory Statistics for the Life and Biomedical Sciences}; while the main text focuses on a conceputal introduction to the use of statistics in the life sciences, this supplement provides an analytical and computational introduction using the statistical computing language \textsf{R}.  An understanding of the basics of \textsf{R}, how it stores, utilizes, and processes data, and how to analyze these results will be built.  
 
+\section{What is \textsf{R}?}
+\textsf{R} is an open-source statistical software that allows users to import, transform, and analyze data in order to draw conclusions.  In this case, it will be used to perform analyses of biomedical data, and this text will go through the steps to do so from installation to drawing conclusions.  
+
+\subsection{Installation of \textsf{R}}
+\textsf{R} is freely available on the internet, and it is recommended to download it from \url{http://cran.us.r-project.org/}, where there are up to date versions for Windows, Mac OS X, and Linux.  This link will provide instructions for a complete download.  
+
+\subsection{Introduction to RStudio}
+\textsf{RStudio} is a platform that makes using \textsf{R} significantly easier, providing a visual framework for working. It can be downloaded from \url{https://www.rstudio.com/products/rstudio/download/}, by scrolling to the bottom and selecting the appropriate operating system from \textit{Installers} under \textit{Installers for Supported Platforms}.  \textsf{RStudio} is not necessary in order to use \textsf{R}, but it is highly recommended for organizational and accesibility reasons.      
+
+
+Upon opening \textsf{RStudio}, something similar to Figure \ref{fig:rstudio} should appear.  The four pane window environment is standard and provides easy access to many of the most commonly utilized tools.  Note that the four panes can be moved around or closed, so different versions of \textsf{Rstudio} may look a bit different.  
+\begin{figure}[h!]
+\centering
+\includegraphics[width = 6in]{chapters/chapter_0/rstudio.png}
+\caption{The default \textsf{RStudio} layout.  }
+\label{fig:rstudio}
+\end{figure}
+
+\subsubsection{The Script Editor}
+The top left pane in Figure \ref{fig:rstudio} shows the script editor, used to edit a \textsf{R} script file.  Think of this pane as similar to any text editor, providing a working space for the code being utilized and a means to save that for later.  We recommend that all work is done in a \textsf{R} script file so no information is lost.  If a script editor is not visible, a new \textsf{R} script file can be created by going to \textit{File > New File > R Script}.  
+
+In order to run a command in the script editor, you must place your curser on the line you want to run and type \textsf{command + Return} on Mac or \textsf{Ctrl + Enter} on Windows or Linux.  Alternatively, at the top of the script editor pane is the run button, which can be clicked after highlighting the code to be run.  Try this for yourself with the following example, and if successful, you shall see "hi" print out in the bottom left pane.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{print}\hlstd{(}\hlstr{"hi!"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] "hi!"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\subsubsection{The Console} 
+The bottom left pane in Figure \ref{fig:rstudio} is called the console.  This is the machinery in \textsf{R} that does the actual computing.  When commands are run in the script editor, they show up in the console, so the console is an important pane to always have in your \textsf{RStudio environment}.  
+
+\subsubsection{The Environment Tab} 
+The top right pane in Figure \ref{fig:rstudio} shows the \textsf{Environment} tab, which is the home of all stored information in \textsf{R}, such as datasets and variables.  The creation of any variables will show up here.  For example, upon running the following command in the script editor, a variable called \textit{x} should come up under \textsf{Values} in the \textsf{Environment} tab. The equals sign in the command below indicates that the variable of name \textsf{x} is taking on the numerical value 2. A variable created in this way is stored in \textsf{R} for later use and can later be called upon by referencing its variable name, \textit{x}.  Examples of this will be shown in Section \ref{}.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{x} \hlkwb{=} \hlnum{2}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+Furthermore, this pane can be used to import a dataset, and if successful, you should see the dataset show up in this global environment.  A dataset can be imported using the button \textit{Import Dataset} or from the script editor using the command \textit{load()} with the dataset name in quotation marks inside the parentheses.  For example, using a dataset that is on the local machine, the following will import the dataset into \textsf{R} for use and will show up in the \textsf{Environment} pane under \textsf{Data}, 
+
+%% Wherever we upload the book online, we may want to post this dataset and hyperlink it here so people can see the example.  I think this is an important point for people to know how to upload their own datasets.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{load}\hlstd{(}\hlstr{"samp_df.Rda"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+At this point, the global environment looks something like that seen in Figure \ref{fig:rstudioenv}, showing both the variable \textit{x} and the dataset \textit{samp.df}.  
+\begin{figure}[h!]
+\centering
+\includegraphics[width = 2in]{chapters/chapter_0/rstudioenv.png}
+\caption{An example of how the global environment stores datasets and variables.}
+\label{fig:rstudioenv}
+\end{figure}
+
+
+\subsubsection{The Files Tab}
+In the lower right pane of Figure \ref{fig:rstudio}, several tabs can be seen.  The Files tab is a directory of all the files on the local computer and can be used to access other files, such as saved datasets or previously created \textsf{R} scripts.  
+
+\subsubsection{The Plots Tab} 
+The next tab seen is the Plots tab, which is where plots will be displayed when created in a R script file.  Section \ref{graphs} will go into more detail as to how to create plots, but just note that this is where they will show up.  
+
+\subsubsection{The Packages Tab}
+Because \textsf{R} is an open-source software, anyone can creates packages for it that contain functions, data, or other useful programs.  Packages are then shared and built upon to make the knowledge base of the community greater.  The Packages tab is where these packages are accessible in \textsf{RStudio}.  Many packages come standard with the installation of \textsf{RStudio} and can be seen here.  By checking the box to the left of a package, all of its contents will be available for use.  A package has been created to accompany this book, and it can be included for use in the packages tab.  Section \ref{thepackage} will discuss this specific package in further detail.  
+
+
+\subsubsection{The Help Tab}
+The Help Tab provides basic helpful information on most features of \textsf{R} and \textsf{RStudio}.  It can be searched, as well as accessed by typing a question mark next to any function or package in the script file.  For example, the following command will pull up in the Help tab all the information about the print function.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlopt{?}\hlstd{print}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\subsubsection{The Viewer Tab}
+%% What even is this tab?!?
+
+\section{Working with Data in \textsf{R}} 
+
+\subsection{Vectors} 
+Vectors are one dimensional arrays used to store lists of information. They can be created using a concatenation function, \textit{c()}.  The values intended to be in the list are separated by commas inside the parentheses.  For example, a vector of numbers 1 through 5 can be made as follows.  Note that the first line assigns the variable \textit{num.vector} to the vector and the second line simply prints it out when called upon.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{num.vector} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{4}\hlstd{,}\hlnum{5}\hlstd{)}
+\hlstd{num.vector}
+\end{alltt}
+\begin{verbatim}
+## [1] 1 2 3 4 5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+The same numerical vector can also be created using a colon, which implies the numbers between the end values.  For example, the following command creates the same vector as above, but without the concatenation command.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{num.vector2} \hlkwb{=} \hlnum{1}\hlopt{:}\hlnum{5}
+\hlstd{num.vector2}
+\end{alltt}
+\begin{verbatim}
+## [1] 1 2 3 4 5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Vectors can also be used for characters or strings, such as the following where the characters must be individually surrounded by quotation marks.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{alph.vector} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"a"}\hlstd{,} \hlstr{"b"}\hlstd{,} \hlstr{"c"}\hlstd{,} \hlstr{"d"}\hlstd{,} \hlstr{"e"}\hlstd{)}
+\hlstd{alph.vector}
+\end{alltt}
+\begin{verbatim}
+## [1] "a" "b" "c" "d" "e"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsubsection{Operating with Vectors}
+Vectors can be used for computational purposes and many mathematical functions can be applied.  When two vectors of the same length are computed together, each element is paired with the corresponding element in the opposite list and the computation applied accordingly.  For example, addition, multiplication, and squaring are done pairwise as follows, 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{a} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{4}\hlstd{)}
+\hlstd{b} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{5}\hlstd{,}\hlnum{6}\hlstd{,}\hlnum{7}\hlstd{,}\hlnum{8}\hlstd{)}
+\hlstd{a}\hlopt{+}\hlstd{b}
+\end{alltt}
+\begin{verbatim}
+## [1]  6  8 10 12
+\end{verbatim}
+\begin{alltt}
+\hlstd{a}\hlopt{-}\hlstd{b}
+\end{alltt}
+\begin{verbatim}
+## [1] -4 -4 -4 -4
+\end{verbatim}
+\begin{alltt}
+\hlstd{a}\hlopt{*}\hlstd{b}
+\end{alltt}
+\begin{verbatim}
+## [1]  5 12 21 32
+\end{verbatim}
+\begin{alltt}
+\hlstd{a}\hlopt{^}\hlnum{2}
+\end{alltt}
+\begin{verbatim}
+## [1]  1  4  9 16
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Furthermore, a single numerical can be applied to a vector, acting as a vector itself of the same length as the corresponding vector. Therefore, multiplying a vector by 2 multiplies every element in the vector by 2.  Some examples of this can be seen here,  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{2}\hlopt{*}\hlstd{a}
+\end{alltt}
+\begin{verbatim}
+## [1] 2 4 6 8
+\end{verbatim}
+\begin{alltt}
+\hlnum{2}\hlopt{+}\hlstd{a}
+\end{alltt}
+\begin{verbatim}
+## [1] 3 4 5 6
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Note that attempting to apply such mathematical operations to a vector of strings will not produce results.  An error like the following will appear, 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlnum{2}\hlopt{*}\hlstd{alph.vector}
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\color{errorcolor}{\#\# Error in 2 * alph.vector: non-numeric argument to binary operator}}\end{kframe}
+\end{knitrout}
+
+Another use of the concatenating function \textit{c()} is to combine multiple vectors into a single vector.  This is done as follows, 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{c}\hlstd{(a,b)}
+\end{alltt}
+\begin{verbatim}
+## [1] 1 2 3 4 5 6 7 8
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsubsection{Accessing Elements of a Vector}
+Once a vector has been created, it is helpful to be able to pull out certain parts of it.  Vectors are indexed, meaning that each element in the vector corresponds to a location identified by number, numbered 1 through the length of the matrix.  To access an element in the vector, brackets must be used which signals to \textsf{R} that the element at the location specified within the brackets is wanted.  For example, to obtain the first element in the vector above \textit{b}, the correct command is \textit{b[1]}, as shown below 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{b[}\hlnum{1}\hlstd{]}
+\end{alltt}
+\begin{verbatim}
+## [1] 5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+In order to obtain more than one element in a vector, the notation is more specific.  A vector of index locations must be passed into the brackets, such as in the following two examples, 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{b[}\hlnum{1}\hlopt{:}\hlnum{2}\hlstd{]}
+\end{alltt}
+\begin{verbatim}
+## [1] 5 6
+\end{verbatim}
+\begin{alltt}
+\hlstd{b[}\hlkwd{c}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{3}\hlstd{)]}
+\end{alltt}
+\begin{verbatim}
+## [1] 5 7
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+If every element in a vector is wanted except for one or two, a negative sign can be applied to the vector contained inside the brackets.  For example, the following removes the second and third elements of the list \textit{b}.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{b[}\hlopt{-}\hlkwd{c}\hlstd{(}\hlnum{2}\hlstd{,}\hlnum{3}\hlstd{)]}
+\end{alltt}
+\begin{verbatim}
+## [1] 5 8
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\subsection{Matrices} 
+A matrix is similar to a vector in that it stores information except that it is a two dimensional array.  The function \textit{matrix()} can be used to create two dimensional matrices.  The input of this function is the following 
+\begin{itemize} 
+\item A vector containing all the matrix entries
+\item A specification of \textit{byrow = TRUE} which fills the matrix firstly left to right and top to bottom or a specification of \textit{byrow = FALSE} which fills columns first from left to right 
+\item A specification of \textit{nrow = } which outlines how many rows are in the matrix
+\end{itemize} 
+
+To go through a basic example, 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{mat1} \hlkwb{=} \hlkwd{matrix}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{8}\hlstd{,} \hlkwc{byrow} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{nrow} \hlstd{=} \hlnum{4}\hlstd{)}
+\hlstd{mat1}
+\end{alltt}
+\begin{verbatim}
+##      [,1] [,2]
+## [1,]    1    2
+## [2,]    3    4
+## [3,]    5    6
+## [4,]    7    8
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+If you change the \textit{byrow} specification, you get the following 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{mat2} \hlkwb{=} \hlkwd{matrix}\hlstd{(}\hlnum{1}\hlopt{:}\hlnum{8}\hlstd{,} \hlkwc{byrow} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{nrow} \hlstd{=} \hlnum{4}\hlstd{)}
+\hlstd{mat2}
+\end{alltt}
+\begin{verbatim}
+##      [,1] [,2]
+## [1,]    1    5
+## [2,]    2    6
+## [3,]    3    7
+## [4,]    4    8
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Just like with vectors, mathematical computations can be applied to matrices.  Again, the computations are applied pairwase unless a single numerical value is applied which applies to all elements.  Some examples are as follows, 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{mat1}\hlopt{+}\hlstd{mat2}
+\end{alltt}
+\begin{verbatim}
+##      [,1] [,2]
+## [1,]    2    7
+## [2,]    5   10
+## [3,]    8   13
+## [4,]   11   16
+\end{verbatim}
+\begin{alltt}
+\hlstd{mat1}\hlopt{*}\hlstd{mat2}
+\end{alltt}
+\begin{verbatim}
+##      [,1] [,2]
+## [1,]    1   10
+## [2,]    6   24
+## [3,]   15   42
+## [4,]   28   64
+\end{verbatim}
+\begin{alltt}
+\hlnum{2}\hlopt{*}\hlstd{mat1}
+\end{alltt}
+\begin{verbatim}
+##      [,1] [,2]
+## [1,]    2    4
+## [2,]    6    8
+## [3,]   10   12
+## [4,]   14   16
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Matrices can become significantly more complicated, and in such structures, form the basis for much statistical computation.  Consider the following table,
+
+\begin{center} 
+\begin{tabular}{|c c c c|}
+\hline 
+Name & Weight & Gender & Age \\ 
+\hline 
+John & 210 & Male & 22 \\ 
+Suzie & 140 & Female & 45 \\ 
+Mary & 120 & Female & 35 \\ 
+Bob & 180 & Male & 50 \\ 
+Dave & 160 & Male & 70 \\ 
+\hline 
+\end{tabular} 
+\end{center}
+
+There are two ways to create a matrix from this information: create a long list of values as used above or create several individual vectors and combine them into a matrix.  The second method is laid out here, 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{names}  \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"John"}\hlstd{,} \hlstr{"Suzie"}\hlstd{,} \hlstr{"Mary"}\hlstd{,} \hlstr{"Bob"}\hlstd{,} \hlstr{"Dave"}\hlstd{)}
+\hlstd{weights} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{210}\hlstd{,} \hlnum{140}\hlstd{,} \hlnum{120}\hlstd{,} \hlnum{180}\hlstd{,} \hlnum{160}\hlstd{)}
+\hlstd{genders} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"Male"}\hlstd{,} \hlstr{"Female"}\hlstd{,} \hlstr{"Female"}\hlstd{,} \hlstr{"Male"}\hlstd{,} \hlstr{"Male"}\hlstd{)}
+\hlstd{ages} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlnum{22}\hlstd{,} \hlnum{45}\hlstd{,} \hlnum{35}\hlstd{,} \hlnum{50}\hlstd{,} \hlnum{70}\hlstd{)}
+
+\hlstd{samp.matrix} \hlkwb{=} \hlkwd{matrix}\hlstd{(}\hlkwd{c}\hlstd{(names, weights, genders, ages),} \hlkwc{nrow} \hlstd{=} \hlnum{5}\hlstd{)}
+\hlstd{samp.matrix}
+\end{alltt}
+\begin{verbatim}
+##      [,1]    [,2]  [,3]     [,4]
+## [1,] "John"  "210" "Male"   "22"
+## [2,] "Suzie" "140" "Female" "45"
+## [3,] "Mary"  "120" "Female" "35"
+## [4,] "Bob"   "180" "Male"   "50"
+## [5,] "Dave"  "160" "Male"   "70"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+Notice how the \textit{c()} function is required to concatenate the several vectors into one long vector, as well as the specification of \textit{nrow()}, so as not to get a single long list of values.  
+
+
+\subsubsection{Accessing Elements of a Matrix}
+Because matrices are two dimensional, accessing elements inside them requires two dimensions.  As with vectors, bracket notation is used with a comma in the middle indicating the distinction between rows and columns.  Inside the brackets, the order is rows comma columns.  The best way to see this is through examples.  Using the \textit{samp.matrix} created just above, the item in the first row and first column can be pulled as follows, 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{samp.matrix[}\hlnum{1}\hlstd{,}\hlnum{1}\hlstd{]}
+\end{alltt}
+\begin{verbatim}
+## [1] "John"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+If instead, the entire first row was desired, this could be done by putting a vector of indeces wanted for the columns such as this 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{samp.matrix[}\hlnum{1}\hlstd{,}\hlnum{1}\hlopt{:}\hlnum{4}\hlstd{]}
+\end{alltt}
+\begin{verbatim}
+## [1] "John" "210"  "Male" "22"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Alternatively, if the column section after the comma is left blank, this signals to \textsf{R} that all columns are desired.  The result would be the same as above, 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{samp.matrix[}\hlnum{1}\hlstd{,]}
+\end{alltt}
+\begin{verbatim}
+## [1] "John" "210"  "Male" "22"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+
+\subsection{Dataframes} 
+Another method that \textsf{R} uses to store data is called a dataframe, which is similar to a matrix, with slight differences.  It is a two dimensional array, but row 
+
+\subsubsection{Computing with Dataframes} 
+
+\subsubsection{Accessing Elements of a Dataframe} 
+
+\subsection{Datatypes}
+\subsubsection{Numerical} 
+\subsubsection{Categorical} 
+% gender, true false, 0 or 1, 
+% factor variables 
+\subsubsection{Checking the Datatype}
+
+\section{Functions} 
+
+\section{Some Programming Background}
+
+\section{The OIBioStat Package} \label{thepackage}
 All the datasets used in the text can be accessed by downloading the OIBiostat package from \textsf{R}. Run the following command to download the package:
 %' 
 %' %% These commands aren't going to work until we have uploaded the package to CRAN. Just skip it for now and require below.
@@ -138,6 +576,9 @@ To access a dataset in the package, simply run the \texttt{data()} command, whic
 \end{kframe}
 \end{knitrout}
 
+
+
+\section{Exercises}
 
 \newpage
 \chapter{Introduction to Basic Techniques}
@@ -527,10 +968,10 @@ Bracket notation can then be used to calculate summary statistics specifically f
 \end{kframe}
 \end{knitrout}
 
-\subsection{Visualizing distributions of data}
+\subsection{Visualizing distributions of data} \label{graphs}
 While most numerical summaries can be calculated by hand, \textsf{R} is essential for creating graphical summaries.
 
-\subsubsection{Histograms}
+\subsubsection{Histograms} 
 A \textbf{histogram} provides a view of data density. Observations are sorted into different bins based on their value, and the histogram shows the number of observations in each bin. The following command produces a histogram of the \texttt{clutch.volume} variable.
 
 \begin{knitrout}
@@ -539,7 +980,7 @@ A \textbf{histogram} provides a view of data density. Observations are sorted in
 \hlkwd{hist}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-19-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-40-1} 
 
 \end{knitrout}
 
@@ -576,7 +1017,7 @@ The following command reproduces \textit{OI Biostat} Table 1.16 and Figure 1.17.
      \hlkwc{main} \hlstd{=} \hlstr{"Histogram of Clutch Volume Frequencies"}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-20-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-41-1} 
 
 \end{knitrout}
 
@@ -592,7 +1033,7 @@ A \textbf{boxplot} uses five statistics to summarize a dataset, in addition to s
 \hlkwd{boxplot}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-21-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-42-1} 
 
 \end{knitrout}
 \end{centering}
@@ -620,7 +1061,7 @@ The following command reproduces a simplified version of \textit{OI Biostat} Fig
         \hlkwc{ylim} \hlstd{=} \hlkwd{range}\hlstd{(frog.altitude.data}\hlopt{$}\hlstd{clutch.volume))}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-22-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-43-1} 
 
 \end{knitrout}
 \end{centering}
@@ -635,7 +1076,7 @@ The following command reproduces a simplified version of \textit{OI Biostat} Fig
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-23-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-44-1} 
 
 }
 
@@ -670,7 +1111,7 @@ The following command reproduces a simplified version of \textit{OI Biostat} Fig
      \hlkwc{pch} \hlstd{=} \hlnum{19}\hlstd{,} \hlkwc{xlab} \hlstd{=} \hlstr{"Female Body Size (cm)"}\hlstd{,} \hlkwc{ylab} \hlstd{=} \hlkwd{expression}\hlstd{(}\hlstr{"Clutch Volume"} \hlopt{~} \hlstd{(mm}\hlopt{^}\hlnum{3}\hlstd{)))}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-24-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-45-1} 
 
 \end{knitrout}
 \end{centering}
@@ -739,7 +1180,7 @@ It is much easier to use the \texttt{cor()} function to find correlation.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-26-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-47-1} 
 
 }
 
@@ -778,7 +1219,7 @@ The function \texttt{par()} creates partitions in the graphing output. In this c
     \hlkwc{ylab} \hlstd{=} \hlstr{"Frequency"}\hlstd{,} \hlkwc{ylim} \hlstd{=} \hlkwd{c}\hlstd{(}\hlnum{0}\hlstd{,} \hlnum{30}\hlstd{),} \hlkwc{main} \hlstd{=} \hlstr{"Log Transformed"}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-28-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-49-1} 
 
 \end{knitrout}
 
@@ -797,7 +1238,7 @@ Transformations can also be applied to both variables when exploring a relations
     \hlkwc{main} \hlstd{=} \hlstr{"Transformed"}\hlstd{)}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-29-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-50-1} 
 
 \end{knitrout}
 
@@ -898,7 +1339,7 @@ A \textbf{bar plot} is a common way to display a single categorical variable, ei
 \hlkwd{barplot}\hlstd{(}\hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{actn3.r577x)}\hlopt{/}\hlkwd{sum}\hlstd{(}\hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{actn3.r577x)),} \hlkwc{main} \hlstd{=} \hlstr{"Frequency Barplot"}\hlstd{)}  \hlcom{## frequency barplot}
 \end{alltt}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-34-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-55-1} 
 
 \end{knitrout}
 
@@ -929,7 +1370,7 @@ The argument \texttt{legend} can be used to specify whether the row names or the
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-35-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-56-1} 
 
 }
 
@@ -953,7 +1394,7 @@ A \textbf{standardized segmented bar plot} uses proportions to scale the data, a
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-36-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-57-1} 
 
 }
 
@@ -978,7 +1419,7 @@ A \textbf{standardized segmented bar plot} uses proportions to scale the data, a
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-37-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-58-1} 
 
 }
 
@@ -1012,7 +1453,7 @@ In \textit{OI Biostat} Figure 1.34, the data from the contingency table are orga
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-38-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-59-1} 
 
 }
 
@@ -1035,7 +1476,7 @@ The \textbf{side-by-side} boxplot is a useful tool for comparing the distributio
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-39-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-60-1} 
 
 }
 
@@ -1054,7 +1495,7 @@ The \textbf{side-by-side} boxplot is a useful tool for comparing the distributio
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-40-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-61-1} 
 
 }
 
@@ -1085,7 +1526,7 @@ A \textbf{hollow histogram} plots the outlines of histograms for each group onto
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-41-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-62-1} 
 
 }
 
@@ -1106,7 +1547,7 @@ A \textbf{hollow histogram} plots the outlines of histograms for each group onto
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-42-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-63-1} 
 
 }
 
@@ -1194,7 +1635,7 @@ For example, simulation can be used to obtain the probability distribution of th
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-44-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-65-1} 
 
 }
 
@@ -1558,7 +1999,7 @@ There is a function in R called the \texttt{dnorm()} function, which, for a give
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-51-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-72-1} 
 
 }
 
@@ -1577,7 +2018,7 @@ The second method involves sampling randomly from the known normal distribution 
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-52-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-73-1} 
 
 }
 
@@ -1595,7 +2036,7 @@ Plotting both methods on the same graphs is useful for comparison as follows.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-53-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-74-1} 
 
 }
 
@@ -1614,7 +2055,7 @@ The function \texttt{pnorm()} tells the percentage of the normal distribution th
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-54-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-75-1} 
 
 }
 
@@ -1829,7 +2270,7 @@ Both of these methods can be seen below in this recreation of \textit{OI Biostat
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-59-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-80-1} 
 
 }
 
@@ -1859,7 +2300,7 @@ Both of these methods can be seen below in this recreation of \textit{OI Biostat
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-60-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-81-1} 
 
 }
 
@@ -1905,7 +2346,7 @@ As above, the binomial distribution can be accessed directly with \texttt{dbinom
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-61-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-82-1} 
 
 }
 
@@ -1923,7 +2364,7 @@ Superimposing the graphs is another useful mechanism for direct comparison of th
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-62-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-83-1} 
 
 }
 
@@ -2137,7 +2578,7 @@ Standard histograms plots of some of the variables on this dataset can be plotte
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-72-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-93-1} 
 
 }
 
@@ -2216,7 +2657,7 @@ The following steps can be used to create a \textbf{sampling distribution of the
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-74-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-95-1} 
 
 }
 
@@ -2333,7 +2774,7 @@ Example 4.10 from \textit{OI Biostat} is an excellent example of how to clean up
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-80-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-101-1} 
 
 }
 
@@ -2348,7 +2789,7 @@ Example 4.10 from \textit{OI Biostat} is an excellent example of how to clean up
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-80-2} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-101-2} 
 
 }
 
@@ -2481,7 +2922,7 @@ The following plot shows how the t-distribution approximates the normal distribu
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-83-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-104-1} 
 
 }
 
@@ -2708,6 +3149,7 @@ The main text walks through the arithmetic procedures of the ANOVA test and calc
 \end{kframe}
 \end{knitrout}
 
+
 \newpage
 \chapter{Simple Linear Regression}
 \minitoc
@@ -2742,7 +3184,7 @@ To check for linearity, a simple examination of a scatterplot of the data will s
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-93-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-114-1} 
 
 }
 
@@ -2763,7 +3205,7 @@ As further examples, the figures below show other linear relatonships.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-94-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-115-1} 
 
 }
 
@@ -2782,7 +3224,7 @@ For comparison, the following plot shows data that a linear relationship is not 
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-95-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-116-1} 
 
 }
 
@@ -2805,7 +3247,7 @@ To check for \textbf{constant variability}, a scatterplot is again a good resour
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-96-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-117-1} 
 
 }
 
@@ -2849,7 +3291,7 @@ Two examples of this procedure are included below.  In the first example, the re
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-97-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-118-1} 
 
 }
 
@@ -2879,7 +3321,7 @@ In the second example, the data appears somewhat normal, but with some outliers.
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-98-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-119-1} 
 
 }
 
@@ -2951,7 +3393,7 @@ With this linear regression in mind, it would be helpful to be able to visualize
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-101-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-122-1} 
 
 }
 
@@ -2971,7 +3413,7 @@ Performing a similar regression for the FAMuSS dataset between height and weight
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-102-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-123-1} 
 
 }
 
@@ -3076,15 +3518,16 @@ Furthermore, the two t-tests shown in the text can be computed as follows.  Note
 
 
 \newpage
-\chapter{Multiple Linear Regression}
+\chapter{Multiple and Logistic Regression}
 \minitoc
 
 
 %% FIGURE NUMBERs WILL LIKELY CHANGE WHEN CH 7 IS FINALIZED, SO CHECK THEM ALL AT SOME POINT 
 
-In Chapter 6, the dataset \texttt{statins} was introduced when visually understanding the assumptions of simple linear regression.  It will again be used in this chapter to understand the idea of multiple linear regression.
+In Chapter 7, the dataset \texttt{statins} was introduced when visually understanding the assumptions of simple linear regression.  It will again be used in this chapter to understand the idea of multiple linear regression.
 
 %% Should I include Figure 7.2 in here, seems uneccessary.  
+
 
 \section*{Confounders} 
 
@@ -3102,7 +3545,7 @@ In Chapter 6, the dataset \texttt{statins} was introduced when visually understa
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-105-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-126-1} 
 
 }
 
@@ -3120,7 +3563,7 @@ In Chapter 6, the dataset \texttt{statins} was introduced when visually understa
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-106-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-127-1} 
 
 }
 
@@ -3224,7 +3667,6 @@ Notice how in this example, the first model shows a negative relationship betwee
 \end{kframe}
 \end{knitrout}
 
-
 \section{Evaluating The Fit of a Multiple Regression Model}
 \subsection{Assumptions of Linear Regression}
 The same procedures as outlined in Chapter 6 can be used to test the model assumptions, and will be repeated here.  
@@ -3243,7 +3685,7 @@ The same procedures as outlined in Chapter 6 can be used to test the model assum
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-110-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-131-1} 
 
 }
 
@@ -3260,7 +3702,7 @@ The same procedures as outlined in Chapter 6 can be used to test the model assum
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-111-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-132-1} 
 
 }
 
@@ -3285,7 +3727,7 @@ The same procedures as outlined in Chapter 6 can be used to test the model assum
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-112-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-133-1} 
 
 }
 
@@ -3518,7 +3960,7 @@ Testing the assumptions and evaluating the fit, the model is reasonably good, bu
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-118-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-139-1} 
 
 }
 
@@ -3717,7 +4159,7 @@ Now, using the information based on the single regressions, a multiple regressio
 \end{alltt}
 \end{kframe}
 
-{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-121-1} 
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-142-1} 
 
 }
 
@@ -3726,11 +4168,208 @@ Now, using the information based on the single regressions, a multiple regressio
 \end{knitrout}
 
 
-% \newpage
-% \chapter{Categorical Data}
-% \minitoc
-% <<child-demo, child='chapters/chapter_8/Chapter8.Rnw'>>=
-% @
+\section{Introduction to Logistic Regression}
+Section 8.4 in \textit{OI Biostat} introduces logistic regression, a method used to create models with a binary response variable.  
+
+\newpage
+\chapter{Categorical Data}
+\minitoc
+
+
+\section{Inference for a Single Proportion}
+Looking at the example presented in Section 8.1 of \textit{OI Biostat}, a dataset contains 80 cancer patients at the Dana Farber Cancer Institute (DFCI) who survived at least 5 years and 40 patients who did not.  \textsf{R} can be used to "create" this dataset and to infer information about the population.  The initial statistics calculated are the mean, the standard deviation, and the sample proportion, $\hat{p}$, which can be seen in the code below.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{x} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlkwd{rep}\hlstd{(}\hlnum{1}\hlstd{,}\hlnum{80}\hlstd{),}\hlkwd{rep}\hlstd{(}\hlnum{0}\hlstd{,}\hlnum{40}\hlstd{))}
+\hlstd{x.bar} \hlkwb{=} \hlkwd{mean}\hlstd{(x)}
+\hlstd{std.dev} \hlkwb{=} \hlkwd{sd}\hlstd{(x)}
+\hlstd{p.hat} \hlkwb{=} \hlkwd{sum}\hlstd{(x)}\hlopt{/}\hlkwd{length}\hlstd{(x)}
+\hlstd{p.hat}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.6666667
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsection{Inference Using the Normal Approximation}
+Following the criteria laid out in \textit{OI Biostat}, the DFCI data can be approximated with a normal distribution.  The method for making inferences about the data based on this assumption is laid out as follows.  
+
+\subsubsection{Confidence Intervals}
+The same method as discussed in previous chapters can be used to build a confidence interval, following the form 
+\[ \hat{p} \pm z^* \cdot SE_{\hat{p}}\]
+
+An example of this worked out is from \textit{OI Biostat} Example 8.3.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 8.3}
+\hlstd{SE.p.hat} \hlkwb{=} \hlkwd{sqrt}\hlstd{(p.hat}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p.hat)}\hlopt{/}\hlkwd{length}\hlstd{(x))}
+\hlkwd{c}\hlstd{(p.hat} \hlopt{-} \hlnum{1.96}\hlopt{*}\hlstd{SE.p.hat, p.hat} \hlopt{+}  \hlnum{1.96}\hlopt{*}\hlstd{SE.p.hat)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.5823217 0.7510116
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsubsection{Hypothesis Testing}
+Again, the procedures that have been performed before can be used to do a hypothesis test on a proportion.  The $z$-statistic would be 
+\[ z = \frac{\hat{p}-p_0}{SE_{p_0}}\]
+
+Example 8.5 from \textit{OI Biostat} is worked out below.  Note that there is a slight difference in the $z$ statistic value because this version does not use an approximation of $\hat{p}$ to 0.67.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 8.5}
+\hlstd{p.0} \hlkwb{=} \hlnum{0.6}
+\hlstd{SE.p.0} \hlkwb{=} \hlkwd{sqrt}\hlstd{(p.0}\hlopt{*}\hlstd{(}\hlnum{1}\hlopt{-}\hlstd{p.0)}\hlopt{/}\hlkwd{length}\hlstd{(x))}
+\hlstd{z} \hlkwb{=} \hlstd{(p.hat} \hlopt{-} \hlstd{p.0)}\hlopt{/}\hlstd{SE.p.0}
+\hlstd{z}
+\end{alltt}
+\begin{verbatim}
+## [1] 1.490712
+\end{verbatim}
+\begin{alltt}
+\hlcom{## get the p-value (note that it is a two-sided test)}
+\hlnum{2}\hlopt{*}\hlkwd{pnorm}\hlstd{(z,} \hlkwc{lower.tail} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.1360371
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+% \section{Inference for the Difference of Two Proportions}
+\stepcounter{section}
+
+\section{Inference for Two or More Groups}
+The $\chi^2$ testing method discussed in Section 8.3.2 of \textit{OI Biostat} requires $R$ in order to calculate a p-value.  The function for doing so is \textit{pchisq()} and like all functions previously discussed that start with $"p"$ such as \textit{pnorm()}, this function takes in a value of the chi-squared distribution and returns a p-value.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 8.16 }
+\hlstd{chi_sq} \hlkwb{=} \hlstd{(}\hlnum{500}\hlopt{-}\hlnum{502.6}\hlstd{)}\hlopt{^}\hlnum{2}\hlopt{/}\hlnum{502.6} \hlopt{+} \hlstd{(}\hlnum{44425}\hlopt{-}\hlnum{44422.4}\hlstd{)}\hlopt{^}\hlnum{2}\hlopt{/}\hlnum{44422.4} \hlopt{+} \hlstd{(}\hlnum{505}\hlopt{-}\hlnum{502.4}\hlstd{)}\hlopt{^}\hlnum{2}\hlopt{/}\hlnum{502.4}  \hlopt{+} \hlstd{(}\hlnum{44405}\hlopt{-}\hlnum{44407.6}\hlstd{)}\hlopt{^}\hlnum{2}\hlopt{/}\hlnum{44407.6}
+\hlkwd{pchisq}\hlstd{(chi_sq,} \hlnum{1}\hlstd{,} \hlkwc{lower.tail} \hlstd{=} \hlnum{FALSE}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## [1] 0.8689801
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+The second method for doing this calculation is using the function \textit{chisq.test()}, which takes the contingency table as its input either in matrix or table form.  The code below shows how to create a matrix and convert it to a table, but the conversion is not necessary for the chi-squared test.  
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{mat} \hlkwb{=} \hlkwd{matrix}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{500}\hlstd{,}\hlnum{44425}\hlstd{,} \hlnum{505}\hlstd{,}\hlnum{44405}\hlstd{),} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{,} \hlkwc{byrow} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlkwd{colnames}\hlstd{(mat)} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"Yes"}\hlstd{,} \hlstr{"No"}\hlstd{)}
+\hlkwd{rownames}\hlstd{(mat)} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"Mammogram"}\hlstd{,} \hlstr{"Control"}\hlstd{)}
+\hlstd{tbl} \hlkwb{=} \hlkwd{as.table}\hlstd{(mat)}
+
+\hlkwd{chisq.test}\hlstd{(tbl)}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  tbl
+## X-squared = 0.01748, df = 1, p-value = 0.8948
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+Alternatively, the \textit{chisq.test} function can be used directly on a dataset 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 8.20}
+\hlstd{tbl} \hlkwb{=} \hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{race ,famuss}\hlopt{$}\hlstd{actn3.r577x)}
+\hlkwd{chisq.test}\hlstd{(tbl)}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	Pearson's Chi-squared test
+## 
+## data:  tbl
+## X-squared = 19.4, df = 8, p-value = 0.01286
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\subsection{Fisher's Exact Test of Independence}
+The Fisher's Exact Test of Independence can be easily performed in $R$ on any matrix or table.  The function \textit{fisher.test()} takes in a matrix or table and returns a p-value.    
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 8.24}
+\hlstd{mat} \hlkwb{=} \hlkwd{matrix}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{13}\hlstd{,}\hlnum{3}\hlstd{,}\hlnum{4}\hlstd{,}\hlnum{9}\hlstd{,}\hlnum{17}\hlstd{,}\hlnum{12}\hlstd{),} \hlkwc{ncol} \hlstd{=} \hlnum{2}\hlstd{,} \hlkwc{byrow} \hlstd{=} \hlnum{TRUE}\hlstd{)}
+\hlkwd{fisher.test}\hlstd{(mat,} \hlkwc{alternative} \hlstd{=} \hlstr{"two.sided"}\hlstd{)}
+\end{alltt}
+\begin{verbatim}
+## 
+## 	Fisher's Exact Test for Count Data
+## 
+## data:  mat
+## p-value = 0.02505
+## alternative hypothesis: two.sided
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\section{Chi-Square} 
+Using the Chi-Square test for goodness of fit follows the same protocol as above, except some prior data manipulation into a table is required.  
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 8.28}
+\hlstd{tbl_1} \hlkwb{=} \hlkwd{table}\hlstd{(famuss}\hlopt{$}\hlstd{race)}
+\hlstd{tbl_2} \hlkwb{=} \hlkwd{as.table}\hlstd{(}\hlkwd{matrix}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{0.128}\hlstd{,} \hlnum{0.01}\hlstd{,} \hlnum{0.804}\hlstd{,} \hlnum{0.058}\hlstd{,} \hlnum{1.00}\hlstd{),} \hlkwc{ncol} \hlstd{=} \hlnum{5}\hlstd{))}
+\hlkwd{colnames}\hlstd{(tbl_2)} \hlkwb{=} \hlkwd{names}\hlstd{(tbl_1)}
+\hlstd{tbl} \hlkwb{=} \hlkwd{rbind}\hlstd{(tbl_1, tbl_2)}
+\hlkwd{rownames}\hlstd{(tbl)} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"FAMuSS"}\hlstd{,} \hlstr{"US Census"}\hlstd{)}
+\hlkwd{chisq.test}\hlstd{(tbl)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in chisq.test(tbl): Chi-squared approximation may be incorrect}}\begin{verbatim}
+## 
+## 	Pearson's Chi-squared test
+## 
+## data:  tbl
+## X-squared = 11.112, df = 4, p-value = 0.02534
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{## Example 8.29 }
+\hlstd{tbl} \hlkwb{=} \hlkwd{as.table}\hlstd{(}\hlkwd{matrix}\hlstd{(}\hlkwd{c}\hlstd{(}\hlnum{0.25}\hlstd{,} \hlnum{0.5}\hlstd{,} \hlnum{0.25}\hlstd{,} \hlnum{84}\hlstd{,} \hlnum{233}\hlstd{,} \hlnum{134}\hlstd{),} \hlkwc{ncol} \hlstd{=} \hlnum{3}\hlstd{))}
+\hlkwd{rownames}\hlstd{(tbl)} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"Expected"}\hlstd{,} \hlstr{"Observed"}\hlstd{)}
+\hlkwd{colnames}\hlstd{(tbl)} \hlkwb{=} \hlkwd{c}\hlstd{(}\hlstr{"AA"}\hlstd{,} \hlstr{"AB"}\hlstd{,} \hlstr{"BB"}\hlstd{)}
+\hlkwd{chisq.test}\hlstd{(tbl)}
+\end{alltt}
+
+
+{\ttfamily\noindent\color{warningcolor}{\#\# Warning in chisq.test(tbl): Chi-squared approximation may be incorrect}}\begin{verbatim}
+## 
+## 	Pearson's Chi-squared test
+## 
+## data:  tbl
+## X-squared = 109.67, df = 2, p-value < 2.2e-16
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
 
 
 \end{document}

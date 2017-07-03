@@ -1,9 +1,10 @@
 
 %% FIGURE NUMBERs WILL LIKELY CHANGE WHEN CH 7 IS FINALIZED, SO CHECK THEM ALL AT SOME POINT 
 
-In Chapter 6, the dataset \texttt{statins} was introduced when visually understanding the assumptions of simple linear regression.  It will again be used in this chapter to understand the idea of multiple linear regression.
+In Chapter 7, the dataset \texttt{statins} was introduced when visually understanding the assumptions of simple linear regression.  It will again be used in this chapter to understand the idea of multiple linear regression.
 
 %% Should I include Figure 7.2 in here, seems uneccessary.  
+
 
 \section*{Confounders} 
 
@@ -56,7 +57,6 @@ Notice how in this example, the first model shows a negative relationship betwee
 # Calculation of the simple linear regression coefficient
 mean(statins.samp$RFFT[statins.samp$Statin == 1]) - mean(statins.samp$RFFT[statins.samp$Statin == 0])
 @
-
 
 \section{Evaluating The Fit of a Multiple Regression Model}
 \subsection{Assumptions of Linear Regression}
@@ -199,3 +199,6 @@ qqnorm(residuals)
 qqline(residuals)
 @
 
+
+\section{Introduction to Logistic Regression}
+Section 8.4 in \textit{OI Biostat} introduces logistic regression, a method used to create models with a binary response variable.  

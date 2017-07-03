@@ -190,10 +190,10 @@ mean(frog.altitude.data$clutch.volume[less.than.2000])
 sd(frog.altitude.data$clutch.volume[less.than.2000])
 @
 
-\subsection{Visualizing distributions of data}
+\subsection{Visualizing distributions of data} \label{graphs}
 While most numerical summaries can be calculated by hand, \textsf{R} is essential for creating graphical summaries.
 
-\subsubsection{Histograms}
+\subsubsection{Histograms} 
 A \textbf{histogram} provides a view of data density. Observations are sorted into different bins based on their value, and the histogram shows the number of observations in each bin. The following command produces a histogram of the \texttt{clutch.volume} variable.
 
 <<fig.height=3.5, fig.width=5.5>>=

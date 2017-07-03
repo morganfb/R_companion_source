@@ -29,7 +29,7 @@
 
 \newpage 
 \setcounter{chapter}{-1}
-\chapter{Preface}
+\chapter{Introduction to \textsf{R}}
 \minitoc
 <<child-demo, child='chapters/chapter_0/Chapter0.Rnw'>>=
 @
@@ -64,6 +64,7 @@
 <<child-demo, child='chapters/chapter_5/Chapter5.Rnw'>>=
 @
 
+
 \newpage
 \chapter{Simple Linear Regression}
 \minitoc
@@ -71,16 +72,18 @@
 @
 
 \newpage
-\chapter{Multiple Linear Regression}
+\chapter{Multiple and Logistic Regression}
 \minitoc
 <<child-demo, child='chapters/chapter_7/Chapter7.Rnw'>>=
 @
 
-% \newpage
-% \chapter{Categorical Data}
-% \minitoc
-% <<child-demo, child='chapters/chapter_8/Chapter8.Rnw'>>=
-% @
+\newpage
+\chapter{Categorical Data}
+\minitoc
+<<child-demo, child='chapters/chapter_8/Chapter8.Rnw'>>=
+@
+
+
 
 
 \end{document}

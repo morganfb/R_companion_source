@@ -1,6 +1,6 @@
 
 \section{Inference for a Single Proportion}
-Looking at the example presented in 8.1 of \textit{OI Biostat}, a dataset contains 80 cancer patients at the Dana Farber Cancer Institute (DFCI) who survived at least 5 years and 40 patients who did not.  \textsf{R} can be used to "create" this dataset and to infer information about the population.  The initial statistics calculated are the mean, the standard deviation, and the sample proportion, $\hat{p}$, which can be seen in the code below.  
+Looking at the example presented in Section 8.1 of \textit{OI Biostat}, a dataset contains 80 cancer patients at the Dana Farber Cancer Institute (DFCI) who survived at least 5 years and 40 patients who did not.  \textsf{R} can be used to "create" this dataset and to infer information about the population.  The initial statistics calculated are the mean, the standard deviation, and the sample proportion, $\hat{p}$, which can be seen in the code below.  
 
 <<>>=
 x = c(rep(1,80),rep(0,40))
@@ -39,17 +39,62 @@ z
 2*pnorm(z, lower.tail = FALSE)
 @
 
-\subsection{Inference Using Exact Methods}
-The DFCI data actually follows a binomial distribution with $n=120$ and $p=\frac{80}{120} = 0.6667$.  
-
-
-\section{Inference for the Difference of Two Proportions}
-
+% \section{Inference for the Difference of Two Proportions}
+\stepcounter{section}
 
 \section{Inference for Two or More Groups}
+The $\chi^2$ testing method discussed in Section 8.3.2 of \textit{OI Biostat} requires $R$ in order to calculate a p-value.  The function for doing so is \textit{pchisq()} and like all functions previously discussed that start with $"p"$ such as \textit{pnorm()}, this function takes in a value of the chi-squared distribution and returns a p-value.  
+
+<<>>=
+## Example 8.16 
+chi_sq = (500-502.6)^2/502.6 + (44425-44422.4)^2/44422.4 + (505-502.4)^2/502.4  + (44405-44407.6)^2/44407.6
+pchisq(chi_sq, 1, lower.tail = FALSE)
+@
+
+The second method for doing this calculation is using the function \textit{chisq.test()}, which takes the contingency table as its input either in matrix or table form.  The code below shows how to create a matrix and convert it to a table, but the conversion is not necessary for the chi-squared test.  
+
+<<>>=
+mat = matrix(c(500,44425, 505,44405), ncol = 2, byrow = TRUE)
+colnames(mat) = c("Yes", "No")
+rownames(mat) = c("Mammogram", "Control")
+tbl = as.table(mat)
+
+chisq.test(tbl)
+@
+
+Alternatively, the \textit{chisq.test} function can be used directly on a dataset 
+<<>>=
+## Example 8.20
+tbl = table(famuss$race ,famuss$actn3.r577x)
+chisq.test(tbl)
+@
+
+\subsection{Fisher's Exact Test of Independence}
+The Fisher's Exact Test of Independence can be easily performed in $R$ on any matrix or table.  The function \textit{fisher.test()} takes in a matrix or table and returns a p-value.    
+<<>>=
+## Example 8.24
+mat = matrix(c(13,3,4,9,17,12), ncol = 2, byrow = TRUE)
+fisher.test(mat, alternative = "two.sided")
+@
 
 
 \section{Chi-Square} 
+Using the Chi-Square test for goodness of fit follows the same protocol as above, except some prior data manipulation into a table is required.  
+<<>>=
+## Example 8.28
+tbl_1 = table(famuss$race)
+tbl_2 = as.table(matrix(c(0.128, 0.01, 0.804, 0.058, 1.00), ncol = 5))
+colnames(tbl_2) = names(tbl_1)
+tbl = rbind(tbl_1, tbl_2)
+rownames(tbl) = c("FAMuSS", "US Census")
+chisq.test(tbl)
+@
 
+<<>>=
+## Example 8.29 
+tbl = as.table(matrix(c(0.25, 0.5, 0.25, 84, 233, 134), ncol = 3))
+rownames(tbl) = c("Expected", "Observed")
+colnames(tbl) = c("AA", "AB", "BB")
+chisq.test(tbl)
+@
 
-\section{Randomization Test}
