@@ -1,3 +1,4 @@
+%!TEX root=../../main.tex
 \vspace{0.5cm} 
 
 This chapter introduces basic commands for manipulating datasets, including how to calculate numerical summaries, create tables from data, and make graphical plots. 

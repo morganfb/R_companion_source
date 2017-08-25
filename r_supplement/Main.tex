@@ -57,6 +57,7 @@
 \pagestyle{fancy}
 \usepackage{minitoc}
 \fancyhf{}
+\fancyfoot[C]{\thepage}
  
 %comment these lines out to revert to default font
 \usepackage{kpfonts}
@@ -106,7 +107,9 @@
 \chapter{Introduction to \textsf{R}}
 \minitoc
 
+%!TEX root=../../main.tex
 \pagestyle{fancy}
+
 
 This text is a companion to \textit{Introductory Statistics for the Life and Biomedical Sciences}; while the main text focuses on a conceputal introduction to the use of statistics in the life sciences, this supplement provides an analytical and computational introduction using the statistical computing language \textsf{R}.  An understanding of the basics of \textsf{R}, how it stores, utilizes, and processes data, and how to analyze these results will be built.  
 
@@ -339,7 +342,7 @@ Another use of the concatenating function \textit{c()} is to combine multiple ve
 It is reccomended that you try out these and other examples for yourself in order to fully appreciate how this works.
 
 \subsubsection{Accessing Elements of a Vector} \label{access_vectors}
-Once a vector has been created, it is helpful to be able to pull out certain parts of it.  Vectors are indexed, meaning that each element in the vector corresponds to a location identified by number, numbered 1 through the length of the matrix.  To access an element in the vector, brackets are used, which signals to \textsf{R} that the element at the location specified within the brackets is wanted.  For example, to obtain the first element in the vector above \textit{b}, the correct command is \textit{b[1]}, as shown below 
+Once a vector has been created, it is helpful to be able to pull out certain parts of it.  Vectors are indexed, meaning that each element in the vector corresponds to a location identified by number, numbered 1 through the length of the vector.  To access an element in the vector, brackets are used, which signals to \textsf{R} that the element at the location specified within the brackets is wanted.  For example, to obtain the first element in the vector above \textit{b}, the correct command is \textit{b[1]}, as shown below 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
@@ -775,6 +778,7 @@ To access a dataset in the package, simply run the \texttt{data()} command, whic
 \chapter{Introduction to Basic Techniques}
 \minitoc
 
+%!TEX root=../../main.tex
 \vspace{0.5cm} 
 
 This chapter introduces basic commands for manipulating datasets, including how to calculate numerical summaries, create tables from data, and make graphical plots. 
@@ -3083,6 +3087,7 @@ Example 4.13 from \textit{OI Biostat}, shown below, gives a comparison of doing 
 \chapter{Inference For Numerical Data}
 \minitoc
 
+%!TEX root=../../main.tex
 \vspace{0.5cm} 
 
 \section{The t-distribution}
@@ -3712,6 +3717,7 @@ Furthermore, the two t-tests shown in the text can be computed as follows.  Note
 \chapter{Multiple and Logistic Regression}
 \minitoc
 
+%!TEX root=../../main.tex
 
 %% FIGURE NUMBERs WILL LIKELY CHANGE WHEN CH 7 IS FINALIZED, SO CHECK THEM ALL AT SOME POINT 
 
@@ -4366,6 +4372,7 @@ Section 8.4 in \textit{OI Biostat} introduces logistic regression, a method used
 \chapter{Categorical Data}
 \minitoc
 
+%!TEX root=../../main.tex
 
 \section{Inference for a Single Proportion}
 Looking at the example presented in Section 8.1 of \textit{OI Biostat}, a dataset contains 80 cancer patients at the Dana Farber Cancer Institute (DFCI) who survived at least 5 years and 40 patients who did not.  \textsf{R} can be used to "create" this dataset and to infer information about the population.  The initial statistics calculated are the mean, the standard deviation, and the sample proportion, $\hat{p}$, which can be seen in the code below.  

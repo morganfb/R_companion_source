@@ -1,3 +1,4 @@
+%!TEX root=../../main.tex
 
 \section{Inference for a Single Proportion}
 Looking at the example presented in Section 8.1 of \textit{OI Biostat}, a dataset contains 80 cancer patients at the Dana Farber Cancer Institute (DFCI) who survived at least 5 years and 40 patients who did not.  \textsf{R} can be used to "create" this dataset and to infer information about the population.  The initial statistics calculated are the mean, the standard deviation, and the sample proportion, $\hat{p}$, which can be seen in the code below.  

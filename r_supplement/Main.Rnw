@@ -7,6 +7,7 @@
 \pagestyle{fancy}
 \usepackage{minitoc}
 \fancyhf{}
+\fancyfoot[C]{\thepage}
  
 %comment these lines out to revert to default font
 \usepackage{kpfonts}

@@ -1,3 +1,4 @@
+%!TEX root=../../main.tex
 \vspace{0.5cm} 
 
 \section{The t-distribution}

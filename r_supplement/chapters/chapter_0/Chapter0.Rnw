@@ -1,4 +1,6 @@
+%!TEX root=../../main.tex
 \pagestyle{fancy}
+
 
 This text is a companion to \textit{Introductory Statistics for the Life and Biomedical Sciences}; while the main text focuses on a conceputal introduction to the use of statistics in the life sciences, this supplement provides an analytical and computational introduction using the statistical computing language \textsf{R}.  An understanding of the basics of \textsf{R}, how it stores, utilizes, and processes data, and how to analyze these results will be built.  
 
@@ -146,7 +148,7 @@ c(a,b)
 It is reccomended that you try out these and other examples for yourself in order to fully appreciate how this works.
 
 \subsubsection{Accessing Elements of a Vector} \label{access_vectors}
-Once a vector has been created, it is helpful to be able to pull out certain parts of it.  Vectors are indexed, meaning that each element in the vector corresponds to a location identified by number, numbered 1 through the length of the matrix.  To access an element in the vector, brackets are used, which signals to \textsf{R} that the element at the location specified within the brackets is wanted.  For example, to obtain the first element in the vector above \textit{b}, the correct command is \textit{b[1]}, as shown below 
+Once a vector has been created, it is helpful to be able to pull out certain parts of it.  Vectors are indexed, meaning that each element in the vector corresponds to a location identified by number, numbered 1 through the length of the vector.  To access an element in the vector, brackets are used, which signals to \textsf{R} that the element at the location specified within the brackets is wanted.  For example, to obtain the first element in the vector above \textit{b}, the correct command is \textit{b[1]}, as shown below 
 <<>>=
 b[1]
 @
