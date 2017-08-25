@@ -271,7 +271,15 @@ samp.df = data.frame(names, weights, genders, ages)
 samp.df
 @
 
-Notice how none of the values have quotation marks on them anymore.  This begs two questions: whether the strings are still strings and whether the numerical values are now indeed numerical rather than strings.  There are two ways to determine this.  The easiest is to look in the Environment tab and to find the \textit{samp.df} element.  Clicking on the little blue triangle on the left will reveal something like the following image.  Notice how under \textit{samp.df}, each column can be seen as an individual row, listed by its column name.  Next to the columns \textit{names} and \textit{genders} is the datatype "Factor", which is a desired string classification.  Furthermore, the columns \textit{weights} and \textit{ages} are indeed numerical.  
+Notice how none of the values have quotation marks on them anymore.  This begs two questions: whether the strings are still strings and whether the numerical values are now indeed numerical rather than strings.  There are two ways to determine this.  The easiest is to look in the Environment tab and to find the \textit{samp.df} element.  Clicking on the little blue triangle on the left will reveal something like the following image in Figure \ref{fig:dfcreate}.  Notice how under \textit{samp.df}, each column can be seen as an individual row, listed by its column name.  Next to the columns \textit{names} and \textit{genders} is the datatype "Factor", which is a desired string classification.  Furthermore, the columns \textit{weights} and \textit{ages} are indeed numerical.  
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width = 2in]{chapters/chapter_0/dfcreate.png}
+\caption{An example of how the global environment displays important information about a dataframe.}
+\label{fig:dfcreate}
+\end{figure}
+
 
 \subsubsection{Accessing Elements of a Dataframe} 
 Accessing elements of a dataframe can be a bit trickier than with vectors or matrices.  As with matrices, two dimensional indeces can be used with brackets to access individual elements, rows, or columns.  For example, the first element and the first row can be retrieved respectively as follows, 
