@@ -12,7 +12,7 @@ This text is a companion to \textit{Introductory Statistics for the Life and Bio
 \textsf{RStudio} is a platform that makes using \textsf{R} significantly easier, providing a visual framework for working. It can be downloaded from \url{https://www.rstudio.com/products/rstudio/download/}, by scrolling to the bottom and selecting the appropriate operating system from \textit{Installers} under \textit{Installers for Supported Platforms}.  \textsf{RStudio} is not necessary in order to use \textsf{R}, but it is highly recommended for organizational and accesibility reasons.      
 
 
-Upon opening \textsf{RStudio}, something similar to Figure \ref{fig:rstudio} should appear.  The four pane window environment is standard and provides easy access to many of the most commonly utilized tools.  Note that the four panes can be moved around or closed, so different versions of \textsf{Rstudio} may look a bit different.  
+Upon opening \textsf{RStudio}, something similar to Figure \ref{fig:rstudio} should appear.  The four pane window environment is standard and provides easy access to many of the most commonly utilized tools.  Each corner contains one pane, and each pane can include several tabs.  The four panes shown in Figure \ref{fig:rstudio} demonstrate a common starting setup environment, but different versions of \textsf{Rstudio} may look a bit different.  Furthermore, panes can be moved around or closed.  Therefore, this section will go through the various panes, their elements and uses, and how to access them.    
 \begin{figure}[h!]
 \centering
 \includegraphics[width = 6in]{chapters/chapter_0/rstudio.png}
@@ -23,34 +23,42 @@ Upon opening \textsf{RStudio}, something similar to Figure \ref{fig:rstudio} sho
 \subsubsection{The Script Editor}
 The top left pane in Figure \ref{fig:rstudio} shows the script editor, used to edit a \textsf{R} script file.  Think of this pane as similar to any text editor, providing a working space for the code being utilized and a means to save that for later.  We recommend that all work is done in a \textsf{R} script file so no information is lost.  If a script editor is not visible, a new \textsf{R} script file can be created by going to \textit{File > New File > R Script}.  
 
-In order to run a command in the script editor, you must place your curser on the line you want to run and type \textsf{command + Return} on Mac or \textsf{Ctrl + Enter} on Windows or Linux.  Alternatively, at the top of the script editor pane is the run button, which can be clicked after highlighting the code to be run.  Try this for yourself with the following example, and if successful, you shall see "hi" print out in the bottom left pane.  
+In order to run a command in the script editor, you must place your curser on the line you want to run and type \textsf{command + Return} on Mac or \textsf{Ctrl + Enter} on Windows or Linux.  Alternatively, at the top of the script editor pane is the run button, which can be clicked after highlighting the code to be run.  Try this for yourself by opening a script file and running the following example.  If successful, you shall see the result of this simple calculation show up in the bottom left pane.  One of the most basic capabilties of \textsf{R} is as a calculator as shown in this example below.  The light grey box indicates a section of \textsf{R} code, where the purple text is code that has been inputted and the second line, as indicated by the hashtags and $[1]$ is output in response to the command in the first line.  
 
 <<>>=
-print("hi!")
+5+3 
 @
 
 
 \subsubsection{The Console} 
-The bottom left pane in Figure \ref{fig:rstudio} is called the console.  This is the machinery in \textsf{R} that does the actual computing.  When commands are run in the script editor, they show up in the console, so the console is an important pane to always have in your \textsf{RStudio environment}.  
+The bottom left pane in Figure \ref{fig:rstudio} is home to the console tab.  This is the machinery in \textsf{R} that does the actual computing.  When commands are run in the script editor, they and their output show up in the console, so the console is an important pane to always have in your \textsf{RStudio environment}.  If the console is not visible, it is likely minimized and can be reopened by going to \textit{View > Move Focus to Console}. 
 
 \subsubsection{The Environment Tab} 
-The top right pane in Figure \ref{fig:rstudio} shows the \textsf{Environment} tab, which is the home of all stored information in \textsf{R}, such as datasets and variables.  The creation of any variables will show up here.  For example, upon running the following command in the script editor, a variable called \textit{x} should come up under \textsf{Values} in the \textsf{Environment} tab. The equals sign in the command below indicates that the variable of name \textsf{x} is taking on the numerical value 2. A variable created in this way is stored in \textsf{R} for later use and can later be called upon by referencing its variable name, \textit{x}.  Examples of this will be shown in Section \ref{}.  
+The top right pane in Figure \ref{fig:rstudio} hosts the \textsf{Environment} tab, which is the home of all stored information in \textsf{R}, such as datasets and variables.  The creation of any variables will show up here.  For example, upon running the following command in the script editor, a variable called \textit{x} should come up under \textsf{Values} in the \textsf{Environment} tab as shown in Figure \ref{fig:rstudioenv0}. The equals sign in the command below indicates that the variable of name \textsf{x} is taking on the numerical value 2. A variable created in this way is stored in \textsf{R} for later use and can later be called upon by referencing its variable name, \textit{x}.   
 
 <<>>=
 x = 2
 @
 
+ 
+\begin{figure}[h!]
+\centering
+\includegraphics[width = 2in]{chapters/chapter_0/rstudioenv0.png}
+\caption{An example of how the global environment stores variables.}
+\label{fig:rstudioenv0}
+\end{figure}
 
-Furthermore, this pane can be used to import a dataset, and if successful, you should see the dataset show up in this global environment.  A dataset can be imported using the button \textit{Import Dataset} or from the script editor using the command \textit{load()} with the dataset name in quotation marks inside the parentheses.  For example, using a dataset that is on the local machine, the following will import the dataset into \textsf{R} for use and will show up in the \textsf{Environment} pane under \textsf{Data}, 
-
-%% Wherever we upload the book online, we may want to post this dataset and hyperlink it here so people can see the example.  I think this is an important point for people to know how to upload their own datasets.  
-
+To access a variable once created, the variable name can be called upon in the script editor and various operations can be performed to it.  For example, the below command uses the above created variable to get another result. More examples of this will be shown in Section \ref{}.  
 <<>>=
-load("samp_df.Rda")
+x*2 
 @
 
 
-At this point, the global environment looks something like that seen in Figure \ref{fig:rstudioenv}, showing both the variable \textit{x} and the dataset \textit{samp.df}.  
+If the Environment tab is not visible, the upper right pane is likely minimized and can be reopened by going to \textit{View > Show Environment}.
+
+\subsubsection{The Files Tab}
+In the lower right pane of Figure \ref{fig:rstudio}, several tabs can be seen.  The Files tab is a directory of all the files on the local computer and can be used to access other files, such as saved datasets or previously created \textsf{R} scripts.  Navigating betweeen folders in this tab is similar to doing so on your computer.  This is where datsets with the file type \textit{Rdata} or \textit{Rda} can be loaded into the \textsf{R} environment.\footnote{A data file that is not in the format \textit{Rdata} must be imported rather than just loaded.  This can be done in the Environment tab using the button \textit{Import Dataset} or from the script editor using the command \textit{load()} with the dataset name in quotation marks inside the parentheses.  Insert reference here for an example of doing this}   Upon locating a dataset by navigating to its location on your computer, it can be loaded into the environment by clicking on it in this Files tab.  Doing this will cause the dataset to show up in the Environment tab in the same manner as described in the previous section.  For example, if the dataset called \textit{samp\_df.Rda} is loaded from the Files tab, the global environment should looks something like that seen in Figure \ref{fig:rstudioenv}, showing both the variable \textit{x} and the dataset \textit{samp.df}.   
+
 \begin{figure}[h!]
 \centering
 \includegraphics[width = 2in]{chapters/chapter_0/rstudioenv.png}
@@ -58,22 +66,20 @@ At this point, the global environment looks something like that seen in Figure \
 \label{fig:rstudioenv}
 \end{figure}
 
+If the Files tab is not visible, the lower right pane is likely minimized and can be reopened by going to \textit{View > Show Files}.
 
-\subsubsection{The Files Tab}
-In the lower right pane of Figure \ref{fig:rstudio}, several tabs can be seen.  The Files tab is a directory of all the files on the local computer and can be used to access other files, such as saved datasets or previously created \textsf{R} scripts.  
 
 \subsubsection{The Plots Tab} 
 The next tab seen is the Plots tab, which is where plots will be displayed when created in a R script file.  Section \ref{graphs} will go into more detail as to how to create plots, but just note that this is where they will show up.  
 
 \subsubsection{The Packages Tab}
-Because \textsf{R} is an open-source software, anyone can creates packages for it that contain functions, data, or other useful programs.  Packages are then shared and built upon to make the knowledge base of the community greater.  The Packages tab is where these packages are accessible in \textsf{RStudio}.  Many packages come standard with the installation of \textsf{RStudio} and can be seen here.  By checking the box to the left of a package, all of its contents will be available for use.  A package has been created to accompany this book, and it can be included for use in the packages tab.  Section \ref{thepackage} will discuss this specific package in further detail.  
+Because \textsf{R} is an open-source software, anyone can creates packages that contain functions, data, or other useful programs.  Packages are then shared and built upon to make the knowledge base of the community greater.  The Packages tab is where these packages are accessible in \textsf{RStudio}.  Many packages come standard with the installation of \textsf{RStudio} and can be seen here.  By checking the box to the left of a package, all of its contents will be available for use.  A package has been created to accompany this book, and it can be included for use in the packages tab.  Section \ref{thepackage} will discuss this specific package in further detail.  
 
 
 \subsubsection{The Help Tab}
-The Help Tab provides basic helpful information on most features of \textsf{R} and \textsf{RStudio}.  It can be searched, as well as accessed by typing a question mark next to any function or package in the script file.  For example, the following command will pull up in the Help tab all the information about the print function.  
-
+The Help Tab provides basic helpful information on most features of \textsf{R} and \textsf{RStudio}.  It can be searched, as well as accessed by typing a question mark next to any function or package in the script file.  For example, the following command will pull up in the Help tab all the information about the mean function.
 <<>>=
-?print
+?mean
 @
 
 
@@ -81,11 +87,13 @@ The Help Tab provides basic helpful information on most features of \textsf{R} a
 %% What even is this tab?!?
 
 \section{Working with Data in \textsf{R}} 
+\textsf{R} is built to work with many types of data, which can hold different pieces of information.  From large datasets to small lists of names, \textsf{R} is designed to handle data relative to its purpose and input form.  Several examples will be presented to illustrate many of these different means of handling data. %% I dont like the wording here... need to introduce the idea here better of why R has different datatypes 
 
 \subsection{Vectors} 
-Vectors are one dimensional arrays used to store lists of information. They can be created using a concatenation function, \textit{c()}.  The values intended to be in the list are separated by commas inside the parentheses.  For example, a vector of numbers 1 through 5 can be made as follows.  Note that the first line assigns the variable \textit{num.vector} to the vector and the second line simply prints it out when called upon.  
+Vectors are one dimensional arrays used to store lists of information. A few examples of a vector could be a grocery list, a list of ages of people in a room, or a guest list.  Vectors can be created using a concatenation function, \textit{c()}.  The values intended to be in the list are separated by commas inside the parentheses.  For example, a vector of numbers 1 through 5 can be made as follows.  Note that the first line shows this method of creating a list, while the second line assigns the variable \textit{num.vector} to be equal to the vector.  The third line calls on the variable just created and simply prints it.  
 
 <<>>=
+c(1,2,3,4,5)
 num.vector = c(1,2,3,4,5)
 num.vector
 @
@@ -97,27 +105,25 @@ num.vector2 = 1:5
 num.vector2
 @
 
-Vectors can also be used for characters or strings, such as the following where the characters must be individually surrounded by quotation marks.  
+Vectors can also be used for characters or strings, meaning a group of characters forming a word. The following is an example of a list of characters, where each of the characters must be individually surrounded by quotation marks in order to signal to \textsf{R} that it is a character and not a variable.  
 <<>>=
 alph.vector = c("a", "b", "c", "d", "e")
 alph.vector
 @
 
 \subsubsection{Operating with Vectors}
-Vectors can be used for computational purposes and many mathematical functions can be applied.  When two vectors of the same length are computed together, each element is paired with the corresponding element in the opposite list and the computation applied accordingly.  For example, addition, multiplication, and squaring are done pairwise as follows, 
+Vectors can be used for computational purposes by applying many mathematical functions.  \textsf{R} applies computation to vectors pairwise, meaning that each element is paired with the corresponding element in the opposite vector and the computation applied accordingly. Note that vectors should be the same length in order to apply such computations. For example, addition, multiplication, and squaring are done pairwise as follows, 
 <<>>=
 a = c(1,2,3,4)
 b = c(5,6,7,8)
 a+b
-a-b
 a*b
 a^2
 @
 
-Furthermore, a single numerical can be applied to a vector, acting as a vector itself of the same length as the corresponding vector. Therefore, multiplying a vector by 2 multiplies every element in the vector by 2.  Some examples of this can be seen here,  
+Furthermore, a single numerical computation can be applied to a vector, by applying the single computation to each element in the vector.  For example, multiplying a vector by 2, as in the following example, individually multiplies every element in the vector by 2.
 <<>>=
 2*a
-2+a
 @
 
 Note that attempting to apply such mathematical operations to a vector of strings will not produce results.  An error like the following will appear, 
@@ -130,15 +136,17 @@ Another use of the concatenating function \textit{c()} is to combine multiple ve
 c(a,b)
 @
 
+It is reccomended that you try out these and other examples for yourself in order to fully appreciate how this works.
+
 \subsubsection{Accessing Elements of a Vector}
-Once a vector has been created, it is helpful to be able to pull out certain parts of it.  Vectors are indexed, meaning that each element in the vector corresponds to a location identified by number, numbered 1 through the length of the matrix.  To access an element in the vector, brackets must be used which signals to \textsf{R} that the element at the location specified within the brackets is wanted.  For example, to obtain the first element in the vector above \textit{b}, the correct command is \textit{b[1]}, as shown below 
+Once a vector has been created, it is helpful to be able to pull out certain parts of it.  Vectors are indexed, meaning that each element in the vector corresponds to a location identified by number, numbered 1 through the length of the matrix.  To access an element in the vector, brackets are used, which signals to \textsf{R} that the element at the location specified within the brackets is wanted.  For example, to obtain the first element in the vector above \textit{b}, the correct command is \textit{b[1]}, as shown below 
 <<>>=
 b[1]
 @
 
 In order to obtain more than one element in a vector, the notation is more specific.  A vector of index locations must be passed into the brackets, such as in the following two examples, 
 <<>>=
-b[1:2]
+b[1:3]
 b[c(1,3)]
 @
 
@@ -152,7 +160,7 @@ b[-c(2,3)]
 A matrix is similar to a vector in that it stores information except that it is a two dimensional array.  The function \textit{matrix()} can be used to create two dimensional matrices.  The input of this function is the following 
 \begin{itemize} 
 \item A vector containing all the matrix entries
-\item A specification of \textit{byrow = TRUE} which fills the matrix firstly left to right and top to bottom or a specification of \textit{byrow = FALSE} which fills columns first from left to right 
+\item A specification of \textit{byrow = TRUE} which fills the matrix firstly left to right and then top to bottom or a specification of \textit{byrow = FALSE} which fills columns top to bottom first moving from left to right 
 \item A specification of \textit{nrow = } which outlines how many rows are in the matrix
 \end{itemize} 
 
@@ -168,7 +176,7 @@ mat2 = matrix(1:8, byrow = FALSE, nrow = 4)
 mat2
 @
 
-Just like with vectors, mathematical computations can be applied to matrices.  Again, the computations are applied pairwase unless a single numerical value is applied which applies to all elements.  Some examples are as follows, 
+Just like with vectors, mathematical computations can be applied to matrices.  Again, the computations are applied pairwase unless a single numerical value is given which applies to all elements.  Some examples are as follows, 
 <<>>=
 mat1+mat2
 mat1*mat2
@@ -198,10 +206,17 @@ weights = c(210, 140, 120, 180, 160)
 genders = c("Male", "Female", "Female", "Male", "Male")
 ages = c(22, 45, 35, 50, 70)
 
-samp.matrix = matrix(c(names, weights, genders, ages), nrow = 5)
+samp.matrix = matrix(c(names, weights, genders, ages), byrow = FALSE, nrow = 5)
 samp.matrix
 @
-Notice how the \textit{c()} function is required to concatenate the several vectors into one long vector, as well as the specification of \textit{nrow()}, so as not to get a single long list of values.  
+Notice how the \textit{c()} function is required to concatenate the several vectors into one long vector, as well as the specification of \textit{nrow()}, so as not to get a single long list of values. Try this out for yourself, perhaps changing values for \textit{nrow} or \textit{byrow} to see how it changes the output.   
+
+When this matrix was created, the variable names that helped to identify the purpose of each column were lost.  Therefore, it may be desirable to add column names to the matrix.  This can be done using the function \textit{colnames()}, which is applied to the variable that represents the matrix and takes in a list of strings as input.  The following example shows how this can be done.  
+<<>>=
+colnames(samp.matrix) = c("Name", "Weight", "Gender", "Age")
+samp.matrix
+@
+
 
 
 \subsubsection{Accessing Elements of a Matrix}
@@ -221,7 +236,20 @@ Alternatively, if the column section after the comma is left blank, this signals
 samp.matrix[1,]
 @
 
+\subsubsection{Combining Matrices}
+Often times, it is useful to combine two matrices or a matrix and a vector into one larger matrix.  This can be done using the function \textit{cbind()} or \textit{rbind()}.  These work similarly to the concatenation function \textit{c()}, but with multiple dimensions.  \textit{cbind()} combines along the column dimension, while \textit{rbind()} does so along the rows.  The function takes as input the elements to be combined in the order of choice, separated by commas.  For example, in the example below, an extra column representing smoking status is added to the matrix.  
+<<>>=
+Smoker = c("Yes", "No", "Yes", "No", "No")
+samp.matrix2 = cbind(samp.matrix, Smoker)
+samp.matrix2
+@
 
+
+Similarly, an extra row could be added to the matrix representing another individual instead using \textit{rbind()} such as the following, 
+<<>>=
+samp.matrix3 = rbind(samp.matrix2, c("Lucy", 130, "Female", 18, "No"))
+samp.matrix3
+@
 
 
 \subsection{Dataframes} 

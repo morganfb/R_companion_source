@@ -1,10 +1,10 @@
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {7.2}Simple vs. Multiple Regression}{\reset@font\mtcSfont 83}{section.7.2}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {7.3}Evaluating The Fit of a Multiple Regression Model}{\reset@font\mtcSfont 85}{section.7.3}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {7.3.1}Assumptions of Linear Regression}{\reset@font\mtcSSfont 85}{subsection.7.3.1}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {7.3.2}Hypothesis Tests and Confidence Intervals}{\reset@font\mtcSSfont 87}{subsection.7.3.2}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {7.5}Categorical Predictors With More Than Two Values}{\reset@font\mtcSfont 87}{section.7.5}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {7.5.1}Using ANOVA For Categorical Variables}{\reset@font\mtcSSfont 89}{subsection.7.5.1}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {7.5.2}Using Dummy Variables}{\reset@font\mtcSSfont 90}{subsection.7.5.2}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {7.6}Analysis of the Statin Dataset}{\reset@font\mtcSfont 90}{section.7.6}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {7.7}Analysis of the FAMuSS Dataset}{\reset@font\mtcSfont 92}{section.7.7}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {7.8}Introduction to Logistic Regression}{\reset@font\mtcSfont 96}{section.7.8}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {7.2}Simple vs. Multiple Regression}{\reset@font\mtcSfont 85}{section.7.2}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {7.3}Evaluating The Fit of a Multiple Regression Model}{\reset@font\mtcSfont 87}{section.7.3}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {7.3.1}Assumptions of Linear Regression}{\reset@font\mtcSSfont 87}{subsection.7.3.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {7.3.2}Hypothesis Tests and Confidence Intervals}{\reset@font\mtcSSfont 89}{subsection.7.3.2}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {7.5}Categorical Predictors With More Than Two Values}{\reset@font\mtcSfont 89}{section.7.5}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {7.5.1}Using ANOVA For Categorical Variables}{\reset@font\mtcSSfont 91}{subsection.7.5.1}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {7.5.2}Using Dummy Variables}{\reset@font\mtcSSfont 92}{subsection.7.5.2}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {7.6}Analysis of the Statin Dataset}{\reset@font\mtcSfont 92}{section.7.6}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {7.7}Analysis of the FAMuSS Dataset}{\reset@font\mtcSfont 94}{section.7.7}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {7.8}Introduction to Logistic Regression}{\reset@font\mtcSfont 98}{section.7.8}}
