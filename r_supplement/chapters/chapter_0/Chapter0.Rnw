@@ -89,6 +89,13 @@ The Help Tab provides basic helpful information on most features of \textsf{R} a
 \section{Working with Data in \textsf{R}} 
 \textsf{R} is built to work with many types of data, which can hold different pieces of information.  From large datasets to small lists of names, \textsf{R} is designed to handle data relative to its purpose and input form.  Several examples will be presented to illustrate many of these different means of handling data. %% I dont like the wording here... need to introduce the idea here better of why R has different datatypes 
 
+\subsection{Datatypes}
+\subsubsection{Numerical} 
+\subsubsection{Categorical} 
+% gender, true false, 0 or 1, 
+% factor variables 
+\subsubsection{Checking the Datatype}
+
 \subsection{Vectors} 
 Vectors are one dimensional arrays used to store lists of information. A few examples of a vector could be a grocery list, a list of ages of people in a room, or a guest list.  Vectors can be created using a concatenation function, \textit{c()}.  The values intended to be in the list are separated by commas inside the parentheses.  For example, a vector of numbers 1 through 5 can be made as follows.  Note that the first line shows this method of creating a list, while the second line assigns the variable \textit{num.vector} to be equal to the vector.  The third line calls on the variable just created and simply prints it.  
 
@@ -138,7 +145,7 @@ c(a,b)
 
 It is reccomended that you try out these and other examples for yourself in order to fully appreciate how this works.
 
-\subsubsection{Accessing Elements of a Vector}
+\subsubsection{Accessing Elements of a Vector} \label{access_vectors}
 Once a vector has been created, it is helpful to be able to pull out certain parts of it.  Vectors are indexed, meaning that each element in the vector corresponds to a location identified by number, numbered 1 through the length of the matrix.  To access an element in the vector, brackets are used, which signals to \textsf{R} that the element at the location specified within the brackets is wanted.  For example, to obtain the first element in the vector above \textit{b}, the correct command is \textit{b[1]}, as shown below 
 <<>>=
 b[1]
@@ -253,18 +260,52 @@ samp.matrix3
 
 
 \subsection{Dataframes} 
-Another method that \textsf{R} uses to store data is called a dataframe, which is similar to a matrix, with slight differences.  It is a two dimensional array, but row 
+Another method that \textsf{R} uses to store data is called a dataframe, which is similar to a matrix, with slight differences.  It is a two dimensional array just like a matrix, but the important difference is that it can handle more than a single data type.  Looking at the output of the matrix created above, it is noticable that every value has quotation marks on it in the output.  This indicates that \textsf{R} is viewing every value of that matrix as a character, even the numbers.  This is problematic in case computations on the numerical values were desired, such as calculating the mean weight of all individuals.  If you tried to do that, \textsf{R} would return an error.  Therefore, it is a better idea to store 2 dimensional data that is not a uniform datatype in a dataframe.    
+<<>>=
+samp.matrix
+@
 
-\subsubsection{Computing with Dataframes} 
+In order to create a dataframe in \textsf{R}, the function \textit{data.frame()} is used.  As input, it takes a list of vectors that are the desired columns in the dataframe.  For example, a dataframe that presents the same information as the matrix \textit{samp.matrix} can be created as follows, 
+<<>>=
+samp.df = data.frame(names, weights, genders, ages)
+samp.df
+@
+
+Notice how none of the values have quotation marks on them anymore.  This begs two questions: whether the strings are still strings and whether the numerical values are now indeed numerical rather than strings.  There are two ways to determine this.  The easiest is to look in the Environment tab and to find the \textit{samp.df} element.  Clicking on the little blue triangle on the left will reveal something like the following image.  Notice how under \textit{samp.df}, each column can be seen as an individual row, listed by its column name.  Next to the columns \textit{names} and \textit{genders} is the datatype "Factor", which is a desired string classification.  Furthermore, the columns \textit{weights} and \textit{ages} are indeed numerical.  
 
 \subsubsection{Accessing Elements of a Dataframe} 
+Accessing elements of a dataframe can be a bit trickier than with vectors or matrices.  As with matrices, two dimensional indeces can be used with brackets to access individual elements, rows, or columns.  For example, the first element and the first row can be retrieved respectively as follows, 
 
-\subsection{Datatypes}
-\subsubsection{Numerical} 
-\subsubsection{Categorical} 
-% gender, true false, 0 or 1, 
-% factor variables 
-\subsubsection{Checking the Datatype}
+<<>>=
+samp.df[1,1]
+samp.df[1,]
+@
+
+Note that if you put a one dimensional list inside the brackets, \textsf{R} will default to pulling the column with that index.  For example, the following pulls the first column.  
+<<>>=
+samp.df[1]
+@
+
+It must be noted that dataframes maintain column vector names upon creation, and this is an important thing to know when trying to access elements.  With dataframes, the notation \textit{dataframe\$variable\_name} can be used to access an entire column, where the dollar sign signifies that you are looking for the column with that variable name that follows.  For example, the following returns the \textit{weights} column of the dataframe.  
+<<>>=
+samp.df$weights
+@
+
+This command returns a vector of the weights, and as discussed in Section \ref{access_vectors}, a specific item in that vector can be accessed using a one dimensional vector inside the brackets.  For example, the following returns the first element in the column \textit{weights}.  
+<<>>=
+samp.df$weights[1]
+@
+
+\subsubsection{Altering Dataframes}
+
+When working with dataframes, it is often reccomended that you create a new column if you want to alter the data in some form.  For example, if you wanted to convert the weights given to kg, you could add another column to the dataframe to do so.  In order to add a new column, you simply call \textit{dataframe\$new\_variable\_name} and set it equal to something in the same way that you define a variable.  For example, the following command adds this new column of weights in kilograms.  
+<<>>=
+samp.df$weights_kg = samp.df$weights/2.2
+samp.df
+@
+
+The functions \textit{cbind()} and \textit{rbind()} can be applied in the same way to dataframes as matrices.  It is reccomended that you try this out for yourself.  
+
 
 \section{Functions} 
 

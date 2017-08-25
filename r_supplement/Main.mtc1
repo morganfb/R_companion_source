@@ -10,20 +10,20 @@
 {\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode The Help Tab}{\reset@font\mtcSSSfont 6}{section*.8}}
 {\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode The Viewer Tab}{\reset@font\mtcSSSfont 7}{section*.9}}
 {\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {0.2}Working with Data in \textsf {R}}{\reset@font\mtcSfont 7}{section.0.2}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {0.2.1}Vectors}{\reset@font\mtcSSfont 7}{subsection.0.2.1}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Operating with Vectors}{\reset@font\mtcSSSfont 7}{section*.10}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Accessing Elements of a Vector}{\reset@font\mtcSSSfont 8}{section*.11}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {0.2.2}Matrices}{\reset@font\mtcSSfont 9}{subsection.0.2.2}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Accessing Elements of a Matrix}{\reset@font\mtcSSSfont 11}{section*.12}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Combining Matrices}{\reset@font\mtcSSSfont 11}{section*.13}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {0.2.3}Dataframes}{\reset@font\mtcSSfont 12}{subsection.0.2.3}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Computing with Dataframes}{\reset@font\mtcSSSfont 13}{section*.14}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Accessing Elements of a Dataframe}{\reset@font\mtcSSSfont 13}{section*.15}}
-{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {0.2.4}Datatypes}{\reset@font\mtcSSfont 13}{subsection.0.2.4}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Numerical}{\reset@font\mtcSSSfont 13}{section*.16}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Categorical}{\reset@font\mtcSSSfont 13}{section*.17}}
-{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Checking the Datatype}{\reset@font\mtcSSSfont 13}{section*.18}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {0.3}Functions}{\reset@font\mtcSfont 13}{section.0.3}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {0.4}Some Programming Background}{\reset@font\mtcSfont 13}{section.0.4}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {0.5}The OIBioStat Package}{\reset@font\mtcSfont 13}{section.0.5}}
-{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {0.6}Exercises}{\reset@font\mtcSfont 13}{section.0.6}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {0.2.1}Datatypes}{\reset@font\mtcSSfont 7}{subsection.0.2.1}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Numerical}{\reset@font\mtcSSSfont 7}{section*.10}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Categorical}{\reset@font\mtcSSSfont 7}{section*.11}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Checking the Datatype}{\reset@font\mtcSSSfont 7}{section*.12}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {0.2.2}Vectors}{\reset@font\mtcSSfont 7}{subsection.0.2.2}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Operating with Vectors}{\reset@font\mtcSSSfont 8}{section*.13}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Accessing Elements of a Vector}{\reset@font\mtcSSSfont 8}{section*.14}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {0.2.3}Matrices}{\reset@font\mtcSSfont 9}{subsection.0.2.3}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Accessing Elements of a Matrix}{\reset@font\mtcSSSfont 11}{section*.15}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Combining Matrices}{\reset@font\mtcSSSfont 12}{section*.16}}
+{\reset@font\mtcSSfont\mtc@string\contentsline{subsection}{\noexpand \leavevmode \numberline {0.2.4}Dataframes}{\reset@font\mtcSSfont 12}{subsection.0.2.4}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Accessing Elements of a Dataframe}{\reset@font\mtcSSSfont 13}{section*.17}}
+{\reset@font\mtcSSSfont\mtc@string\contentsline{subsubsection}{\noexpand \leavevmode Altering Dataframes}{\reset@font\mtcSSSfont 14}{section*.18}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {0.3}Functions}{\reset@font\mtcSfont 14}{section.0.3}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {0.4}Some Programming Background}{\reset@font\mtcSfont 14}{section.0.4}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {0.5}The OIBioStat Package}{\reset@font\mtcSfont 14}{section.0.5}}
+{\reset@font\mtcSfont\mtc@string\contentsline{section}{\noexpand \leavevmode \numberline {0.6}Exercises}{\reset@font\mtcSfont 15}{section.0.6}}
